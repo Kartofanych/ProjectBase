@@ -1,0 +1,48 @@
+[versions]
+agp = "8.1.0"
+gradle = "8.1.0"
+kotlin-gradle-plugin = "1.8.21"
+org-jetbrains-kotlin-android = "1.8.10"
+core-ktx = "1.12.0"
+lifecycle-runtime-ktx = "2.6.2"
+
+#compose
+compose = "2.6.2"
+activity-compose = "1.8.2"
+compose-bom = "2023.10.01"
+material3 = "1.2.0-beta01"
+navigation = "2.7.6"
+coil = "2.5.0"
+appcompat = "1.6.1"
+material = "1.10.0"
+
+[libraries]
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-gradle-plugin" }
+kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin-gradle-plugin" }
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+
+#compose
+activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+ui = { group = "androidx.compose.ui", name = "ui" }
+ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
+coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", name = "viewmodel-compose", version.ref = "compose" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+
+[plugins]
+com-android-application = { id = "com.android.application", version.ref = "agp" }
+org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
+com-android-library = { id = "com.android.library", version.ref = "agp" }
+
+[bundles]
+compose = ["activity-compose", "compose-bom", "ui", "ui-graphics", "ui-tooling", "ui-tooling-preview", "material3", "navigation", "coil", "androidx-lifecycle-viewmodel-compose"]
+
