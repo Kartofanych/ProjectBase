@@ -15,5 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "MultimodulePractice"
 include(":app")
+include(":common")
 include(":features:auth:api")
 include(":features:auth:impl")
