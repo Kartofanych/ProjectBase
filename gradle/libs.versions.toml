@@ -6,6 +6,9 @@ org-jetbrains-kotlin-android = "1.8.10"
 core-ktx = "1.12.0"
 lifecycle-runtime-ktx = "2.6.2"
 
+#dagger
+dagger = "2.48.1"
+
 #compose
 compose = "2.6.2"
 activity-compose = "1.8.2"
@@ -14,7 +17,7 @@ material3 = "1.2.0-beta01"
 navigation = "2.7.6"
 coil = "2.5.0"
 appcompat = "1.6.1"
-material = "1.10.0"
+material = "1.11.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -37,6 +40,12 @@ androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
+#dagger
+dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
+dagger-android = { group = "com.google.dagger", name = "dagger-android-support", version.ref = "dagger" }
+dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger"}
+dagger-compiler-android = { group = "com.google.dagger", name = "dagger-android-processor", version.ref = "dagger"}
+
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }
@@ -45,4 +54,5 @@ com-android-library = { id = "com.android.library", version.ref = "agp" }
 
 [bundles]
 compose = ["activity-compose", "compose-bom", "ui", "ui-graphics", "ui-tooling", "ui-tooling-preview", "material3", "navigation", "coil", "androidx-lifecycle-viewmodel-compose"]
-
+dagger = ["dagger", "dagger-android"]
+dagger-compiler = ["dagger-compiler", "dagger-compiler-android"]

@@ -30,20 +30,23 @@ android {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
-            signingConfig = signingConfigs.getByName("debug")
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
         }
     }
 }
 
 dependencies {
+    // ===== feature modules =====
     implementation(project(":features:auth:impl"))
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
+
+    // ===== compose =====
     implementation(libs.bundles.compose)
+
+    // ===== dagger =====
+    implementation(libs.bundles.dagger)
+    kapt(libs.bundles.dagger.compiler)
+
 
 }
