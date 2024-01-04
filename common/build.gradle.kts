@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
+    id("org.jetbrains.kotlin.plugin.serialization")
     kotlin("kapt")
     // Precompiled plugin with the base android configuration.
     // Declared in buildSrc/.../android-config.gradle.kts.
@@ -8,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = ProjectConfig.namespace("auth.impl")
+    namespace = ProjectConfig.namespace("common")
 
     // ===== compose =====
     buildFeatures.compose = true
@@ -18,10 +19,8 @@ android {
 }
 
 dependencies {
-    api(project(":features:auth:api"))
-    implementation(project(":common"))
-
     implementation(libs.core.ktx)
+
     implementation(libs.bundles.compose)
 
     implementation(libs.bundles.dagger)

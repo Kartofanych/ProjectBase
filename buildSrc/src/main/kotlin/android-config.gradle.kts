@@ -17,12 +17,12 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_18
-        targetCompatibility = JavaVersion.VERSION_18
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {
-            jvmTarget = "18"
+            jvmTarget = "17"
             freeCompilerArgs = listOf(
                 "-Xopt-in=kotlin.RequiresOptIn"
             )

@@ -35,6 +35,9 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":common"))
+
     // ===== feature modules =====
     implementation(project(":features:auth:impl"))
 
