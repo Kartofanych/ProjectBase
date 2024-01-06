@@ -1,4 +1,4 @@
-package com.example.impl.di
+package com.example.impl.di.modules
 
 import com.example.api.AuthEntry
 import com.example.common.FeatureEntry

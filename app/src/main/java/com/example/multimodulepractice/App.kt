@@ -13,8 +13,8 @@ class App : Application(), ApplicationProvider {
     override fun onCreate() {
         super.onCreate()
 
-        appProvider = DaggerAppComponent.builder()
-            .build()
+        appProvider = DaggerAppComponent.factory()
+            .create(this)
     }
 
     override fun mainProvider(): Any = appProvider

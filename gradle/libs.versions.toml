@@ -1,7 +1,7 @@
 [versions]
 agp = "8.1.0"
 gradle = "8.1.4"
-kotlin-gradle-plugin = "1.9.20"
+kotlin-gradle-plugin = "1.8.21"
 org-jetbrains-kotlin-android = "1.8.10"
 core-ktx = "1.12.0"
 lifecycle-runtime-ktx = "2.6.2"
@@ -18,6 +18,12 @@ navigation = "2.7.6"
 coil = "2.5.0"
 appcompat = "1.6.1"
 material = "1.11.0"
+
+#data store
+data-store = "1.0.0"
+
+#json
+json = "1.6.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -46,6 +52,13 @@ dagger-android = { group = "com.google.dagger", name = "dagger-android-support",
 dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
 dagger-compiler-android = { group = "com.google.dagger", name = "dagger-android-processor", version.ref = "dagger" }
 
+#data store
+datastore = { group = "androidx.datastore", name = "datastore", version.ref = "data-store"}
+datastore-pref = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "data-store"}
+
+#json
+json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "json"}
+
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
@@ -55,3 +68,4 @@ com-android-library = { id = "com.android.library", version.ref = "agp" }
 compose = ["activity-compose", "compose-bom", "ui", "ui-graphics", "ui-tooling", "ui-tooling-preview", "material3", "navigation", "coil", "androidx-lifecycle-viewmodel-compose"]
 dagger = ["dagger", "dagger-android"]
 dagger-compiler = ["dagger-compiler", "dagger-compiler-android"]
+datastore = ["datastore", "datastore-pref"]
