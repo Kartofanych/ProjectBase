@@ -1,6 +1,6 @@
 package com.example.multimodulepractice.di.modules
 
-import com.example.impl.di.AuthEntryModule
+import com.example.impl.di.modules.AuthEntryModule
 import dagger.Module
 
 
