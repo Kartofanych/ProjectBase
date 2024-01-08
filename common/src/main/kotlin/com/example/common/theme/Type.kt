@@ -1,4 +1,4 @@
-package com.example.multimodulepractice.ui.theme
+package com.example.common.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -9,7 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import com.example.multimodulepractice.di.LocalAppProvider
-import com.example.multimodulepractice.ui.theme.MultimodulePracticeTheme
+import com.example.common.theme.MultimodulePracticeTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
