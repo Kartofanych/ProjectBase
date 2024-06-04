@@ -6,9 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.example.api.AuthEntry
 import com.example.common.find
 import com.example.multimodulepractice.di.LocalAppProvider
+import com.inno.api.MainEntry
 
 @Composable
 fun Navigation() {
@@ -16,14 +16,14 @@ fun Navigation() {
     val navController = rememberNavController()
     val destinations = LocalAppProvider.current.destinations
 
-    val authScreen = destinations.find<AuthEntry>()
+    val mainScreen = destinations.find<MainEntry>()
 
     Box(Modifier.fillMaxSize()) {
         NavHost(
             navController = navController,
-            startDestination = authScreen.destination(),
+            startDestination = mainScreen.destination(),
         ) {
-            with(authScreen) {
+            with(mainScreen) {
                 composable(navController, destinations)
             }
             // ===== here add another feature entries =====

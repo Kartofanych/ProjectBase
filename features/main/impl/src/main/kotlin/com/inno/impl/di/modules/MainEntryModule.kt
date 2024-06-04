@@ -1,20 +1,20 @@
-package com.example.impl.di.modules
+package com.inno.impl.di.modules
 
-import com.example.api.AuthEntry
 import com.example.common.FeatureEntry
 import com.example.common.di.AppScope
 import com.example.common.di.FeatureEntryKey
-import com.example.impl.AuthEntryImpl
+import com.inno.api.MainEntry
+import com.inno.impl.MainEntryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 
 @Module
-interface AuthEntryModule {
+interface MainEntryModule {
 
     @Binds
     @AppScope
     @IntoMap
-    @FeatureEntryKey(AuthEntry::class)
-    fun authFeatureEntry(entry: AuthEntryImpl): FeatureEntry
+    @FeatureEntryKey(MainEntry::class)
+    fun authFeatureEntry(entry: MainEntryImpl): FeatureEntry
 }

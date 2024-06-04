@@ -40,6 +40,7 @@ dependencies {
 
     // ===== feature modules =====
     implementation(project(":features:auth:impl"))
+    implementation(project(":features:main:impl"))
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)

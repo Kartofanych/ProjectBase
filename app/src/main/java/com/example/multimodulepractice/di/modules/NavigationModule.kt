@@ -1,13 +1,13 @@
 package com.example.multimodulepractice.di.modules
 
-import com.example.impl.di.modules.AuthEntryModule
+import com.inno.impl.di.modules.MainEntryModule
 import dagger.Module
 
 
 @Module(
     // ===== here add new feature entries =====
     includes = [
-        AuthEntryModule::class,
+        MainEntryModule::class
     ]
 )
 interface NavigationModule
