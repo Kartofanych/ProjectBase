@@ -27,11 +27,13 @@ class MapFragmentViewHolder @Inject constructor(
 
     private val mapView = MapView(context)
 
+    private val daggerMapComponent by lazy {
+        DaggerMapComponent.factory().create(dependencies, mapView)
+    }
+
     @Composable
     fun MapFragment() {
-        val viewModel = injectedViewModel {
-            DaggerMapComponent.factory().create(dependencies, mapView).mapViewModel()
-        }
+        val viewModel = injectedViewModel { daggerMapComponent.mapViewModel() }
         val lifecycleOwner = LocalLifecycleOwner.current
         DisposableEffect(lifecycleOwner) {
             val observer = LifecycleEventObserver { _, event ->
