@@ -16,5 +16,5 @@ interface MainEntryModule {
     @AppScope
     @IntoMap
     @FeatureEntryKey(MainEntry::class)
-    fun authFeatureEntry(entry: MainEntryImpl): FeatureEntry
+    fun mainFeatureEntry(entry: MainEntryImpl): FeatureEntry
 }
