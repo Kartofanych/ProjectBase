@@ -37,20 +37,17 @@ android {
 dependencies {
 
     implementation(project(":common"))
-
-    // ===== feature modules =====
     implementation(project(":features:auth:impl"))
     implementation(project(":features:main:impl"))
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
 
-    // ===== compose =====
     implementation(libs.bundles.compose)
 
-    // ===== dagger =====
     implementation(libs.bundles.dagger)
     kapt(libs.bundles.dagger.compiler)
 
+    implementation(libs.maps.mobile)
 
 }

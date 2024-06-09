@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = ProjectConfig.namespace("main")
+    namespace = ProjectConfig.namespace("main.impl")
 
     // ===== compose =====
     buildFeatures.compose = true
@@ -21,7 +21,6 @@ android {
 dependencies {
     api(project(":features:main:api"))
     implementation(project(":common"))
-    implementation(libs.core.ktx)
 
     implementation(libs.core.ktx)
     implementation(libs.bundles.compose)
@@ -31,4 +30,7 @@ dependencies {
 
     implementation(libs.bundles.datastore)
     implementation(libs.json)
+
+    implementation(libs.maps.mobile)
+
 }

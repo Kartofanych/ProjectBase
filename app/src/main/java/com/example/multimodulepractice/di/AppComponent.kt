@@ -1,9 +1,8 @@
 package com.example.multimodulepractice.di
 
-import android.content.Context
 import com.example.impl.di.modules.AuthProviderModule
+import com.example.multimodulepractice.di.modules.AppModule
 import com.example.multimodulepractice.di.modules.NavigationModule
-import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
@@ -11,6 +10,7 @@ import javax.inject.Singleton
 @Component(
     dependencies = [],
     modules = [
+        AppModule::class,
         NavigationModule::class,
         AuthProviderModule::class
     ]
@@ -19,7 +19,7 @@ interface AppComponent : AppProvider {
 
     @Component.Factory
     interface Factory {
-        fun create(@BindsInstance context: Context): AppComponent
+        fun create(appModule: AppModule): AppComponent
     }
 
 }
