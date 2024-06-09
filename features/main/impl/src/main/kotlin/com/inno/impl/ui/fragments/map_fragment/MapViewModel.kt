@@ -1,9 +1,8 @@
-package com.inno.impl.ui.fragments
+package com.inno.impl.ui.fragments.map_fragment
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.example.common.di.AppContext
 import com.example.multimodulepractice.main.impl.R
@@ -18,6 +17,11 @@ import com.yandex.mapkit.map.MapObjectTapListener
 import com.yandex.mapkit.map.PolygonMapObject
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.runtime.image.ImageProvider
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @SuppressLint("StaticFieldLeak")
@@ -28,8 +32,15 @@ class MapViewModel @Inject constructor(
     private val mapView: MapView
 ) : ViewModel() {
 
+    private val _uiEvent = Channel<MapUiEvent>()
+    val uiEvent = _uiEvent.receiveAsFlow()
+
+    private val _uiStateFlow = MutableStateFlow(MapUiState.EMPTY)
+    val uiStateFlow: StateFlow<MapUiState>
+        get() = _uiStateFlow
+
     private val placemarkTapListener = MapObjectTapListener { _, point ->
-        Toast.makeText(context, "Иннополис", Toast.LENGTH_SHORT).show()
+        onMapAction(MapActions.OnPlaceMarkTapped)
         true
     }
 
@@ -85,6 +96,22 @@ class MapViewModel @Inject constructor(
     fun onStop() {
         mapView.onStop()
         MapKitFactory.getInstance().onStop()
+    }
+
+    fun onMapAction(action: MapActions) {
+        when (action) {
+            MapActions.ModalDismissed -> {
+                _uiStateFlow.update {
+                    it.copy(currentLandmarkId = null)
+                }
+            }
+
+            MapActions.OnPlaceMarkTapped -> {
+                _uiStateFlow.update {
+                    it.copy(currentLandmarkId = "123")
+                }
+            }
+        }
     }
 
 }
