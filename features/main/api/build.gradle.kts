@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = ProjectConfig.namespace("main")
+    namespace = ProjectConfig.namespace("main.api")
 }
 
 dependencies {
