@@ -9,17 +9,22 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import com.example.common.Destinations
+import com.example.multimodulepractice.main.impl.R
 import com.inno.api.MainEntry
 import com.inno.impl.data.models.MainTab
 import com.inno.impl.ui.compose_elements.Tab
@@ -49,8 +54,8 @@ class MainEntryImpl @Inject constructor(
                     .safeDrawingPadding()
                     .fillMaxWidth()
                     .height(56.dp)
-                    .align(Alignment.BottomCenter)
-                    .background(Color.Black),
+                    .clip(RoundedCornerShape(15.dp, 15.dp,  0.dp, 0.dp))
+                    .align(Alignment.BottomCenter),
                 currentTab = currentTab
             )
         }
@@ -72,8 +77,8 @@ class MainEntryImpl @Inject constructor(
     @Composable
     fun TabBar(modifier: Modifier, currentTab: MutableState<MainTab>) {
         Row(
-            modifier = modifier,
-            horizontalArrangement = Arrangement.SpaceAround
+            modifier = modifier.background(Color.White),
+            horizontalArrangement = Arrangement.SpaceAround,
         ) {
             Tab(currentTab, MainTab.MAP)
             Tab(currentTab, MainTab.LIST)
