@@ -1,6 +1,6 @@
 package com.inno.impl.di
 
-import com.inno.impl.ui.fragments.MapViewModel
+import com.inno.impl.ui.fragments.map_fragment.MapViewModel
 import com.yandex.mapkit.mapview.MapView
 import dagger.BindsInstance
 import dagger.Component

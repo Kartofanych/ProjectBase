@@ -24,13 +24,14 @@ import com.inno.api.MainEntry
 import com.inno.impl.data.models.MainTab
 import com.inno.impl.ui.compose_elements.Tab
 import com.inno.impl.ui.fragments.ListFragment
-import com.inno.impl.ui.fragments.MapFragmentViewHolder
+import com.inno.impl.ui.fragments.map_fragment.MapFragmentViewHolder
 import com.inno.impl.ui.fragments.ProfileFragment
 import javax.inject.Inject
 
 class MainEntryImpl @Inject constructor(
     private val mapFragmentViewHolder: MapFragmentViewHolder,
 ) : MainEntry() {
+
     @Composable
     override fun Composable(
         navController: NavHostController,
