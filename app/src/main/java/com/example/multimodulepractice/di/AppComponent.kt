@@ -2,7 +2,6 @@ package com.example.multimodulepractice.di
 
 import com.example.impl.di.modules.AuthProviderModule
 import com.example.multimodulepractice.di.modules.AppModule
-import com.example.multimodulepractice.di.modules.NavigationModule
 import dagger.Component
 import javax.inject.Singleton
 
@@ -11,11 +10,10 @@ import javax.inject.Singleton
     dependencies = [],
     modules = [
         AppModule::class,
-        NavigationModule::class,
         AuthProviderModule::class
     ]
 )
-interface AppComponent : AppProvider {
+interface AppComponent {
 
     @Component.Factory
     interface Factory {

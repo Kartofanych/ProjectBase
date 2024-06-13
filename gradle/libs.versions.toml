@@ -1,8 +1,11 @@
 [versions]
 agp = "8.1.0"
 gradle = "8.1.4"
+hilt-android = "2.49"
+hilt-android-gradle-plugin = "2.49"
 kotlin-gradle-plugin = "1.8.21"
 maps-mobile = "4.6.1-lite"
+navigation-fragment-ktx = "2.7.7"
 org-jetbrains-kotlin-android = "1.8.10"
 core-ktx = "1.13.1"
 lifecycle-runtime-ktx = "2.8.1"
@@ -27,6 +30,8 @@ data-store = "1.0.0"
 json = "1.6.0"
 
 [libraries]
+androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation-fragment-ktx" }
+androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation-fragment-ktx" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-gradle-plugin" }
@@ -48,11 +53,10 @@ androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
-#dagger
-dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
-dagger-android = { group = "com.google.dagger", name = "dagger-android-support", version.ref = "dagger" }
-dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
-dagger-compiler-android = { group = "com.google.dagger", name = "dagger-android-processor", version.ref = "dagger" }
+#dagger-hilt
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt-android" }
+hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt-android-gradle-plugin" }
 
 #data store
 datastore = { group = "androidx.datastore", name = "datastore", version.ref = "data-store"}
@@ -68,6 +72,5 @@ com-android-library = { id = "com.android.library", version.ref = "agp" }
 
 [bundles]
 compose = ["activity-compose", "compose-bom", "ui", "ui-graphics", "ui-tooling", "ui-tooling-preview", "material3", "navigation", "coil", "androidx-lifecycle-viewmodel-compose"]
-dagger = ["dagger", "dagger-android"]
-dagger-compiler = ["dagger-compiler", "dagger-compiler-android"]
+navigation = ["androidx-navigation-fragment-ktx", "androidx-navigation-ui-ktx"]
 datastore = ["datastore", "datastore-pref"]
