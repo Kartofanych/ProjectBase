@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = ProjectConfig.namespace("auth")
+    namespace = ProjectConfig.namespace("auth.api")
 }
 
 dependencies {

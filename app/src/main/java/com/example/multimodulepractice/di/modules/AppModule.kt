@@ -1,16 +1,18 @@
 package com.example.multimodulepractice.di.modules
 
+import android.app.Application
 import android.content.Context
-import com.example.common.di.AppScope
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
-@AppScope
 @Module
-class AppModule(private val context: Context) {
+@InstallIn(SingletonComponent::class)
+object AppModule {
 
     @Provides
-    fun provideContext(): Context {
-        return context
+    fun provideContext(app: Application): Context {
+        return app.baseContext
     }
 }

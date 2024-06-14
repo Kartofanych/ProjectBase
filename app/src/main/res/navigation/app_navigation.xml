@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/main_fragment"
+    >
+
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="com.inno.impl.ui.MainFragment"
+        android:label="main_fragment" />
+
+</navigation>
