@@ -19,7 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.common.theme.tabTextStyle
 import com.example.multimodulepractice.main.impl.R
-import com.inno.impl.data.models.MainTab
+import com.inno.impl.data.local.models.MainTab
 import com.inno.impl.ui.MainFragment.Companion.LIST_TITLE
 import com.inno.impl.ui.MainFragment.Companion.MAP_TITLE
 import com.inno.impl.ui.MainFragment.Companion.PROFILE_TITLE

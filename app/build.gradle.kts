@@ -53,4 +53,6 @@ dependencies {
 
     implementation(libs.maps.mobile)
 
+    implementation(libs.bundles.network)
+
 }

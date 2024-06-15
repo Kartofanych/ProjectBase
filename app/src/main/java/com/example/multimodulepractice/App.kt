@@ -2,7 +2,6 @@ package com.example.multimodulepractice
 
 import android.app.Application
 import com.example.multimodulepractice.di.DaggerAppComponent
-import com.example.multimodulepractice.di.modules.AppModule
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.MapKitFactory.setApiKey
 import dagger.hilt.android.HiltAndroidApp
@@ -17,7 +16,7 @@ class App : Application() {
         MapKitFactory.initialize(this)
 
         DaggerAppComponent.factory()
-            .create(AppModule)
+            .create(this)
     }
 
 }
