@@ -1,6 +1,5 @@
 package com.inno.impl.ui.fragments.map
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.inno.geo.repository.GeoRepository
@@ -32,7 +31,6 @@ class MapViewModel @Inject constructor(
     init {
         //Just example
         viewModelScope.launch {
-            Log.d("1212121", "hello")
             interactor.getMapInfo()
         }
 
