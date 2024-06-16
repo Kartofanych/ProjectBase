@@ -1,4 +1,4 @@
-package com.example.impl.di.modules
+package com.example.impl.di
 
 import com.example.api.AuthInfoManager
 import com.example.api.AuthInteractor

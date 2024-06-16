@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import com.example.common.common_composables.TopShadow
+import com.example.common.composables.TopShadow
 import com.example.common.theme.MultimodulePracticeTheme
 import com.example.multimodulepractice.main.impl.R
 import com.example.multimodulepractice.main.impl.databinding.MainFragmentBinding

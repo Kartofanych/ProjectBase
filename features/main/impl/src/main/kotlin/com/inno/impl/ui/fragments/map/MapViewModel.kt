@@ -1,12 +1,15 @@
 package com.inno.impl.ui.fragments.map
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.inno.geo.repository.GeoRepository
 import com.inno.impl.data.interactors.MapInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -14,20 +17,35 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MapViewModel @Inject constructor(
-    private val interactor: MapInteractor
+    private val interactor: MapInteractor,
+    private val repository: GeoRepository
 ) : ViewModel() {
 
     private val _uiEvent = Channel<MapUiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
-    private val _uiStateFlow = MutableStateFlow(MapUiState.EMPTY)
+    private val _uiStateFlow =
+        MutableStateFlow(MapUiState.EMPTY(repository.geoInfoImmediately().currentPoint))
     val uiStateFlow: StateFlow<MapUiState>
         get() = _uiStateFlow
 
     init {
         //Just example
         viewModelScope.launch {
+            Log.d("1212121", "hello")
             interactor.getMapInfo()
+        }
+
+        subscribeToGeo()
+    }
+
+    private fun subscribeToGeo() {
+        viewModelScope.launch {
+            repository.geoInfoFlow().collectLatest { geoInfo ->
+                _uiStateFlow.update {
+                    it.copy(location = geoInfo.currentPoint)
+                }
+            }
         }
     }
 

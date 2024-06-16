@@ -33,6 +33,9 @@ gson = "2.10.1"
 
 #json
 json = "1.6.0"
+junit = "4.13.2"
+junit-version = "1.1.5"
+espresso-core = "3.5.1"
 
 [libraries]
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation-fragment-ktx" }
@@ -76,6 +79,9 @@ okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor",
 
 #json
 json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "json" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit-version" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }

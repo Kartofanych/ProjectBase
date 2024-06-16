@@ -40,6 +40,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":features:auth:impl"))
     implementation(project(":features:main:impl"))
+    implementation(project(":features:geo"))
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)

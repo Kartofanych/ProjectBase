@@ -1,6 +1,7 @@
 package com.inno.impl.data.interactors
 
 import android.util.Log
+import com.inno.geo.repository.GeoRepository
 import com.inno.impl.data.network.MainApi
 import com.inno.impl.data.network.models.request.GeoPointDto
 import com.inno.impl.data.network.models.request.StartInfoRequest
@@ -13,17 +14,17 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class MapInteractor @Inject constructor(
-    private val api: MainApi
+    private val api: MainApi,
+    private val geoRepository: GeoRepository
 ) {
 
     suspend fun getMapInfo() {
         return withContext(Dispatchers.IO) {
             try {
+                val geoPoint = GeoPointDto.fromGeoPoint(geoRepository.geoInfo().currentPoint)
                 val response = api.getStartInfo(
                     StartInfoRequest(
-                        GeoPointDto(
-                            1f, 1f
-                        )
+                        geoPoint = geoPoint
                     )
                 )
                 response.enqueue(object : Callback<StartInfoResponse> {
