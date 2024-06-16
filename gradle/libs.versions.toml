@@ -10,9 +10,6 @@ org-jetbrains-kotlin-android = "1.8.10"
 core-ktx = "1.13.1"
 lifecycle-runtime-ktx = "2.8.1"
 
-#dagger
-dagger = "2.48.1"
-
 #compose
 compose = "2.8.1"
 activity-compose = "1.9.0"
@@ -25,6 +22,14 @@ material = "1.12.0"
 
 #data store
 data-store = "1.0.0"
+
+#network
+retrofit-version = "2.9.0"
+okhttp = "5.0.0-alpha.3"
+logging = "5.0.0-alpha.3"
+
+#gson
+gson = "2.10.1"
 
 #json
 json = "1.6.0"
@@ -59,11 +64,18 @@ hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", ve
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt-android-gradle-plugin" }
 
 #data store
-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "data-store"}
-datastore-pref = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "data-store"}
+datastore = { group = "androidx.datastore", name = "datastore", version.ref = "data-store" }
+datastore-pref = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "data-store" }
+
+#network
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+gson-converter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit-version" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit-version" }
+okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "logging" }
 
 #json
-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "json"}
+json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "json" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }
@@ -74,3 +86,4 @@ com-android-library = { id = "com.android.library", version.ref = "agp" }
 compose = ["activity-compose", "compose-bom", "ui", "ui-graphics", "ui-tooling", "ui-tooling-preview", "material3", "navigation", "coil", "androidx-lifecycle-viewmodel-compose"]
 navigation = ["androidx-navigation-fragment-ktx", "androidx-navigation-ui-ktx"]
 datastore = ["datastore", "datastore-pref"]
+network = ["okhttp", "retrofit", "gson", "gson-converter", "okhttp-logging"]

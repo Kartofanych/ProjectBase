@@ -1,20 +1,19 @@
 package com.example.multimodulepractice.di.modules
 
-import android.app.Application
-import android.content.Context
-import com.example.common.di.AppContext
+import com.inno.impl.data.network.MainApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AppModule {
+class ApiModule {
 
     @Provides
-    @AppContext
-    fun provideContext(app: Application): Context {
-        return app.baseContext
+    fun provideMainApi(retrofit: Retrofit): MainApi {
+        return retrofit.create(MainApi::class.java)
     }
+
 }

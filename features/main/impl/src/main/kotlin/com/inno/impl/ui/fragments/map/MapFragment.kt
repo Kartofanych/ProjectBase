@@ -13,7 +13,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
@@ -21,9 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.example.common.theme.MultimodulePracticeTheme
 import com.example.multimodulepractice.main.impl.R
 import com.inno.impl.utils.innoCoordinates
@@ -36,7 +32,9 @@ import com.yandex.mapkit.map.MapObjectTapListener
 import com.yandex.mapkit.map.PolygonMapObject
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.runtime.image.ImageProvider
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MapFragment : Fragment() {
 
     //TODO create map in module?
@@ -47,8 +45,8 @@ class MapFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = ComposeView(requireContext()).apply {
-        mapView = MapView(this.context)
+    ): View = ComposeView(requireActivity()).apply {
+        mapView = MapView(requireActivity())
         setContent {
             MultimodulePracticeTheme {
                 Surface(

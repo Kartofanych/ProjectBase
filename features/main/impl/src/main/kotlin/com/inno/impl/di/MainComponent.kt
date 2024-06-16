@@ -1,5 +1,6 @@
 package com.inno.impl.di
 
+import com.inno.impl.ui.MainFragment
 import dagger.Component
 
 @MainScope
@@ -8,6 +9,8 @@ import dagger.Component
     modules = []
 )
 interface MainComponent {
+
+    fun inject(mainFragment: MainFragment)
 
     @Component.Factory
     interface Factory {
