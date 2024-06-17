@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.dataStore
 import com.example.api.AuthInfoManager
 import com.example.api.models.AuthInfo
+import com.example.common.di.AppContext
 import com.example.common.di.AppScope
 import com.example.impl.auth_info.mappers.toModel
 import com.example.impl.auth_info.models.AuthInfoDto
@@ -15,6 +16,7 @@ import javax.inject.Inject
 
 @AppScope
 class AuthInfoManagerImpl @Inject constructor(
+    @AppContext
     context: Context
 ) : AuthInfoManager {
 

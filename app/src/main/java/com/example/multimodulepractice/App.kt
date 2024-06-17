@@ -2,12 +2,17 @@ package com.example.multimodulepractice
 
 import android.app.Application
 import com.example.multimodulepractice.di.DaggerAppComponent
+import com.inno.geo.GeoManager
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.MapKitFactory.setApiKey
 import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
 @HiltAndroidApp
 class App : Application() {
+
+    @Inject
+    lateinit var geoManager: GeoManager
 
     override fun onCreate() {
         super.onCreate()
@@ -17,6 +22,8 @@ class App : Application() {
 
         DaggerAppComponent.factory()
             .create(this)
+
+        geoManager.start()
     }
 
 }

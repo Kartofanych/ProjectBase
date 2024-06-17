@@ -1,6 +1,11 @@
 package com.inno.impl.utils
 
+import com.example.common.models.GeoPoint
 import com.yandex.mapkit.geometry.Point
+
+fun GeoPoint.toMapKitPoint(): Point {
+    return Point(lat.toDouble(), lon.toDouble())
+}
 
 //TODO remove for backend
 val innoCoordinates = listOf(

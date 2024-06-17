@@ -20,63 +20,79 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.example.common.models.GeoPoint
 import com.example.common.theme.MultimodulePracticeTheme
 import com.example.multimodulepractice.main.impl.R
 import com.inno.impl.utils.innoCoordinates
+import com.inno.impl.utils.toMapKitPoint
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.LinearRing
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.geometry.Polygon
 import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.map.MapObjectTapListener
+import com.yandex.mapkit.map.PlacemarkMapObject
 import com.yandex.mapkit.map.PolygonMapObject
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.runtime.image.ImageProvider
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MapFragment : Fragment() {
 
     //TODO create map in module?
     private lateinit var mapView: MapView
+    private var userMapObject: PlacemarkMapObject? = null
     private val viewModel: MapViewModel by viewModels()
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = ComposeView(requireActivity()).apply {
+    ): View {
         mapView = MapView(requireActivity())
-        setContent {
-            MultimodulePracticeTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    val sheetState = rememberModalBottomSheetState()
-                    val uiState = viewModel.uiStateFlow.collectAsState().value
 
-                    MapEventHandler(uiEvent = viewModel.uiEvent)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiStateFlow.collectLatest {
+                updateUserLocation(it.location)
+            }
+        }
 
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
+        return ComposeView(requireActivity()).apply {
+            setContent {
+                MultimodulePracticeTheme {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
                     ) {
-                        AndroidView(
-                            factory = {
-                                mapView
-                            },
-                            modifier = Modifier.fillMaxSize()
-                        )
+                        val sheetState = rememberModalBottomSheetState()
+                        val uiState = viewModel.uiStateFlow.collectAsState().value
 
-                        if (uiState.currentLandmarkId != null) {
-                            ModalBottomSheet(
-                                onDismissRequest = {
-                                    viewModel.onMapAction(MapActions.ModalDismissed)
+                        MapEventHandler(uiEvent = viewModel.uiEvent)
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                        ) {
+                            AndroidView(
+                                factory = {
+                                    mapView
                                 },
-                                sheetState = sheetState,
-                                modifier = Modifier.heightIn(min = 300.dp)
-                            ) {}
+                                modifier = Modifier.fillMaxSize()
+                            )
+
+                            if (uiState.currentLandmarkId != null) {
+                                ModalBottomSheet(
+                                    onDismissRequest = {
+                                        viewModel.onMapAction(MapActions.ModalDismissed)
+                                    },
+                                    sheetState = sheetState,
+                                    modifier = Modifier.heightIn(min = 300.dp)
+                                ) {}
+                            }
                         }
                     }
                 }
@@ -91,8 +107,6 @@ class MapFragment : Fragment() {
         mapView.onStart()
         //TODO будут с бэка приходить
         drawBoundary()
-        setMarkerInStartLocation()
-        moveToStartLocation()
     }
 
     private val placemarkTapListener = MapObjectTapListener { _, point ->
@@ -100,20 +114,27 @@ class MapFragment : Fragment() {
         true
     }
 
-    private fun moveToStartLocation() {
-        val startLocation = Point(55.752085, 48.744618)
-        val zoomValue = 16.5f
-        mapView.mapWindow.map.move(CameraPosition(startLocation, zoomValue, 0.0f, 0.0f))
+    private fun updateUserLocation(geoPoint: GeoPoint) {
+        val location = geoPoint.toMapKitPoint()
+        if (userMapObject == null) {
+            val mapObjectCollection = mapView.mapWindow.map.mapObjects
+            userMapObject = mapObjectCollection.addPlacemark().apply {
+                geometry = viewModel.uiStateFlow.value.location.toMapKitPoint()
+                setIcon(ImageProvider.fromResource(context, R.drawable.ic_dollar_pin))
+                addTapListener(placemarkTapListener)
+            }
+            moveToLocation(geoPoint)
+        } else {
+            userMapObject?.let {
+                it.geometry = location
+            }
+        }
     }
 
-
-    private fun setMarkerInStartLocation() {
-        val mapObjectCollection = mapView.mapWindow.map.mapObjects
-        val obj = mapObjectCollection.addPlacemark().apply {
-            geometry = Point(55.752085, 48.744618)
-            setIcon(ImageProvider.fromResource(context, R.drawable.ic_dollar_pin))
-        }
-        obj.addTapListener(placemarkTapListener)
+    private fun moveToLocation(geoPoint: GeoPoint) {
+        val location = geoPoint.toMapKitPoint()
+        val zoomValue = 16.5f
+        mapView.mapWindow.map.move(CameraPosition(location, zoomValue, 0.0f, 0.0f))
     }
 
     private fun drawBoundary() {
@@ -145,6 +166,5 @@ class MapFragment : Fragment() {
         mapView.onStop()
         MapKitFactory.getInstance().onStop()
     }
-
 
 }

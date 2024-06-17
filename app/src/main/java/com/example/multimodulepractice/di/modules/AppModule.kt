@@ -7,6 +7,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -17,4 +19,10 @@ class AppModule {
     fun provideContext(app: Application): Context {
         return app.baseContext
     }
+
+    @Provides
+    fun provideScope(): CoroutineScope {
+        return CoroutineScope(SupervisorJob())
+    }
+
 }

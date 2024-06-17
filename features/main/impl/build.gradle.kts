@@ -22,6 +22,7 @@ android {
 
 dependencies {
     api(project(":features:main:api"))
+    implementation(project(":features:geo"))
     implementation(project(":common"))
 
     implementation(libs.core.ktx)
