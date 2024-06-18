@@ -10,7 +10,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import androidx.core.content.ContextCompat
 import com.example.common.di.AppContext
-import com.example.common.models.GeoPoint
+import com.example.common.models.local.GeoPoint
 import com.inno.geo.repository.GeoRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

@@ -11,20 +11,25 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.FragmentManager
 import com.example.common.composables.TopShadow
 import com.example.common.theme.MultimodulePracticeTheme
-import com.example.multimodulepractice.main.impl.R
-import com.example.multimodulepractice.main.impl.databinding.MainFragmentBinding
 import com.inno.impl.data.local.models.MainTab
 import com.inno.impl.di.DaggerMainComponent
 import com.inno.impl.di.MainDependencies
@@ -57,16 +62,50 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val baseInflater = LayoutInflater.from(requireActivity())
-        return MainFragmentBinding.inflate(baseInflater).also {
-            it.composeView.apply {
-                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-                setContent {
-                    MultimodulePracticeTheme {
+        DaggerMainComponent.factory().create(mainDependencies).inject(this)
+        val fragmentContainerId = View.generateViewId()
+        return ComposeView(requireActivity()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnLifecycleDestroyed(this@MainFragment.viewLifecycleOwner))
+            setContent {
+                MultimodulePracticeTheme {
+                    Box(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+
                         val activeFragment = remember { mutableStateOf<Fragment>(mapFragment) }
                         val currentTab = remember { mutableStateOf(MainTab.MAP) }
+                        var initialized by remember { mutableStateOf(false) }
+                        AndroidView(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(bottom = 40.dp),
+                            factory = { context ->
+                                FragmentContainerView(context)
+                                    .apply { id = fragmentContainerId }
+                            },
+                            update = { view ->
+                                if (!initialized) {
+                                    childFragmentManager.beginTransaction().apply {
+                                        add(fragmentContainerId, mapFragment)
+                                        add(fragmentContainerId, listFragment).hide(listFragment)
+                                        add(fragmentContainerId, profileFragment).hide(
+                                            profileFragment
+                                        )
+                                    }.commitNow()
+                                    initialized = true
+                                } else {
+                                    childFragmentManager.onContainerAvailable(view)
+                                }
+                            }
+                        )
 
-                        Box(modifier = Modifier.fillMaxSize()) {
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .align(Alignment.BottomCenter)
+                                .height(60.dp)
+                        ) {
                             TopShadow(
                                 modifier = Modifier
                                     .align(Alignment.TopCenter)
@@ -121,18 +160,16 @@ class MainFragment : Fragment() {
                     }
                 }
             }
-        }.root
+        }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        DaggerMainComponent.factory().create(mainDependencies).inject(this)
-
-        childFragmentManager.beginTransaction().apply {
-            add(R.id.bottom_fragment_container, mapFragment)
-            add(R.id.bottom_fragment_container, listFragment).hide(listFragment)
-            add(R.id.bottom_fragment_container, profileFragment).hide(profileFragment)
-        }.commitNow()
+    private fun FragmentManager.onContainerAvailable(view: FragmentContainerView) {
+        val method = FragmentManager::class.java.getDeclaredMethod(
+            "onContainerAvailable",
+            FragmentContainerView::class.java
+        )
+        method.isAccessible = true
+        method.invoke(this, view)
     }
 
     companion object {
