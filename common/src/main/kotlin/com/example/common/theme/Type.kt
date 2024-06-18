@@ -20,3 +20,18 @@ val tabTextStyle = TextStyle(
     fontSize = 12.sp,
     letterSpacing = 0.5.sp
 )
+
+val mediumTextStyle = TextStyle(
+    fontFamily = montserratFamily,
+    fontWeight = FontWeight.Medium,
+    fontSize = 12.sp,
+    letterSpacing = 0.5.sp
+)
+
+
+val semiboldTextStyle = TextStyle(
+    fontFamily = montserratFamily,
+    fontWeight = FontWeight.SemiBold,
+    fontSize = 14.sp,
+    letterSpacing = 0.5.sp
+)

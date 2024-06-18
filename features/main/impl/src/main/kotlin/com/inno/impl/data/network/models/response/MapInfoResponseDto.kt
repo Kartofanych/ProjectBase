@@ -2,10 +2,10 @@ package com.inno.impl.data.network.models.response
 
 import com.google.gson.annotations.SerializedName
 
-data class StartInfoResponse(
+data class MapInfoResponseDto(
     @SerializedName("city")
     val city: CityDto,
 
-    @SerializedName("list")
+    @SerializedName("attractions")
     val list: List<MapLandmarkDto>
 )

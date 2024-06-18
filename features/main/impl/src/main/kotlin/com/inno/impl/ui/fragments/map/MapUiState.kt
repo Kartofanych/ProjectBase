@@ -1,15 +1,23 @@
 package com.inno.impl.ui.fragments.map
 
-import com.example.common.models.GeoPoint
 
 data class MapUiState(
-    val location: GeoPoint,
-    val currentLandmarkId: String?
+    val currentLandmarkId: String?,
+    val state: MapState,
 ) {
+
+    sealed interface MapState {
+        object Error : MapState
+        object Loading : MapState
+        object Content : MapState
+    }
+
+
     companion object {
-        fun EMPTY(geoPoint: GeoPoint): MapUiState = MapUiState(
-            geoPoint,
-            currentLandmarkId = null
+        fun EMPTY(): MapUiState = MapUiState(
+            currentLandmarkId = null,
+            state = MapState.Loading
         )
     }
+
 }

@@ -1,6 +1,6 @@
 package com.inno.geo.repository
 
-import com.example.common.models.GeoPoint
+import com.example.common.models.local.GeoPoint
 import com.inno.geo.models.GeoInfo
 import kotlinx.coroutines.flow.Flow
 

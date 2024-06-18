@@ -3,7 +3,7 @@ package com.inno.geo.repository
 import android.content.Context
 import androidx.datastore.dataStore
 import com.example.common.di.AppContext
-import com.example.common.models.GeoPoint
+import com.example.common.models.local.GeoPoint
 import com.inno.geo.models.GeoInfo
 import com.inno.geo.models.GeoInfoDto
 import kotlinx.coroutines.flow.Flow
