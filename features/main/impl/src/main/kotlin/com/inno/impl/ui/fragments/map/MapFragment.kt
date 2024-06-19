@@ -10,6 +10,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -21,6 +22,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -159,20 +163,28 @@ class MapFragment : Fragment() {
                                     sheetState = sheetState,
                                     modifier = Modifier.heightIn(min = 300.dp),
                                     dragHandle = null,
-                                    ) {
+                                ) {
                                     //TODO:put content here
                                     val lm = Landmark(
-                                        R.drawable.innopolis_university,
+                                        listOf(
+                                            R.drawable.innopolis_university,
+                                            R.drawable.inno,
+                                            R.drawable.ic_dollar_pin
+                                        ),
                                         "Университет Иннополис",
                                         "г. Иннополис, ул. Университетская 1",
                                         "Иннополис — это уникальное место в Татарстане," +
                                                 " в 40 км от Казани. Целый город, который построили " +
                                                 "для айтишников. Здесь работают программисты," +
-                                                " разработчики."
+                                                " разработчики.",
+                                        listOf(
+                                            Pair("Семейное", Color(0xFF52CE8E)),
+                                            Pair("Наука", Color(0xFF74A3FF)),
+                                            Pair("Еще что то", Color(0xFFFFC47E)),
+                                            Pair("Что то не поместилось", Color(0xFFD795FF))
+                                        )
                                     )
                                     LandmarkBottomSheet(landmark = lm)
-
-
                                 }
                             }
                         }
@@ -201,15 +213,8 @@ class MapFragment : Fragment() {
                 )
             }
             Spacer(modifier = Modifier.height(12.dp))
-            Image(
-                painter = painterResource(id = landmark.imageRes),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(175.dp)
-                    .clip(RoundedCornerShape(16.dp))
-            )
+            ImageSlider(images = landmark.imageRes)
+
             Spacer(modifier = Modifier.height(11.dp))
             Text(
                 text = landmark.name,
@@ -234,10 +239,10 @@ class MapFragment : Fragment() {
                 verticalArrangement = Arrangement.spacedBy(6.dp)
 
             ) {
-                Chip(text = "Семейное", Color(0xFF52CE8E))
-                Chip(text = "Наука", Color(0xFF74A3FF))
-                Chip(text = "Еще что то", Color(0xFFFFC47E))
-                Chip(text = "Что то не поместилось", Color(0xFFD795FF))
+                for (i in landmark.categories) {
+                    Chip(text = i.first, color = i.second)
+                }
+
             }
             Spacer(modifier = Modifier.height(16.dp))
             Text(
@@ -267,6 +272,7 @@ class MapFragment : Fragment() {
                         .weight(1f)
                         .height(52.dp)
                         .background(Color(0xFFFFC47E), shape = RoundedCornerShape(10.dp))
+                        .clip(RoundedCornerShape(size = 10.dp))
                         .clickable { }
                 ) {
                     Column(
@@ -294,6 +300,7 @@ class MapFragment : Fragment() {
                         .weight(1f)
                         .height(52.dp)
                         .background(Color(0xFF52CE8E), shape = RoundedCornerShape(10.dp))
+                        .clip(RoundedCornerShape(size = 10.dp))
                         .clickable { }
                 ) {
                     Column(
@@ -351,11 +358,69 @@ class MapFragment : Fragment() {
     }
 
     @Composable
+    fun ImageSlider(images: List<Int>) {
+        val pageCounter = images.size
+        val pagerState = rememberPagerState(pageCount = { pageCounter })
+
+        Box(
+            Modifier
+                .wrapContentHeight()
+                .fillMaxWidth()
+                .padding(bottom = 8.dp)
+        ) {
+            HorizontalPager(state = pagerState) { page ->
+                Image(
+                    painter = painterResource(id = images[page]),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(175.dp)
+                        .clip(RoundedCornerShape(16.dp))
+                )
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 8.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                repeat(pagerState.pageCount) { iteration ->
+                    val color =
+                        if (pagerState.currentPage == iteration) Color.White else Color.LightGray
+                    Box(
+                        modifier = Modifier
+                            .padding(2.dp)
+                            .clip(RoundedCornerShape(16.dp))
+                            .background(color)
+                            .size(43.dp, 2.5.dp)
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
     @Preview(showBackground = true)
     fun PreviewBottomSheet() {
-        val lm = Landmark(R.drawable.ic_dollar_pin, "Иннополис", "Aдресс", "DESCRIPTION")
-        LandmarkBottomSheet(landmark = lm)
+        val lm = Landmark(
+            listOf(R.drawable.innopolis_university),
+            "Университет Иннополис",
+            "г. Иннополис, ул. Университетская 1",
+            "Иннополис — это уникальное место в Татарстане," +
+                    " в 40 км от Казани. Целый город, который построили " +
+                    "для айтишников. Здесь работают программисты," +
+                    " разработчики.",
+            listOf(
+                Pair("Семейное", Color(0xFF52CE8E)),
+                Pair("Наука", Color(0xFF74A3FF)),
+                Pair("Еще что то", Color(0xFFFFC47E)),
+                Pair("Что то не поместилось", Color(0xFFD795FF))
+            )
+        )
 
+        LandmarkBottomSheet(landmark = lm)
     }
     //=========================================================
 
