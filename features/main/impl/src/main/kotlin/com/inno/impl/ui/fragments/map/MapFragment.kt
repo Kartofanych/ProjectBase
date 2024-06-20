@@ -10,7 +10,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -21,10 +20,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,12 +35,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -167,9 +158,6 @@ class MapFragment : Fragment() {
                                     //TODO:put content here
                                     val lm = Landmark(
                                         listOf(
-                                            R.drawable.innopolis_university,
-                                            R.drawable.inno,
-                                            R.drawable.ic_dollar_pin
                                         ),
                                         "Университет Иннополис",
                                         "г. Иннополис, ул. Университетская 1",
@@ -194,7 +182,6 @@ class MapFragment : Fragment() {
         }
     }
 
-    //========================================================
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
     fun LandmarkBottomSheet(landmark: Landmark) {
@@ -213,24 +200,26 @@ class MapFragment : Fragment() {
                 )
             }
             Spacer(modifier = Modifier.height(12.dp))
-            ImageSlider(images = landmark.imageRes)
+            val imageSlider = ImageSlider(
+                listOf(
+                    "fsdf",
+                    "fsdf"
+                )
+            )
+            imageSlider.ImageSliderComposable()
 
             Spacer(modifier = Modifier.height(11.dp))
             Text(
                 text = landmark.name,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily(
-                    Font(R.font.montserratalternates_bold)
-                )
+                style = semiboldTextStyle.copy()
             )
             Text(
                 text = landmark.address,
                 fontSize = 10.sp,
                 color = Color.Gray,
-                fontFamily = FontFamily(
-                    Font(R.font.montserratalternates_medium)
-                )
+                style = mediumTextStyle.copy()
             )
             Spacer(modifier = Modifier.height(16.dp))
             FlowRow(
@@ -248,17 +237,16 @@ class MapFragment : Fragment() {
             Text(
                 text = "Описание",
                 fontSize = 16.sp,
-                fontFamily = FontFamily(
-                    Font(R.font.montserratalternates_bold)
-                )
+                fontWeight = FontWeight.Bold,
+                style = semiboldTextStyle.copy()
+
             )
             Spacer(modifier = Modifier.height(9.dp))
             Text(
                 text = landmark.description,
                 fontSize = 15.sp,
-                fontFamily = FontFamily(
-                    Font(R.font.montserratalternates_medium)
-                )
+                style = mediumTextStyle.copy()
+
             )
             Spacer(modifier = Modifier.height(22.dp))
             Row(
@@ -288,9 +276,8 @@ class MapFragment : Fragment() {
                             text = "Путеводитель",
                             fontSize = 14.sp,
                             color = Color.White,
-                            fontFamily = FontFamily(
-                                Font(R.font.montserratalternates_semibold)
-                            )
+                            style = semiboldTextStyle.copy()
+
                         )
                     }
 
@@ -316,9 +303,8 @@ class MapFragment : Fragment() {
                             text = "Аудио гид",
                             fontSize = 14.sp,
                             color = Color.White,
-                            fontFamily = FontFamily(
-                                Font(R.font.montserratalternates_semibold)
-                            )
+                            style = semiboldTextStyle.copy()
+
                         )
                     }
 
@@ -328,9 +314,8 @@ class MapFragment : Fragment() {
             Text(
                 text = "Отзывы",
                 fontSize = 16.sp,
-                fontFamily = FontFamily(
-                    Font(R.font.montserratalternates_bold)
-                )
+                style = semiboldTextStyle.copy()
+
             )
         }
     }
@@ -347,9 +332,7 @@ class MapFragment : Fragment() {
                 fontSize = 10.sp,
                 color = Color.White,
                 textAlign = TextAlign.Center,
-                fontFamily = FontFamily(
-                    Font(R.font.montserratalternates_semibold)
-                ),
+                style = semiboldTextStyle.copy(),
                 modifier = Modifier
                     .background(color, shape = RoundedCornerShape(5.dp)),
                 maxLines = 1
@@ -357,55 +340,12 @@ class MapFragment : Fragment() {
         }
     }
 
-    @Composable
-    fun ImageSlider(images: List<Int>) {
-        val pageCounter = images.size
-        val pagerState = rememberPagerState(pageCount = { pageCounter })
-
-        Box(
-            Modifier
-                .wrapContentHeight()
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-        ) {
-            HorizontalPager(state = pagerState) { page ->
-                Image(
-                    painter = painterResource(id = images[page]),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(175.dp)
-                        .clip(RoundedCornerShape(16.dp))
-                )
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 8.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                repeat(pagerState.pageCount) { iteration ->
-                    val color =
-                        if (pagerState.currentPage == iteration) Color.White else Color.LightGray
-                    Box(
-                        modifier = Modifier
-                            .padding(2.dp)
-                            .clip(RoundedCornerShape(16.dp))
-                            .background(color)
-                            .size(43.dp, 2.5.dp)
-                    )
-                }
-            }
-        }
-    }
 
     @Composable
     @Preview(showBackground = true)
     fun PreviewBottomSheet() {
         val lm = Landmark(
-            listOf(R.drawable.innopolis_university),
+            listOf(),
             "Университет Иннополис",
             "г. Иннополис, ул. Университетская 1",
             "Иннополис — это уникальное место в Татарстане," +
@@ -422,7 +362,6 @@ class MapFragment : Fragment() {
 
         LandmarkBottomSheet(landmark = lm)
     }
-    //=========================================================
 
 
     override fun onStart() {
