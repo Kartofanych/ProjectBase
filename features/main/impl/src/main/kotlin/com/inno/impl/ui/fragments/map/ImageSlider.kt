@@ -99,6 +99,78 @@ class ImageSlider(private val imageUrls: List<String>) {
     }
 
     @Composable
+    fun ImageSliderWithTintComposable() {
+        val pageCounter = imageUrls.size
+        val pagerState = rememberPagerState(pageCount = { pageCounter })
+        val showShimmer = remember { mutableStateOf(true) }
+        Box(
+            Modifier
+                .wrapContentHeight()
+                .fillMaxWidth()
+                .padding(bottom = 8.dp)
+        ) {
+            HorizontalPager(state = pagerState) { page ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(360.dp)
+                        .background(
+                            shimmerBrush(
+                                targetValue = 1300f,
+                                showShimmer = showShimmer.value
+                            )
+                        )
+                ) {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(imageUrls[page])
+                            .crossfade(true)
+                            .scale(Scale.FILL)
+                            .build(),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(175.dp)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(360.dp)
+                            .background(
+                                Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color(0xFF262525)),
+                                    startY = 180f
+                                )
+                            )
+                    )
+
+                }
+
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 8.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                repeat(pagerState.pageCount) { iteration ->
+                    val color =
+                        if (pagerState.currentPage == iteration) Color.White else Color.LightGray
+                    Box(
+                        modifier = Modifier
+                            .padding(2.dp)
+                            .clip(RoundedCornerShape(16.dp))
+                            .background(color)
+                            .size(43.dp, 2.5.dp)
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
     fun shimmerBrush(showShimmer: Boolean = true, targetValue: Float = 1000f): Brush {
         return if (showShimmer) {
             val shimmerColors = listOf(
