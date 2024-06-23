@@ -156,7 +156,6 @@ class MapFragment : Fragment() {
                                     modifier = Modifier.heightIn(min = 300.dp),
                                     dragHandle = null,
                                 ) {
-                                    //TODO:put content here
                                     val lm = Landmark(
                                         listOf(
                                             "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg",
@@ -164,6 +163,7 @@ class MapFragment : Fragment() {
                                             "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerEscapes.jpg",
                                             "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerFun.jpg",
                                         ),
+                                        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg",
                                         "Университет Иннополис",
                                         "г. Иннополис, ул. Университетская 1",
                                         "Иннополис — это уникальное место в Татарстане," +
@@ -178,7 +178,7 @@ class MapFragment : Fragment() {
                                         )
                                     )
                                     val bottomSheetLandMark = BottomSheetLandMark(landmark = lm)
-                                    bottomSheetLandMark.LandmarkBottomSheet()
+                                    bottomSheetLandMark.LandmarkBottomSheetFullyExpanded()
                                 }
                             }
                         }
@@ -198,6 +198,7 @@ class MapFragment : Fragment() {
                 "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerEscapes.jpg",
                 "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerFun.jpg"
             ),
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg",
             "Университет Иннополис",
             "г. Иннополис, ул. Университетская 1",
             "Иннополис — это уникальное место в Татарстане," +
@@ -213,9 +214,8 @@ class MapFragment : Fragment() {
         )
 
         val bottomSheetLandMark = BottomSheetLandMark(landmark = lm)
-        bottomSheetLandMark.LandmarkBottomSheet()
+        bottomSheetLandMark.LandmarkBottomSheetFullyExpanded()
     }
-
 
     override fun onStart() {
         super.onStart()
