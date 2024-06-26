@@ -13,16 +13,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +26,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -39,10 +34,9 @@ import androidx.fragment.app.activityViewModels
 import com.example.common.theme.MultimodulePracticeTheme
 import com.example.common.theme.mediumTextStyle
 import com.example.common.theme.semiboldTextStyle
-import com.inno.impl.data.local.models.Categories
-import com.inno.impl.data.local.models.Landmark
 import com.inno.impl.ui.compose_elements.LoadingAnimation
 import com.inno.impl.ui.fragments.map.MapUiState.MapState
+import com.inno.landmark.ui.BottomSheet
 import com.yandex.mapkit.MapKitFactory
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -62,7 +56,6 @@ class MapFragment : Fragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        val sheetState = rememberModalBottomSheetState()
                         val uiState = viewModel.uiStateFlow.collectAsState().value
 
                         MapEventHandler(uiEvent = viewModel.uiEvent)
@@ -147,74 +140,17 @@ class MapFragment : Fragment() {
                                 }
                             }
 
-                            if (uiState.currentLandmarkId != null) {
-                                ModalBottomSheet(
-                                    onDismissRequest = {
-                                        viewModel.onMapAction(MapActions.ModalDismissed)
-                                    },
-                                    sheetState = sheetState,
-                                    modifier = Modifier.heightIn(min = 300.dp),
-                                    dragHandle = null,
-                                ) {
-                                    val lm = Landmark(
-                                        listOf(
-                                            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg",
-                                            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerBlazes.jpg",
-                                            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerEscapes.jpg",
-                                            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerFun.jpg",
-                                        ),
-                                        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg",
-                                        "Университет Иннополис",
-                                        "г. Иннополис, ул. Университетская 1",
-                                        "Иннополис — это уникальное место в Татарстане," +
-                                                " в 40 км от Казани. Целый город, который построили " +
-                                                "для айтишников. Здесь работают программисты," +
-                                                " разработчики.",
-                                        listOf(
-                                            Categories("Семейное", Color(0xFF52CE8E)),
-                                            Categories("Наука", Color(0xFF74A3FF)),
-                                            Categories("Еще что то", Color(0xFFFFC47E)),
-                                            Categories("Что то не поместилось", Color(0xFFD795FF))
-                                        )
-                                    )
-                                    val bottomSheetLandMark = BottomSheetLandMark(landmark = lm)
-                                    bottomSheetLandMark.LandmarkBottomSheetFullyExpanded()
-                                }
+                            if (uiState.currentLandmarkState != null) {
+                                BottomSheet(
+                                    { viewModel.onMapAction(MapActions.ModalDismissed) },
+                                    uiState.currentLandmarkState
+                                )
                             }
                         }
                     }
                 }
             }
         }
-    }
-
-    @Composable
-    @Preview(showBackground = true)
-    fun PreviewBottomSheet() {
-        val lm = Landmark(
-            listOf(
-                "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg",
-                "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerBlazes.jpg",
-                "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerEscapes.jpg",
-                "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerFun.jpg"
-            ),
-            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg",
-            "Университет Иннополис",
-            "г. Иннополис, ул. Университетская 1",
-            "Иннополис — это уникальное место в Татарстане," +
-                    " в 40 км от Казани. Целый город, который построили " +
-                    "для айтишников. Здесь работают программисты," +
-                    " разработчики.",
-            listOf(
-                Categories("Семейное", Color(0xFF52CE8E)),
-                Categories("Наука", Color(0xFF74A3FF)),
-                Categories("Еще что то", Color(0xFFFFC47E)),
-                Categories("Что то не поместилось", Color(0xFFD795FF))
-            )
-        )
-
-        val bottomSheetLandMark = BottomSheetLandMark(landmark = lm)
-        bottomSheetLandMark.LandmarkBottomSheetFullyExpanded()
     }
 
     override fun onStart() {

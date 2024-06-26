@@ -2,25 +2,35 @@ package com.inno.impl.ui.fragments.map
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import coil.ImageLoader
+import coil.request.ImageRequest
 import com.example.common.models.local.GeoPoint
 import com.example.common.models.local.ResponseState
 import com.example.common.utils.runWithMinTime
 import com.example.multimodulepractice.main.impl.R
 import com.inno.geo.repository.GeoRepository
 import com.inno.impl.data.interactors.MapInteractor
-import com.inno.impl.data.local.models.MapLandmark
+import com.inno.impl.data.local_models.map.MapLandmark
 import com.inno.impl.ui.fragments.map.MapUiState.MapState
+import com.inno.impl.utils.iconTextStyle
 import com.inno.impl.utils.toMapKitPoint
+import com.inno.landmark.ui.LandMarkState
 import com.yandex.mapkit.geometry.LinearRing
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.geometry.Polygon
 import com.yandex.mapkit.map.CameraPosition
+import com.yandex.mapkit.map.CircleMapObject
+import com.yandex.mapkit.map.ClusterizedPlacemarkCollection
+import com.yandex.mapkit.map.MapObjectCollection
+import com.yandex.mapkit.map.MapObjectTapListener
+import com.yandex.mapkit.map.MapObjectVisitor
 import com.yandex.mapkit.map.PlacemarkMapObject
 import com.yandex.mapkit.map.PolygonMapObject
+import com.yandex.mapkit.map.PolylineMapObject
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.runtime.image.ImageProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,18 +43,18 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.net.URL
 import javax.inject.Inject
-
 
 @HiltViewModel
 class MapViewModel @Inject constructor(
     private val interactor: MapInteractor,
     private val repository: GeoRepository,
-    context: Context
+    private val context: Context
 ) : ViewModel() {
 
     private var userMapObject: PlacemarkMapObject? = null
+
+    private val tapListeners = mutableListOf<MapObjectTapListener>()
 
     @SuppressLint("StaticFieldLeak")
     val map = MapView(context)
@@ -80,30 +90,58 @@ class MapViewModel @Inject constructor(
         }
     }
 
+    private fun getLandmark(landmarkId: String) {
+        _uiStateFlow.update {
+            it.copy(currentLandmarkState = LandMarkState.Loading)
+        }
+
+        viewModelScope.launch {
+            when (val result = interactor.getLandmarkInfo(landmarkId)) {
+                is ResponseState.Error -> {
+                    _uiStateFlow.update {
+                        it.copy(currentLandmarkState = LandMarkState.Error)
+                    }
+                }
+
+                is ResponseState.Success -> {
+                    _uiStateFlow.update {
+                        it.copy(currentLandmarkState = LandMarkState.Content(result.data))
+                    }
+                }
+            }
+        }
+
+    }
+
     private fun addAttractions(list: List<MapLandmark>) {
         for (landmark in list) {
             val mapObjectCollection = map.mapWindow.map.mapObjects
             mapObjectCollection.addPlacemark().apply {
                 geometry = landmark.geoPoint.toMapKitPoint()
+                val textStyle = iconTextStyle(landmark.color)
+                setText(landmark.name, textStyle)
 
-                addTapListener { _, _ ->
+                MapObjectTapListener { _, _ ->
                     onMapAction(MapActions.OnPlaceMarkTapped(landmark.id))
                     true
+                }.also {
+                    tapListeners.add(it)
+                    addTapListener(it)
                 }
 
-                viewModelScope.launch(Dispatchers.IO) {
-                    val image = try {
-                        val url = URL(landmark.icon)
-                        ImageProvider.fromBitmap(
-                            BitmapFactory.decodeStream(
-                                url.openConnection().getInputStream()
-                            )
-                        )
-                    } catch (e: Exception) {
-                        ImageProvider.fromResource(map.context, R.drawable.ic_dollar_pin)
-                    }
+                viewModelScope.launch {
+                    val loader = ImageLoader(context)
+                    val request = ImageRequest.Builder(context)
+                        .data(landmark.icon)
+                        .error(R.drawable.ic_dollar_pin)
+                        .fallback(R.drawable.ic_dollar_pin)
+                        .allowHardware(false)
+                        .build()
+
+                    val result = loader.execute(request).drawable
+                    val bitmap = (result as BitmapDrawable).bitmap
                     withContext(Dispatchers.Main) {
-                        setIcon(image)
+                        setIcon(ImageProvider.fromBitmap(bitmap))
                     }
                 }
             }
@@ -122,14 +160,12 @@ class MapViewModel @Inject constructor(
         when (action) {
             MapActions.ModalDismissed -> {
                 _uiStateFlow.update {
-                    it.copy(currentLandmarkId = null)
+                    it.copy(currentLandmarkState = null)
                 }
             }
 
             is MapActions.OnPlaceMarkTapped -> {
-                _uiStateFlow.update {
-                    it.copy(currentLandmarkId = action.landmarkId)
-                }
+                getLandmark(action.landmarkId)
             }
         }
     }

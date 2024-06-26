@@ -1,8 +1,9 @@
 package com.inno.impl.ui.fragments.map
 
+import com.inno.landmark.ui.LandMarkState
 
 data class MapUiState(
-    val currentLandmarkId: String?,
+    val currentLandmarkState: LandMarkState?,
     val state: MapState,
 ) {
 
@@ -15,7 +16,7 @@ data class MapUiState(
 
     companion object {
         fun EMPTY(): MapUiState = MapUiState(
-            currentLandmarkId = null,
+            currentLandmarkState = null,
             state = MapState.Loading
         )
     }

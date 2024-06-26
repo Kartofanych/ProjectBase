@@ -1,4 +1,4 @@
-package com.inno.impl.data.local.models
+package com.inno.impl.data.local_models
 
 enum class MainTab {
     MAP,
