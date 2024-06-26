@@ -28,6 +28,7 @@
             <option value="$PROJECT_DIR$/features/auth/api" />
             <option value="$PROJECT_DIR$/features/auth/impl" />
             <option value="$PROJECT_DIR$/features/geo" />
+            <option value="$PROJECT_DIR$/features/landmark" />
             <option value="$PROJECT_DIR$/features/main" />
             <option value="$PROJECT_DIR$/features/main/api" />
             <option value="$PROJECT_DIR$/features/main/impl" />

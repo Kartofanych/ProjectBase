@@ -11,10 +11,10 @@ core-ktx = "1.13.1"
 lifecycle-runtime-ktx = "2.8.1"
 
 #compose
-compose = "2.8.1"
+compose = "2.8.2"
 activity-compose = "1.9.0"
 compose-bom = "2024.05.00"
-material3 = "1.3.0-beta02"
+material3 = "1.2.1"
 navigation = "2.7.7"
 coil = "2.5.0"
 appcompat = "1.7.0"
@@ -53,7 +53,11 @@ ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
-coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+
+coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+coil-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coil" }
+
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", name = "viewmodel-compose", version.ref = "compose" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
@@ -83,7 +87,7 @@ org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.re
 com-android-library = { id = "com.android.library", version.ref = "agp" }
 
 [bundles]
-compose = ["activity-compose", "compose-bom", "ui", "ui-graphics", "ui-tooling", "ui-tooling-preview", "material3", "navigation", "coil", "androidx-lifecycle-viewmodel-compose"]
+compose = ["activity-compose", "compose-bom", "ui", "ui-graphics", "ui-tooling", "ui-tooling-preview", "material3", "navigation", "coil", "coil-compose", "coil-svg", "androidx-lifecycle-viewmodel-compose"]
 navigation = ["androidx-navigation-fragment-ktx", "androidx-navigation-ui-ktx"]
 datastore = ["datastore", "datastore-pref"]
 network = ["okhttp", "retrofit", "gson", "gson-converter", "okhttp-logging"]

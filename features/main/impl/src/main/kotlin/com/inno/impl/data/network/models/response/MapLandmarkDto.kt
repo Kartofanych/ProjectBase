@@ -5,7 +5,7 @@ import com.example.common.models.network.GeoPointDto
 
 data class MapLandmarkDto(
 
-    @SerializedName("id")
+    @SerializedName("uid")
     val id: String,
 
     @SerializedName("name")
@@ -15,5 +15,8 @@ data class MapLandmarkDto(
     val geoPoint: GeoPointDto,
 
     @SerializedName("icon")
-    val icon: String
+    val icon: String,
+
+    @SerializedName("color")
+    val color: String
 )

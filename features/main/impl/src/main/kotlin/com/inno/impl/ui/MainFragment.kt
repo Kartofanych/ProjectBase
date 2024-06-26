@@ -30,7 +30,7 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.FragmentManager
 import com.example.common.composables.TopShadow
 import com.example.common.theme.MultimodulePracticeTheme
-import com.inno.impl.data.local.models.MainTab
+import com.inno.impl.data.local_models.MainTab
 import com.inno.impl.di.DaggerMainComponent
 import com.inno.impl.di.MainDependencies
 import com.inno.impl.ui.compose_elements.Tab
