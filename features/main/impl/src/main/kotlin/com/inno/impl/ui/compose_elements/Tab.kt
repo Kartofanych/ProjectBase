@@ -20,9 +20,11 @@ import androidx.compose.ui.unit.dp
 import com.example.common.theme.tabTextStyle
 import com.example.multimodulepractice.main.impl.R
 import com.inno.impl.data.local_models.MainTab
-import com.inno.impl.ui.MainFragment.Companion.LIST_TITLE
-import com.inno.impl.ui.MainFragment.Companion.MAP_TITLE
-import com.inno.impl.ui.MainFragment.Companion.PROFILE_TITLE
+
+private const val MAP_TITLE = "Карты"
+private const val LIST_TITLE = "Список"
+private const val PROFILE_TITLE = "Профиль"
+
 
 @Composable
 fun Tab(

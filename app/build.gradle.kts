@@ -39,6 +39,7 @@ dependencies {
 
     implementation(project(":common"))
     implementation(project(":features:auth:impl"))
+    implementation(project(":features:login:impl"))
     implementation(project(":features:main:impl"))
     implementation(project(":features:geo"))
 
@@ -49,7 +50,7 @@ dependencies {
 
     implementation(libs.bundles.compose)
 
-    implementation(libs.hilt.android)
+    implementation(libs.bundles.hilt)
     kapt(libs.hilt.android.compiler)
 
     implementation(libs.maps.mobile)
