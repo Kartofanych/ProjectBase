@@ -26,7 +26,7 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.bundles.compose)
 
-    implementation(libs.hilt.android)
+    implementation(libs.bundles.hilt)
     kapt(libs.hilt.android.compiler)
 
     implementation(libs.bundles.datastore)

@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/navigation_map"
-        android:name="com.inno.impl.ui.fragments.map.MapFragment"
+        android:name="com.inno.impl.ui.map.MapFragment"
         android:label="@string/tab_map" />
 
     <fragment
