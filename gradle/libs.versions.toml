@@ -33,6 +33,7 @@ gson = "2.10.1"
 
 #json
 json = "1.6.0"
+compose-material = "1.3.1"
 
 [libraries]
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation-fragment-ktx" }
@@ -53,14 +54,12 @@ ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
+androidx-wear-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "compose-material" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", name = "viewmodel-compose", version.ref = "compose" }
 
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 coil-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coil" }
-
-androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", name = "viewmodel-compose", version.ref = "compose" }
-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 #dagger-hilt
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
@@ -89,7 +88,7 @@ com-android-library = { id = "com.android.library", version.ref = "agp" }
 
 [bundles]
 hilt = ["hilt-android", "hilt-android-compose-navigation"]
-compose = ["activity-compose", "compose-bom", "ui", "ui-graphics", "ui-tooling", "ui-tooling-preview", "material3", "navigation", "coil", "coil-compose", "coil-svg", "androidx-lifecycle-viewmodel-compose"]
+compose = ["activity-compose", "compose-bom", "ui", "ui-graphics", "ui-tooling", "ui-tooling-preview", "material3", "navigation", "coil", "coil-compose", "coil-svg", "androidx-lifecycle-viewmodel-compose", "androidx-wear-compose-material"]
 navigation = ["androidx-navigation-fragment-ktx", "androidx-navigation-ui-ktx"]
 datastore = ["datastore", "datastore-pref"]
 network = ["okhttp", "retrofit", "gson", "gson-converter", "okhttp-logging"]

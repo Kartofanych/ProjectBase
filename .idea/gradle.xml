@@ -35,7 +35,6 @@
             <option value="$PROJECT_DIR$/features/main" />
             <option value="$PROJECT_DIR$/features/main/api" />
             <option value="$PROJECT_DIR$/features/main/impl" />
-            <option value="$PROJECT_DIR$/features/navigation" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
