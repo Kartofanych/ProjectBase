@@ -28,5 +28,7 @@ dependencies {
     implementation(libs.bundles.hilt)
     kapt(libs.hilt.android.compiler)
 
+    implementation(libs.auth.sdk)
+
     implementation(libs.bundles.network)
 }

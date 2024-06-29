@@ -10,6 +10,7 @@ android {
     defaultConfig {
         minSdk = 28
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders["YANDEX_CLIENT_ID"] = "4099a25062b54be98363d406b389760d"
     }
     buildTypes {
         named("release") {
