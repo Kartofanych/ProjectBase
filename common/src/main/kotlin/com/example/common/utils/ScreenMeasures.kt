@@ -1,6 +1,7 @@
 package com.example.common.utils
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Point
 import android.util.DisplayMetrics
 import android.view.WindowManager
@@ -26,7 +27,7 @@ fun Context.screenHeightDp(): Dp {
 }
 
 fun Context.screenWidthDp(): Dp {
-    return dpToPx(screenWidthPx().toFloat()).dp
+    return pxToDp(screenWidthPx().toFloat()).dp
 }
 
 fun Context.dpToPx(dp: Float): Float {
@@ -35,4 +36,10 @@ fun Context.dpToPx(dp: Float): Float {
 
 fun Context.pxToDp(px: Float): Float {
     return px / (resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+}
+
+fun getStatusBarHeight(): Int {
+    val resources = Resources.getSystem()
+    val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+    return resources.getDimensionPixelSize(resourceId)
 }

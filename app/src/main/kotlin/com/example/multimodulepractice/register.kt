@@ -3,14 +3,14 @@ package com.example.multimodulepractice
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import com.example.common.navigation.FeatureApi
+import com.example.common.navigation.FeatureEntry
 
 fun NavGraphBuilder.register(
-    featureApi: FeatureApi,
+    featureEntry: FeatureEntry,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    featureApi.registerGraph(
+    featureEntry.registerGraph(
         navGraphBuilder = this,
         navController = navController,
         modifier = modifier

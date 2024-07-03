@@ -11,11 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.inno.landmark.ui.Landmark.LandmarkState
 import com.inno.landmark.ui.landmark_content.LandmarkContent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomSheet(onDismiss: () -> Unit, state: LandMarkState) {
+fun BottomSheet(onDismiss: () -> Unit, onOpenGuide: () -> Unit, state: LandmarkState) {
     val sheetState = rememberModalBottomSheetState()
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -24,12 +25,13 @@ fun BottomSheet(onDismiss: () -> Unit, state: LandMarkState) {
         shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
     ) {
         when (state) {
-            is LandMarkState.Content -> LandmarkContent(
+            is LandmarkState.Content -> LandmarkContent(
                 landmark = state.landmark,
-                sheetState = sheetState
+                sheetState = sheetState,
+                onOpenGuide = onOpenGuide
             )
 
-            LandMarkState.Error -> {
+            LandmarkState.Error -> {
                 Box(
                     modifier = Modifier
                         .height(200.dp)
@@ -37,7 +39,7 @@ fun BottomSheet(onDismiss: () -> Unit, state: LandMarkState) {
                 )
             }
 
-            LandMarkState.Loading -> {
+            LandmarkState.Loading -> {
                 Box(
                     modifier = Modifier
                         .height(200.dp)

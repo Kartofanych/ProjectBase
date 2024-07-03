@@ -17,7 +17,7 @@ import com.inno.landmark.data.LandmarkResponse
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LandmarkContent(landmark: LandmarkResponse, sheetState: SheetState) {
+fun LandmarkContent(landmark: LandmarkResponse, sheetState: SheetState, onOpenGuide: () -> Unit) {
     val context = LocalContext.current
 
     val scrollState = rememberScrollState()
@@ -33,7 +33,7 @@ fun LandmarkContent(landmark: LandmarkResponse, sheetState: SheetState) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        LandmarkInfo(landmark)
+        LandmarkInfo(landmark, onOpenGuide)
 
     }
 }

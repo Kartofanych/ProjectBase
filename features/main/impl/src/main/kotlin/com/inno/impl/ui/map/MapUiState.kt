@@ -1,9 +1,9 @@
 package com.inno.impl.ui.map
 
-import com.inno.landmark.ui.LandMarkState
+import com.inno.landmark.ui.Landmark
 
 data class MapUiState(
-    val currentLandmarkState: LandMarkState?,
+    val currentLandmarkState: Landmark?,
     val state: MapState,
 ) {
 

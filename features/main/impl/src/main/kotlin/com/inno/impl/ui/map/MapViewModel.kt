@@ -18,7 +18,8 @@ import com.inno.impl.data.local_models.map.MapLandmark
 import com.inno.impl.ui.map.MapUiState.MapState
 import com.inno.impl.utils.iconTextStyle
 import com.inno.impl.utils.toMapKitPoint
-import com.inno.landmark.ui.LandMarkState
+import com.inno.landmark.ui.Landmark
+import com.inno.landmark.ui.Landmark.LandmarkState
 import com.yandex.mapkit.geometry.LinearRing
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.geometry.Polygon
@@ -87,20 +88,25 @@ class MapViewModel @Inject constructor(
 
     private fun getLandmark(landmarkId: String) {
         _uiStateFlow.update {
-            it.copy(currentLandmarkState = LandMarkState.Loading)
+            it.copy(currentLandmarkState = Landmark(landmarkId, LandmarkState.Loading))
         }
 
         viewModelScope.launch {
             when (val result = interactor.getLandmarkInfo(landmarkId)) {
                 is ResponseState.Error -> {
                     _uiStateFlow.update {
-                        it.copy(currentLandmarkState = LandMarkState.Error)
+                        it.copy(currentLandmarkState = Landmark(landmarkId, LandmarkState.Error))
                     }
                 }
 
                 is ResponseState.Success -> {
                     _uiStateFlow.update {
-                        it.copy(currentLandmarkState = LandMarkState.Content(result.data))
+                        it.copy(
+                            currentLandmarkState = Landmark(
+                                landmarkId,
+                                LandmarkState.Content(result.data)
+                            )
+                        )
                     }
                 }
             }
@@ -162,6 +168,21 @@ class MapViewModel @Inject constructor(
             is MapActions.OnPlaceMarkTapped -> {
                 getLandmark(action.landmarkId)
             }
+
+            MapActions.OnOpenGuide -> {
+                viewModelScope.launch {
+                    val currentLandmark = uiStateFlow.value.currentLandmarkState
+                    if (currentLandmark != null) {
+                        _uiEvent.send(MapUiEvent.OnGuideClicked(currentLandmark.id))
+                    }
+                }
+            }
+
+            MapActions.OnMapStarted -> onStart()
+
+            MapActions.OnMapStopped -> onStop()
+
+            MapActions.OnRelaunchMap -> launch()
         }
     }
 
