@@ -11,30 +11,32 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.inno.api.MainFeatureApi
+import com.inno.api.GuideEntry
+import com.inno.api.MainFeatureEntry
 import com.inno.impl.ui.BottomNavBar
 import com.inno.impl.ui.BottomNavGraph
 import javax.inject.Inject
 
-private const val baseRoute = "main"
-
-class MainFeatureImpl @Inject constructor() : MainFeatureApi {
-
-    override val mainRoute = baseRoute
+class MainFeatureImpl @Inject constructor(
+    private val guideEntry: GuideEntry
+) : MainFeatureEntry() {
 
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
         navController: NavController,
         modifier: Modifier
     ) {
-        navGraphBuilder.composable(baseRoute) {
+        navGraphBuilder.composable(featureRoute) {
             val insideNavController = rememberNavController()
             Box(
                 modifier = Modifier.fillMaxSize(),
             ) {
                 BottomNavGraph(
                     modifier = Modifier.padding(bottom = 40.dp),
-                    navController = insideNavController
+                    navController = insideNavController,
+                    navigateToGuide = {
+                        navController.navigate(guideEntry.destination(it))
+                    }
                 )
 
                 BottomNavBar(
@@ -53,30 +55,11 @@ class MainFeatureImpl @Inject constructor() : MainFeatureApi {
                 )
             }
         }
-
-        //example of inside navigation
-        /*composable(
-            route = "$screenMapRoute/{$argumentKey}",
-            arguments = listOf(
-                navArgument(argumentKey) {
-                    type = NavType.StringType
-                }
-            )
-        ) { backStackEntry ->
-            val arguments = requireNotNull(backStackEntry.arguments)
-            val argument = Uri.decode(arguments.getString(argumentKey).orEmpty())
-
-            ScreenB(
-                argument = argument.orEmpty()
-            )
-        }
-    }*/
-
     }
 
     companion object {
-        const val SCREEN_MAP_ROUTE = "$baseRoute/map"
-        const val SCREEN_LIST_ROUTE = "$baseRoute/list"
-        const val SCREEN_PROFILE_ROUTE = "$baseRoute/profile"
+        const val SCREEN_MAP_ROUTE = "main/map"
+        const val SCREEN_LIST_ROUTE = "main/list"
+        const val SCREEN_PROFILE_ROUTE = "main/profile"
     }
 }

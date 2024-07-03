@@ -28,6 +28,7 @@ import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
 import coil.size.Scale
+import com.example.common.composables.shimmerBrush
 import com.example.common.utils.screenHeightPx
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
@@ -36,10 +37,13 @@ fun ImageSlider(imageUrls: List<String>, sheetState: SheetState) {
     val localContext = LocalContext.current
     val pageCounter = imageUrls.size
     val pagerState = rememberPagerState(pageCount = { pageCounter })
-
     val progress = remember {
         derivedStateOf {
-            sheetState.requireOffset() / localContext.screenHeightPx()
+            try {
+                sheetState.requireOffset() / localContext.screenHeightPx()
+            } catch (exception: Exception) {
+                1f
+            }
         }
     }
 

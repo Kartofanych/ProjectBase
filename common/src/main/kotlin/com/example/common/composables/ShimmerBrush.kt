@@ -1,4 +1,4 @@
-package com.inno.landmark.ui.landmark_content
+package com.example.common.composables
 
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat

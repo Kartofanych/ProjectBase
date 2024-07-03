@@ -33,7 +33,7 @@ import com.inno.landmark.data.LandmarkResponse
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun LandmarkInfo(landmark: LandmarkResponse) {
+fun LandmarkInfo(landmark: LandmarkResponse, onOpenGuide: () -> Unit) {
     Column(
         modifier = Modifier
             .padding(horizontal = 10.dp)
@@ -107,7 +107,9 @@ fun LandmarkInfo(landmark: LandmarkResponse) {
                     shape = RoundedCornerShape(10.dp)
                 )
                 .clip(RoundedCornerShape(size = 10.dp))
-                .clickable { }
+                .clickable {
+                    onOpenGuide()
+                }
         ) {
             Row(
                 modifier = Modifier.fillMaxSize(),
@@ -125,7 +127,7 @@ fun LandmarkInfo(landmark: LandmarkResponse) {
                 Spacer(modifier = Modifier.size(5.dp))
 
                 Image(
-                    painter = painterResource(id = R.drawable.play),
+                    painter = painterResource(id = R.drawable.icon_play),
                     contentDescription = null,
                 )
 

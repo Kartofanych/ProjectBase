@@ -16,7 +16,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,9 +33,10 @@ import com.example.common.theme.semiboldTextStyle
 import com.inno.impl.ui.compose_elements.LoadingAnimation
 import com.inno.landmark.ui.BottomSheet
 import com.yandex.mapkit.MapKitFactory
+import com.yandex.mapkit.mapview.MapView
 
 @Composable
-fun MapScreen(viewModel: MapViewModel) {
+fun MapScreen(uiState: MapUiState, onMapAction: (MapActions) -> Unit, map: MapView) {
 
     val lifecycleOwner = LocalLifecycleOwner.current
 
@@ -45,11 +45,11 @@ fun MapScreen(viewModel: MapViewModel) {
             when (event) {
                 ON_START -> {
                     MapKitFactory.getInstance().onStart()
-                    viewModel.onStart()
+                    onMapAction(MapActions.OnMapStarted)
                 }
 
                 ON_STOP -> {
-                    viewModel.onStop()
+                    onMapAction(MapActions.OnMapStopped)
                     MapKitFactory.getInstance().onStop()
                 }
 
@@ -69,16 +69,13 @@ fun MapScreen(viewModel: MapViewModel) {
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        val uiState = viewModel.uiStateFlow.collectAsState().value
-
-        MapEventHandler(uiEvent = viewModel.uiEvent)
 
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
             AndroidView(
                 factory = {
-                    viewModel.map
+                    map
                 }, modifier = Modifier.fillMaxSize()
             )
 
@@ -133,8 +130,9 @@ fun MapScreen(viewModel: MapViewModel) {
                         shape = CircleShape
                     )
                     .clickable {
-                        viewModel.launch()
-                    }) {
+                        onMapAction(MapActions.OnRelaunchMap)
+                    }
+                ) {
                     Column(
                         modifier = Modifier.align(Alignment.Center),
                         horizontalAlignment = Alignment.CenterHorizontally
@@ -155,8 +153,9 @@ fun MapScreen(viewModel: MapViewModel) {
 
             if (uiState.currentLandmarkState != null) {
                 BottomSheet(
-                    { viewModel.onMapAction(MapActions.ModalDismissed) },
-                    uiState.currentLandmarkState
+                    onDismiss = { onMapAction(MapActions.ModalDismissed) },
+                    onOpenGuide = { onMapAction(MapActions.OnOpenGuide) },
+                    state = uiState.currentLandmarkState.state
                 )
             }
         }

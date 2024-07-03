@@ -1,9 +1,17 @@
 package com.inno.impl.ui.map
 
-sealed class MapActions {
+sealed interface MapActions {
 
-    class OnPlaceMarkTapped(val landmarkId: String) : MapActions()
+    object OnMapStarted : MapActions
 
-    object ModalDismissed : MapActions()
+    object OnMapStopped : MapActions
+
+    class OnPlaceMarkTapped(val landmarkId: String) : MapActions
+
+    object ModalDismissed : MapActions
+
+    object OnRelaunchMap : MapActions
+
+    object OnOpenGuide : MapActions
 
 }

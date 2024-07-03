@@ -1,7 +1,6 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("org.jetbrains.kotlin.plugin.serialization")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
     // Precompiled plugin with the base android configuration.
@@ -10,9 +9,8 @@ plugins {
 }
 
 android {
-    namespace = ProjectConfig.namespace("main.impl")
+    namespace = ProjectConfig.namespace("login")
 
-    buildFeatures.viewBinding = true
     // ===== compose =====
     buildFeatures.compose = true
     composeOptions {
@@ -21,24 +19,16 @@ android {
 }
 
 dependencies {
-    api(project(":features:main:api"))
     api(project(":features:guide:api"))
-    implementation(project(":features:geo"))
-    implementation(project(":features:landmark"))
     implementation(project(":common"))
-
     implementation(libs.core.ktx)
+
     implementation(libs.bundles.compose)
-
-    implementation(libs.bundles.navigation)
-
-    implementation(libs.bundles.datastore)
-    implementation(libs.json)
-
-    implementation(libs.maps.mobile)
 
     implementation(libs.bundles.hilt)
     kapt(libs.hilt.android.compiler)
+
+    implementation(libs.auth.sdk)
 
     implementation(libs.bundles.network)
 }

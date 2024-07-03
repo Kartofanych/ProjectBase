@@ -1,19 +1,17 @@
 package com.inno.impl.di
 
-import com.inno.api.LoginFeatureApi
+import com.inno.api.LoginFeatureEntry
 import com.inno.impl.LoginFeatureImpl
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-class LoginNavigationModule {
+interface LoginNavigationModule {
 
-    @Provides
-    fun loginFeature(): LoginFeatureApi {
-        return LoginFeatureImpl()
-    }
+    @Binds
+    fun loginFeature(loginFeatureImpl: LoginFeatureImpl): LoginFeatureEntry
 
 }

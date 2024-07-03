@@ -41,6 +41,7 @@ dependencies {
     implementation(project(":features:auth:impl"))
     implementation(project(":features:login:impl"))
     implementation(project(":features:main:impl"))
+    implementation(project(":features:guide:impl"))
     implementation(project(":features:geo"))
 
     implementation(libs.core.ktx)

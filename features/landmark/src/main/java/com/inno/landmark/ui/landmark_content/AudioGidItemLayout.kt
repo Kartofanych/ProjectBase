@@ -72,7 +72,7 @@ fun AudioGidItemLayout(
             )
 
             Image(
-                painter = painterResource(id = R.drawable.play),
+                painter = painterResource(id = R.drawable.icon_play),
                 contentDescription = null,
                 Modifier
                     .size(20.dp)
