@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.example.api.AuthInfoManager
 import com.example.common.theme.MultimodulePracticeTheme
 import com.inno.api.GuideEntry
 import com.inno.api.LoginFeatureEntry
@@ -22,7 +23,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    //TODO remove
     @Inject
     lateinit var mainFeatureApi: MainFeatureEntry
 
@@ -32,6 +32,8 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var guideEntry: GuideEntry
 
+    @Inject
+    lateinit var authInfoManager: AuthInfoManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             ComposeView(context = this).apply {
                 this.setContent {
                     MultimodulePracticeTheme {
-                        NavigatorScaffold(mainFeatureApi, loginFeatureApi, guideEntry)
+                        NavigatorScaffold()
                     }
                 }
             }.also {
@@ -56,37 +58,36 @@ class MainActivity : AppCompatActivity() {
             }
         )
     }
-}
 
-@Composable
-private fun NavigatorScaffold(
-    mainFeatureApi: MainFeatureEntry,
-    loginFeatureApi: LoginFeatureEntry,
-    guideEntry: GuideEntry
-) {
-    val navController = rememberNavController()
+    @Composable
+    private fun NavigatorScaffold() {
+        val navController = rememberNavController()
 
-    NavHost(
-        navController = navController,
-        startDestination = loginFeatureApi.featureRoute
-    ) {
-        register(
-            loginFeatureApi,
+        NavHost(
             navController = navController,
-            modifier = Modifier
-        )
+            startDestination = when (authInfoManager.authInfo().token) {
+                null -> loginFeatureApi.featureRoute
+                else -> mainFeatureApi.featureRoute
+            }
+        ) {
+            register(
+                loginFeatureApi,
+                navController = navController,
+                modifier = Modifier
+            )
 
-        register(
-            mainFeatureApi,
-            navController = navController,
-            modifier = Modifier
-        )
+            register(
+                mainFeatureApi,
+                navController = navController,
+                modifier = Modifier
+            )
 
-        register(
-            guideEntry,
-            navController = navController,
-            modifier = Modifier
-        )
+            register(
+                guideEntry,
+                navController = navController,
+                modifier = Modifier
+            )
+        }
+
     }
-
 }

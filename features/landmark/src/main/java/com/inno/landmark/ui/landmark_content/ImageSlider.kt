@@ -14,6 +14,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -29,18 +30,21 @@ import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
 import coil.size.Scale
 import com.example.common.composables.shimmerBrush
-import com.example.common.utils.screenHeightPx
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun ImageSlider(imageUrls: List<String>, sheetState: SheetState) {
-    val localContext = LocalContext.current
+fun ImageSlider(
+    imageUrls: List<String>,
+    sheetState: SheetState,
+    columnHeightPx: MutableState<Float>
+) {
     val pageCounter = imageUrls.size
     val pagerState = rememberPagerState(pageCount = { pageCounter })
+
     val progress = remember {
         derivedStateOf {
             try {
-                sheetState.requireOffset() / localContext.screenHeightPx()
+                sheetState.requireOffset() / columnHeightPx.value
             } catch (exception: Exception) {
                 1f
             }

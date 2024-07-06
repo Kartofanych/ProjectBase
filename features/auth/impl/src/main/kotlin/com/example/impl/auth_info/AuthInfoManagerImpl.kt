@@ -24,9 +24,7 @@ class AuthInfoManagerImpl @Inject constructor(
 
     override suspend fun updateAuthInfo(info: AuthInfo) {
         dataStore.updateData {
-            it.copy(
-                id = info.id,
-            )
+            it.copy(token = info.token)
         }
     }
 

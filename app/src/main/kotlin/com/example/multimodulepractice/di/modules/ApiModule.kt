@@ -1,5 +1,6 @@
 package com.example.multimodulepractice.di.modules
 
+import com.inno.impl.data.GuideApi
 import com.inno.impl.data.network.MainApi
 import dagger.Module
 import dagger.Provides
@@ -14,6 +15,11 @@ class ApiModule {
     @Provides
     fun provideMainApi(retrofit: Retrofit): MainApi {
         return retrofit.create(MainApi::class.java)
+    }
+
+    @Provides
+    fun provideGuideApi(retrofit: Retrofit): GuideApi {
+        return retrofit.create(GuideApi::class.java)
     }
 
 }

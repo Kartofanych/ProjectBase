@@ -12,7 +12,7 @@ interface MainApi {
     @POST("map_info")
     suspend fun getStartInfo(@Body body: StartInfoRequest): MapInfoResponseDto
 
-    @POST("get_attraction")
+    @POST("attraction")
     suspend fun getLandmark(@Body body: LandmarkRequest): LandmarkResponseDto
 
 }

@@ -1,21 +1,16 @@
 package com.inno.impl.ui
 
-data class GuideUiState(
-    val currentPage: Int,
-    val state: DataState
-) {
+import com.inno.impl.ui.models.Topic
 
-    sealed interface DataState {
-        object Error : DataState
-        object Loading : DataState
-        object Content : DataState
-    }
+sealed interface GuideUiState {
 
-    companion object {
-        val EMPTY = GuideUiState(
-            currentPage = 0,
-            state = DataState.Loading
-        )
-    }
+    object Error : GuideUiState
+
+    object Loading : GuideUiState
+
+    data class Content(
+        val currentPage: Int,
+        val topics: List<Topic>
+    ) : GuideUiState
 
 }

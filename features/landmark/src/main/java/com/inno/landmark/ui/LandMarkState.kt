@@ -12,4 +12,11 @@ data class Landmark(
         object Loading : LandmarkState
         class Content(val landmark: LandmarkResponse) : LandmarkState
     }
+
+    companion object {
+        val EMPTY = Landmark(
+            "",
+            LandmarkState.Loading
+        )
+    }
 }

@@ -4,5 +4,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AuthInfoDto(
-    val id: String = "",
-)
+    val token: String?,
+) {
+    companion object {
+        val EMPTY = AuthInfoDto(null)
+    }
+}
