@@ -198,7 +198,7 @@ fun MapScreen(
                                 verticalArrangement = Arrangement.Center
                             ) {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.icon_reload),
+                                    painter = painterResource(id = R.drawable.ic_reload),
                                     contentDescription = null,
                                     tint = Color.Red,
                                     modifier = Modifier.size(60.dp)

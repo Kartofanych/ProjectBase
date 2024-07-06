@@ -93,7 +93,7 @@ fun AudioGidItemLayout(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Image(
-                painter = painterResource(id = R.drawable.timer),
+                painter = painterResource(id = R.drawable.ic_timer),
                 contentDescription = null,
             )
             Spacer(modifier = Modifier.width(1.dp))
