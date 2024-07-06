@@ -3,7 +3,7 @@ package com.inno.impl.ui.map
 import com.inno.landmark.ui.Landmark
 
 data class MapUiState(
-    val currentLandmarkState: Landmark?,
+    val currentLandmarkState: Landmark,
     val state: MapState,
 ) {
 
@@ -16,7 +16,7 @@ data class MapUiState(
 
     companion object {
         fun EMPTY(): MapUiState = MapUiState(
-            currentLandmarkState = null,
+            currentLandmarkState = Landmark.EMPTY,
             state = MapState.Loading
         )
     }

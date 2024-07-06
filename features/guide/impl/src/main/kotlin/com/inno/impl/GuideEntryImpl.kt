@@ -1,5 +1,6 @@
 package com.inno.impl
 
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -20,7 +21,17 @@ class GuideEntryImpl @Inject constructor() : GuideEntry() {
         modifier: Modifier
     ) {
 
-        navGraphBuilder.composable(featureRoute, arguments) {
+        navGraphBuilder.composable(
+            featureRoute,
+            arguments,
+            popExitTransition = {
+                slideOutVertically(
+                    targetOffsetY = {
+                        it / 2
+                    },
+                )
+            },
+        ) {
             val landmarkId = it.arguments?.getString(ARG_LANDMARK_ID)!!
             val viewModel: GuideViewModel = hiltViewModel()
 

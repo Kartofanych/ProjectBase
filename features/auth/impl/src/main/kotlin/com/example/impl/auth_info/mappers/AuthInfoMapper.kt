@@ -4,9 +4,9 @@ import com.example.api.models.AuthInfo
 import com.example.impl.auth_info.models.AuthInfoDto
 
 fun AuthInfo.toDto() = AuthInfoDto(
-    id = id,
+    token = token,
 )
 
 fun AuthInfoDto.toModel() = AuthInfo(
-    id = id,
+    token = token,
 )

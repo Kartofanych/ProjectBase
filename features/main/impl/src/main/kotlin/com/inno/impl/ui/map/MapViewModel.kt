@@ -67,7 +67,7 @@ class MapViewModel @Inject constructor(
         launch()
     }
 
-    fun launch() {
+    private fun launch() {
         _uiStateFlow.update {
             it.copy(state = MapState.Loading)
         }
@@ -92,7 +92,7 @@ class MapViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            when (val result = interactor.getLandmarkInfo(landmarkId)) {
+            when (val result = runWithMinTime({ interactor.getLandmarkInfo(landmarkId) })) {
                 is ResponseState.Error -> {
                     _uiStateFlow.update {
                         it.copy(currentLandmarkState = Landmark(landmarkId, LandmarkState.Error))
@@ -161,7 +161,7 @@ class MapViewModel @Inject constructor(
         when (action) {
             MapActions.ModalDismissed -> {
                 _uiStateFlow.update {
-                    it.copy(currentLandmarkState = null)
+                    it.copy(currentLandmarkState = Landmark.EMPTY)
                 }
             }
 
@@ -172,7 +172,7 @@ class MapViewModel @Inject constructor(
             MapActions.OnOpenGuide -> {
                 viewModelScope.launch {
                     val currentLandmark = uiStateFlow.value.currentLandmarkState
-                    if (currentLandmark != null) {
+                    if (currentLandmark != Landmark.EMPTY) {
                         _uiEvent.send(MapUiEvent.OnGuideClicked(currentLandmark.id))
                     }
                 }
@@ -233,11 +233,25 @@ class MapViewModel @Inject constructor(
         polygonMapObject.strokeWidth = 2.0f
     }
 
-    fun onStart() {
+    private fun onStart() {
         map.onStart()
+        val style = "[" +
+                "        {" +
+                "            \"types\": \"point\"," +
+                "            \"tags\": {" +
+                "                \"all\": [" +
+                "                    \"poi\"" +
+                "                ]" +
+                "            }," +
+                "            \"stylers\": {" +
+                "                \"visibility\": \"off\"" +
+                "            }" +
+                "        }" +
+                "    ]"
+        map.mapWindow.map.setMapStyle(style)
     }
 
-    fun onStop() {
+    private fun onStop() {
         map.onStop()
     }
 

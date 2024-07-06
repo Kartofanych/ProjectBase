@@ -20,6 +20,7 @@ android {
 
 dependencies {
     api(project(":features:guide:api"))
+    api(project(":features:main:api"))
     implementation(project(":common"))
     implementation(libs.core.ktx)
 
