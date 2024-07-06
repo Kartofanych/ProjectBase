@@ -95,44 +95,5 @@ fun LandmarkInfo(landmark: LandmarkResponse, onOpenGuide: () -> Unit) {
 
             AudioGidItemLayout(audioGid = landmark.audioGuides[0], onClick = {})
         }
-
-        Spacer(modifier = Modifier.height(41.dp))
-
-        Box(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .size(width = 162.dp, height = 42.dp)
-                .background(
-                    color = Color(0xFF737F89),
-                    shape = RoundedCornerShape(10.dp)
-                )
-                .clip(RoundedCornerShape(size = 10.dp))
-                .clickable {
-                    onOpenGuide()
-                }
-        ) {
-            Row(
-                modifier = Modifier.fillMaxSize(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-
-                Text(
-                    text = "Узнать больше",
-                    fontSize = 14.sp,
-                    color = Color.White,
-                    style = semiboldTextStyle
-                )
-
-                Spacer(modifier = Modifier.size(5.dp))
-
-                Image(
-                    painter = painterResource(id = R.drawable.icon_play),
-                    contentDescription = null,
-                )
-
-            }
-
-        }
     }
 }
