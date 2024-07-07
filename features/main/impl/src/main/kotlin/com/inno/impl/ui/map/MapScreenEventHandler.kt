@@ -6,15 +6,11 @@ import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun MapScreenEventHandler(
-    uiEvent: Flow<MapUiEvent>,
-    navigateToGuide: (String) -> Unit
+    uiEvent: Flow<MapUiEvent>
 ) {
 
     LaunchedEffect(Unit) {
         uiEvent.collect { event ->
-            when (event) {
-                is MapUiEvent.OnGuideClicked -> navigateToGuide(event.landmarkId)
-            }
         }
     }
 

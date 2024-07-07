@@ -12,6 +12,4 @@ sealed interface MapActions {
 
     object OnRelaunchMap : MapActions
 
-    object OnOpenGuide : MapActions
-
 }

@@ -15,11 +15,10 @@ import com.example.multimodulepractice.main.impl.R
 import com.inno.geo.repository.GeoRepository
 import com.inno.impl.data.interactors.MapInteractor
 import com.inno.impl.data.local_models.map.MapLandmark
+import com.inno.impl.repositories.LandmarkRepository
 import com.inno.impl.ui.map.MapUiState.MapState
 import com.inno.impl.utils.iconTextStyle
 import com.inno.impl.utils.toMapKitPoint
-import com.inno.landmark.ui.Landmark
-import com.inno.landmark.ui.Landmark.LandmarkState
 import com.yandex.mapkit.geometry.LinearRing
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.geometry.Polygon
@@ -45,7 +44,8 @@ import javax.inject.Inject
 class MapViewModel @Inject constructor(
     private val interactor: MapInteractor,
     private val repository: GeoRepository,
-    private val context: Context
+    private val context: Context,
+    private val landmarkRepository: LandmarkRepository
 ) : ViewModel() {
 
     private var userMapObject: PlacemarkMapObject? = null
@@ -84,34 +84,6 @@ class MapViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    private fun getLandmark(landmarkId: String) {
-        _uiStateFlow.update {
-            it.copy(currentLandmarkState = Landmark(landmarkId, LandmarkState.Loading))
-        }
-
-        viewModelScope.launch {
-            when (val result = runWithMinTime({ interactor.getLandmarkInfo(landmarkId) })) {
-                is ResponseState.Error -> {
-                    _uiStateFlow.update {
-                        it.copy(currentLandmarkState = Landmark(landmarkId, LandmarkState.Error))
-                    }
-                }
-
-                is ResponseState.Success -> {
-                    _uiStateFlow.update {
-                        it.copy(
-                            currentLandmarkState = Landmark(
-                                landmarkId,
-                                LandmarkState.Content(result.data)
-                            )
-                        )
-                    }
-                }
-            }
-        }
-
     }
 
     private fun addAttractions(list: List<MapLandmark>) {
@@ -160,22 +132,11 @@ class MapViewModel @Inject constructor(
     fun onMapAction(action: MapActions) {
         when (action) {
             MapActions.ModalDismissed -> {
-                _uiStateFlow.update {
-                    it.copy(currentLandmarkState = Landmark.EMPTY)
-                }
+                landmarkRepository.dismissLandmark()
             }
 
             is MapActions.OnPlaceMarkTapped -> {
-                getLandmark(action.landmarkId)
-            }
-
-            MapActions.OnOpenGuide -> {
-                viewModelScope.launch {
-                    val currentLandmark = uiStateFlow.value.currentLandmarkState
-                    if (currentLandmark != Landmark.EMPTY) {
-                        _uiEvent.send(MapUiEvent.OnGuideClicked(currentLandmark.id))
-                    }
-                }
+                landmarkRepository.getLandmark(action.landmarkId)
             }
 
             MapActions.OnMapStarted -> onStart()

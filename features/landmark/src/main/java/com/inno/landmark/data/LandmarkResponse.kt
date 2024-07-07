@@ -1,6 +1,7 @@
 package com.inno.landmark.data
 
 data class LandmarkResponse(
+    val id: String,
     val name: String,
     val info: String,
     val address: String,

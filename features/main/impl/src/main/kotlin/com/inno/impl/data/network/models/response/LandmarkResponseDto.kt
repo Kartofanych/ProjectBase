@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class LandmarkResponseDto(
 
+    @SerializedName("uid")
+    val id: String,
+
     @SerializedName("name")
     val name: String,
 

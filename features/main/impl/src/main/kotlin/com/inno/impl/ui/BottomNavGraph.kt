@@ -1,10 +1,11 @@
 package com.inno.impl.ui
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -21,14 +22,11 @@ import com.inno.impl.ui.profile.ProfileScreen
 
 @Composable
 fun BottomNavGraph(
-    navController: NavHostController,
-    modifier: Modifier,
-    navigateToGuide: (String) -> Unit
+    navController: NavHostController
 ) {
     val viewModel: MapViewModel = hiltViewModel()
-    Box(
-        modifier = modifier.fillMaxSize()
-    ) {
+
+    Box(modifier = Modifier.padding(bottom = 40.dp)) {
         NavHost(
             navController = navController,
             startDestination = SCREEN_MAP_ROUTE
@@ -36,8 +34,7 @@ fun BottomNavGraph(
             composable(route = SCREEN_MAP_ROUTE) {
 
                 MapScreenEventHandler(
-                    uiEvent = viewModel.uiEvent,
-                    navigateToGuide = navigateToGuide,
+                    uiEvent = viewModel.uiEvent
                 )
 
                 MapScreen(

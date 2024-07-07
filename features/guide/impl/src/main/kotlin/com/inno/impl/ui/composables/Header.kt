@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -16,17 +17,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.common.theme.mediumTextStyle
-import com.example.common.utils.getStatusBarHeight
-import com.example.common.utils.pxToDp
 import com.example.multimodulepractice.login.R
 import com.inno.impl.ui.GuideAction
 import com.inno.impl.ui.GuideUiState
-
 
 @Composable
 fun Header(
@@ -35,11 +32,11 @@ fun Header(
     uiState: GuideUiState.Content,
     currentScreen: Int
 ) {
-    val context = LocalContext.current
 
     Row(
         modifier = modifier
-            .padding(top = (context.pxToDp(getStatusBarHeight().toFloat()) + 8).dp)
+            .safeDrawingPadding()
+            .padding(top = 8.dp)
             .padding(horizontal = 16.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
@@ -48,7 +45,7 @@ fun Header(
         Box(
             modifier = Modifier
                 .size(44.dp)
-                .background(Color(0x75535353), RoundedCornerShape(12.dp))
+                .background(Color(0xFFEAEAEA), RoundedCornerShape(12.dp))
                 .clip(RoundedCornerShape(12.dp))
                 .clickable {
                     onAction(GuideAction.OnBackPressed)
@@ -58,20 +55,23 @@ fun Header(
             Icon(
                 painter = painterResource(id = R.drawable.icon_back),
                 contentDescription = null,
-                tint = Color.White
+                tint = Color(0xFF0F0F0F)
             )
         }
 
         Box(
             modifier = Modifier
                 .size(44.dp)
-                .background(Color(0x75535353), RoundedCornerShape(12.dp))
+                .background(Color(0xFFEAEAEA), RoundedCornerShape(12.dp))
                 .clip(RoundedCornerShape(12.dp)),
             contentAlignment = Alignment.Center
         ) {
             Text(
                 text = "${currentScreen + 1}/${uiState.topics.size}",
-                style = mediumTextStyle.copy(fontSize = 14.sp, color = Color.White),
+                style = mediumTextStyle.copy(
+                    fontSize = 14.sp,
+                    color = Color(0xFF0F0F0F)
+                ),
                 modifier = Modifier.align(Alignment.Center)
             )
         }

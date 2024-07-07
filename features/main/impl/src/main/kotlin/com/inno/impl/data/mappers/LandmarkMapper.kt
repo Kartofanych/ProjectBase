@@ -16,6 +16,7 @@ class LandmarkMapper @Inject constructor(
 
     fun mapResponse(response: LandmarkResponseDto): LandmarkResponse {
         return LandmarkResponse(
+            id = response.id,
             name = response.name,
             info = response.info,
             address = response.address,

@@ -2,7 +2,6 @@ package com.inno.landmark.ui.landmark_content
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,7 +30,7 @@ import coil.request.ImageRequest
 import coil.size.Scale
 import com.example.common.composables.shimmerBrush
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ImageSlider(
     imageUrls: List<String>,

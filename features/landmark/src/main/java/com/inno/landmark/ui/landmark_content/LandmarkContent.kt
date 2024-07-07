@@ -28,7 +28,12 @@ import com.inno.landmark.data.LandmarkResponse
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LandmarkContent(landmark: LandmarkResponse, sheetState: SheetState, onOpenGuide: () -> Unit) {
+fun LandmarkContent(
+    landmark: LandmarkResponse,
+    sheetState: SheetState,
+    onOpenGuide: () -> Unit
+) {
+
     val columnHeightPx = remember {
         mutableFloatStateOf(1000f)
     }

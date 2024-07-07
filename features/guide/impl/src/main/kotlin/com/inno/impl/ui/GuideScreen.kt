@@ -1,7 +1,7 @@
 package com.inno.impl.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,7 +26,6 @@ import com.inno.impl.ui.composables.Footer
 import com.inno.impl.ui.composables.Header
 import com.inno.impl.ui.composables.Info
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GuideScreen(uiState: GuideUiState, onAction: (GuideAction) -> Unit) {
 
@@ -77,7 +76,10 @@ fun GuideScreen(uiState: GuideUiState, onAction: (GuideAction) -> Unit) {
         }
     }
 
-    AnimatedVisibility(visible = uiState == GuideUiState.Loading) {
+    AnimatedVisibility(
+        visible = uiState == GuideUiState.Loading,
+        exit = fadeOut()
+    ) {
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
