@@ -2,7 +2,8 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+    id("kotlin-parcelize")
+    id("com.google.gms.google-services")
     // Precompiled plugin with the base android configuration.
     // Declared in buildSrc/.../android-config.gradle.kts.
     `android-config`
@@ -27,10 +28,20 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.kotlinCompiler
     }
+
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = true
-            isShrinkResources = true
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.create("release").apply {
+                keyAlias = "travelling"
+                keyPassword = "AiratRegina55"
+                storeFile = File("$projectDir/keys.jks")
+                storePassword = "AiratRegina55"
+            }
         }
     }
 }
@@ -51,11 +62,15 @@ dependencies {
 
     implementation(libs.bundles.compose)
 
-    implementation(libs.bundles.hilt)
-    kapt(libs.hilt.android.compiler)
+    implementation(libs.bundles.dagger)
+    kapt(libs.bundles.daggerCompiler)
 
     implementation(libs.maps.mobile)
 
     implementation(libs.bundles.network)
+
+    //TODO
+    implementation(platform("com.google.firebase:firebase-bom:33.1.1"))
+    implementation("com.google.firebase:firebase-analytics")
 
 }

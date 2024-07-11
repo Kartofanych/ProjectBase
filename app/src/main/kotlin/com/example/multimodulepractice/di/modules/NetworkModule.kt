@@ -1,22 +1,19 @@
 package com.example.multimodulepractice.di.modules
 
+import com.example.multimodulepractice.common.di.AppScope
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
 class NetworkModule {
 
     @Provides
-    @Singleton
+    @AppScope
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .client(client)
@@ -26,7 +23,7 @@ class NetworkModule {
     }
 
     @Provides
-    @Singleton
+    @AppScope
     fun provideHttpClient(interceptor: Interceptor): OkHttpClient =
         OkHttpClient.Builder().retryOnConnectionFailure(false)
             .addInterceptor(interceptor).build()

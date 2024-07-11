@@ -1,13 +1,14 @@
 package com.example.multimodulepractice.di
 
 import android.app.Application
-import com.example.impl.di.AuthProviderModule
+import com.example.multimodulepractice.AppProvider
+import com.example.multimodulepractice.auth.impl.di.AuthProviderModule
 import com.example.multimodulepractice.di.modules.ApiModule
 import com.example.multimodulepractice.di.modules.AppModule
+import com.example.multimodulepractice.di.modules.DataModule
 import com.example.multimodulepractice.di.modules.NavigationModule
 import com.example.multimodulepractice.di.modules.NetworkModule
-import com.inno.geo.di.GeoProviderModule
-import com.inno.impl.di.MainDependencies
+import com.example.multimodulepractice.geo.di.GeoProviderModule
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -21,12 +22,11 @@ import javax.inject.Singleton
         NetworkModule::class,
         AuthProviderModule::class,
         GeoProviderModule::class,
-        NavigationModule::class
+        NavigationModule::class,
+        DataModule::class
     ]
 )
-interface AppComponent {
-
-    val mainDependencies: MainDependencies
+interface AppComponent : AppProvider {
 
     @Component.Factory
     interface Factory {

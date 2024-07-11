@@ -1,11 +1,9 @@
 package com.example.multimodulepractice.di.modules
 
-import com.inno.impl.di.GuideNavigationModule
-import com.inno.impl.di.LoginNavigationModule
-import com.inno.impl.di.MainNavigationModule
+import com.example.multimodulepractice.guide.impl.di.GuideNavigationModule
+import com.example.multimodulepractice.main.impl.di.MainNavigationModule
+import com.example.multimodulepractice.login.impl.di.LoginNavigationModule
 import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 
 @Module(
     includes = [
@@ -14,5 +12,4 @@ import dagger.hilt.components.SingletonComponent
         GuideNavigationModule::class
     ]
 )
-@InstallIn(SingletonComponent::class)
 interface NavigationModule
