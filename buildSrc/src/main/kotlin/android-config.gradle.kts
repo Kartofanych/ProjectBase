@@ -14,7 +14,7 @@ android {
     }
     buildTypes {
         named("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
         }
     }
     compileOptions {
@@ -25,7 +25,8 @@ android {
         kotlinOptions {
             jvmTarget = "17"
             freeCompilerArgs = listOf(
-                "-Xopt-in=kotlin.RequiresOptIn"
+                "-Xopt-in=kotlin.RequiresOptIn",
+                "-Xstring-concat=inline"
             )
         }
     }

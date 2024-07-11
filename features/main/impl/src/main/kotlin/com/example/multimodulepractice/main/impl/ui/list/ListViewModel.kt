@@ -1,0 +1,57 @@
+package com.example.multimodulepractice.main.impl.ui.list
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.multimodulepractice.common.models.local.ResponseState
+import com.example.multimodulepractice.main.impl.data.interactors.ListInteractor
+import com.example.multimodulepractice.main.impl.di.MainScope
+import com.example.multimodulepractice.main.impl.repositories.AttractionRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@MainScope
+class ListViewModel @Inject constructor(
+    private val listInteractor: ListInteractor,
+    private val attractionRepository: AttractionRepository
+) : ViewModel() {
+
+    private val _uiStateFlow = MutableStateFlow<ListUiState>(ListUiState.Loading)
+    val uiStateFlow: StateFlow<ListUiState>
+        get() = _uiStateFlow
+
+    init {
+        getRecommendations()
+    }
+
+    private fun getRecommendations() {
+        viewModelScope.launch {
+            when (val result = listInteractor.getRecommendations()) {
+                is ResponseState.Error -> {
+                    _uiStateFlow.update { ListUiState.Error }
+                }
+
+                is ResponseState.Success -> {
+                    _uiStateFlow.update {
+                        ListUiState.Content(
+                            result.data.popularList,
+                            result.data.closeList
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    fun onListAction(action: ListAction) {
+        when (action) {
+            is ListAction.OpenAttraction -> {
+                attractionRepository.getLandmark(action.id)
+            }
+        }
+    }
+
+
+}

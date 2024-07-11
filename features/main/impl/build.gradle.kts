@@ -3,7 +3,6 @@ plugins {
     id("kotlin-android")
     id("org.jetbrains.kotlin.plugin.serialization")
     kotlin("kapt")
-    id("dagger.hilt.android.plugin")
     // Precompiled plugin with the base android configuration.
     // Declared in buildSrc/.../android-config.gradle.kts.
     `android-config`
@@ -37,8 +36,8 @@ dependencies {
 
     implementation(libs.maps.mobile)
 
-    implementation(libs.bundles.hilt)
-    kapt(libs.hilt.android.compiler)
+    implementation(libs.bundles.dagger)
+    kapt(libs.bundles.daggerCompiler)
 
     implementation(libs.bundles.network)
 }

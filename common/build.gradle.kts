@@ -2,7 +2,6 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
     kotlin("kapt")
-    id("dagger.hilt.android.plugin")
     // Precompiled plugin with the base android configuration.
     // Declared in buildSrc/.../android-config.gradle.kts.
     `android-config`
@@ -23,8 +22,15 @@ dependencies {
 
     implementation(libs.bundles.compose)
 
-    implementation(libs.bundles.hilt)
-    kapt(libs.hilt.android.compiler)
+    implementation(libs.bundles.dagger)
+    kapt(libs.bundles.daggerCompiler)
+
+    //TODO
+    implementation("io.noties.markwon:core:4.6.2")
+    implementation("io.noties.markwon:ext-strikethrough:4.6.2")
+    implementation("io.noties.markwon:ext-tables:4.6.2")
+    implementation("io.noties.markwon:html:4.6.2")
+    implementation("io.noties.markwon:linkify:4.6.2")
 
     implementation(libs.bundles.network)
 }
