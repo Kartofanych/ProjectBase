@@ -95,7 +95,6 @@ com-android-library = { id = "com.android.library", version.ref = "agp" }
 [bundles]
 dagger = ["dagger", "dagger-android"]
 daggerCompiler = ["dagger-compiler", "dagger-android-processor"]
-hilt = ["hilt-android", "hilt-android-compose-navigation"]
 compose = ["activity-compose", "compose-bom", "ui", "ui-graphics", "ui-tooling", "ui-tooling-preview", "material3", "navigation", "coil", "coil-compose", "coil-svg", "androidx-lifecycle-viewmodel-compose", "androidx-wear-compose-material"]
 navigation = ["androidx-navigation-fragment-ktx", "androidx-navigation-ui-ktx"]
 datastore = ["datastore", "datastore-pref"]
