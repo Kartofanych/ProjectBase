@@ -13,13 +13,19 @@ android {
         manifestPlaceholders["YANDEX_CLIENT_ID"] = "4099a25062b54be98363d406b389760d"
     }
     buildTypes {
-        named("release") {
-            isMinifyEnabled = true
+        getByName("release") {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.create("release").apply {
+                keyAlias = "travelling"
+                keyPassword = "AiratRegina55"
+                storeFile = File("$projectDir/keys.jks")
+                storePassword = "AiratRegina55"
+            }
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
     }
     tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {
@@ -30,9 +36,9 @@ android {
             )
         }
     }
-    packagingOptions {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }

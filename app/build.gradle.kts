@@ -29,20 +29,13 @@ android {
         kotlinCompilerExtensionVersion = Versions.kotlinCompiler
     }
 
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-            signingConfig = signingConfigs.create("release").apply {
-                keyAlias = "travelling"
-                keyPassword = "AiratRegina55"
-                storeFile = File("$projectDir/keys.jks")
-                storePassword = "AiratRegina55"
-            }
-        }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 

@@ -1,9 +1,10 @@
-package com.example.multimodulepractice.landmark.ui.landmark_content
+package com.example.multimodulepractice.main.impl.ui.compose_elements
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,18 +16,20 @@ import androidx.compose.ui.unit.sp
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 
 @Composable
-fun Chip(text: String, color: Color) {
+fun CategoryChip(text: String, color: Color) {
     Box(
         modifier = Modifier
-            .wrapContentHeight()
-            .background(color = color, shape = RoundedCornerShape(7.dp))
-            .padding(horizontal = 13.dp, vertical = 3.dp),
+            .background(color = color, shape = RoundedCornerShape(5.dp))
+            .padding(horizontal = 4.dp, vertical = 2.dp)
+            .height(14.dp),
     ) {
         Text(
             text = text,
             color = Color.White,
-            style = semiboldTextStyle.copy(fontSize = 12.sp),
-            modifier = Modifier.align(Alignment.Center)
+            style = semiboldTextStyle.copy(fontSize = 10.sp),
+            modifier = Modifier
+                .fillMaxHeight()
+                .align(Alignment.Center)
         )
     }
 }
