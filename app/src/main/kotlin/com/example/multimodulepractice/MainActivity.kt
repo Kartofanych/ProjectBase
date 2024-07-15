@@ -46,14 +46,15 @@ class MainActivity : AppCompatActivity() {
         val loginFeature = destinations.find<MainFeatureEntry>()
         val mainFeature = destinations.find<LoginFeatureEntry>()
         val guideFeature = destinations.find<GuideEntry>()
-
+        val audioGuideFeature = destinations.find<AudioGuideFeatureEntry>()
+        val startDestination = when (appProvider.authInfoManager.authInfo().token) {
+            "null" -> loginFeature.featureRoute
+            else -> mainFeature.featureRoute
+        }
         Scaffold {
             NavHost(
                 navController = navController,
-                startDestination = when (appProvider.authInfoManager.authInfo().token) {
-                    null -> loginFeature.featureRoute
-                    else -> mainFeature.featureRoute
-                },
+                startDestination = startDestination,
                 modifier = Modifier
                     .background(Color.White)
                     .padding(bottom = it.calculateBottomPadding())
@@ -72,6 +73,12 @@ class MainActivity : AppCompatActivity() {
 
                 register(
                     guideFeature,
+                    navController = navController,
+                    modifier = Modifier
+                )
+
+                register(
+                    audioGuideFeature,
                     navController = navController,
                     modifier = Modifier
                 )

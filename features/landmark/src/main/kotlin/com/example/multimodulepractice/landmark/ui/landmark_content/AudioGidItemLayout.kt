@@ -1,6 +1,5 @@
 package com.example.multimodulepractice.landmark.ui.landmark_content
 
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -34,7 +33,7 @@ import com.example.multimodulepractice.landmark.data.LandmarkAudioGid
 @Composable
 fun AudioGidItemLayout(
     audioGid: LandmarkAudioGid,
-    onClick: () -> Unit
+    onOpenAudioGuide: () -> Unit
 ) {
     val localContext = LocalContext.current
     Box(
@@ -45,7 +44,7 @@ fun AudioGidItemLayout(
                 color = Color.White,
                 shape = RoundedCornerShape(17.dp)
             )
-            .clickable { onClick() }
+            .clickable { onOpenAudioGuide() }
             .padding(8.dp),
     ) {
         Box(

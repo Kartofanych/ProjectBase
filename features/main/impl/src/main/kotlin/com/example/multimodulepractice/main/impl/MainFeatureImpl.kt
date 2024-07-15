@@ -78,6 +78,7 @@ class MainFeatureImpl @Inject constructor(
                         onDismiss = attractionRepository::dismissLandmark,
                         recallLandmark = { attractionRepository.getLandmark(landmarkId = landmark.id) },
                         onOpenGuide = { navController.navigate("guide/${landmark.id}") },
+                        onOpenAudioGuide = { navController.navigate("audioguide") },
                         landmark = landmark
                     )
                 }

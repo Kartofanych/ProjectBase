@@ -8,7 +8,7 @@ data class LandmarkAudioGidDto(
     @SerializedName("uid")
     val id: String,
 
-    @SerializedName("title")
+    @SerializedName("name")
     val title: String,
 
     @SerializedName("time")
