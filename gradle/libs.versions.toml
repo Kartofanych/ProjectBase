@@ -49,7 +49,6 @@ lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtim
 #compose
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
-maps-mobile = { module = "com.yandex.android:maps.mobile", version.ref = "maps-mobile" }
 ui = { group = "androidx.compose.ui", name = "ui" }
 ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
@@ -86,6 +85,9 @@ json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", v
 
 #auth
 auth-sdk = { group = "com.yandex.android", name = "authsdk", version.ref = "auth" }
+
+#maps
+maps-mobile = { module = "com.yandex.android:maps.mobile", version.ref = "maps-mobile" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }

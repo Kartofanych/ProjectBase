@@ -12,6 +12,9 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders["YANDEX_CLIENT_ID"] = "4099a25062b54be98363d406b389760d"
     }
+
+    buildFeatures.buildConfig = true
+    
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
@@ -25,8 +28,14 @@ android {
                 storeFile = File("$projectDir/keys.jks")
                 storePassword = "AiratRegina55"
             }
+            buildConfigField("String", "API_KEY", "\"${properties["API_KEY"]}\"")
+        }
+
+        getByName("debug") {
+            buildConfigField("String", "API_KEY", "\"${properties["API_KEY"]}\"")
         }
     }
+
     tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {
             jvmTarget = "17"
