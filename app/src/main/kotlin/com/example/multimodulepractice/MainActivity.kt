@@ -23,10 +23,18 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appProvider: AppProvider
 
+    private var startDestination = "login"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         appProvider = (this.applicationContext as App).appProvider
+
+        startDestination = when (appProvider.authInfoManager.authInfo().token) {
+            null -> "login"
+            else -> "main"
+        }
+
         setContent {
             MultimodulePracticeTheme {
                 CompositionLocalProvider(
@@ -47,10 +55,7 @@ class MainActivity : AppCompatActivity() {
         val loginFeature = destinations.find<LoginFeatureEntry>()
         val guideFeature = destinations.find<GuideEntry>()
         val audioGuideFeature = destinations.find<AudioGuideFeatureEntry>()
-        val startDestination = when (appProvider.authInfoManager.authInfo().token) {
-            null -> loginFeature.featureRoute
-            else -> mainFeature.featureRoute
-        }
+
 
         Scaffold {
             NavHost(
