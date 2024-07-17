@@ -36,6 +36,7 @@ fun LandmarkBottomSheet(
     onDismiss: () -> Unit,
     recallLandmark: () -> Unit,
     onOpenGuide: () -> Unit,
+    onOpenAudioGuide: () -> Unit,
     landmark: Landmark
 ) {
     ModalBottomSheet(
@@ -49,7 +50,8 @@ fun LandmarkBottomSheet(
                 LandmarkContent(
                     landmark = state.landmark,
                     sheetState = sheetState,
-                    onOpenGuide = onOpenGuide
+                    onOpenGuide = onOpenGuide,
+                    onOpenAudioGuide = onOpenAudioGuide
                 )
             }
 

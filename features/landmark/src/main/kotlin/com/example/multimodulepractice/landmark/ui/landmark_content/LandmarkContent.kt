@@ -31,7 +31,8 @@ import com.example.multimodulepractice.landmark.data.LandmarkResponse
 fun LandmarkContent(
     landmark: LandmarkResponse,
     sheetState: SheetState,
-    onOpenGuide: () -> Unit
+    onOpenGuide: () -> Unit,
+    onOpenAudioGuide: () -> Unit
 ) {
 
     val columnHeightPx = remember {
@@ -76,7 +77,7 @@ fun LandmarkContent(
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                LandmarkInfo(landmark)
+                LandmarkInfo(landmark, onOpenAudioGuide)
 
             }
         }

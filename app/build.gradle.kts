@@ -1,3 +1,8 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.io.FileInputStream
+import java.io.InputStreamReader
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -18,13 +23,48 @@ android {
         versionName = ProjectConfig.versionName
 
         setProperty("archivesBaseName", "Multimodule-$versionName")
+        manifestPlaceholders["YANDEX_CLIENT_ID"] = getLocalProperty("CLIENT_ID")
         vectorDrawables {
             useSupportLibrary = true
         }
     }
 
-    // ===== compose =====
-    buildFeatures.compose = true
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.create("release").apply {
+                keyAlias = "travelling"
+                keyPassword = "AiratRegina55"
+                storeFile = File("$projectDir/keys.jks")
+                storePassword = "AiratRegina55"
+            }
+            buildConfigField("String", "API_KEY", "\"${getLocalProperty("API_KEY")}\"")
+        }
+
+        getByName("debug") {
+            buildConfigField("String", "API_KEY", "\"${getLocalProperty("API_KEY")}\"")
+        }
+    }
+
+    tasks.withType<KotlinCompile>().configureEach {
+        kotlinOptions {
+            jvmTarget = "17"
+            freeCompilerArgs = listOf(
+                "-Xopt-in=kotlin.RequiresOptIn",
+                "-Xstring-concat=inline"
+            )
+        }
+    }
+
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
+
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.kotlinCompiler
     }
@@ -39,6 +79,18 @@ android {
     }
 }
 
+fun getLocalProperty(key: String, file: String = "local.properties"): Any {
+    val properties = Properties()
+    val localProperties = File(file)
+    if (localProperties.isFile) {
+        InputStreamReader(FileInputStream(localProperties), Charsets.UTF_8).use { reader ->
+            properties.load(reader)
+        }
+    } else error("File from not found")
+
+    return properties.getProperty(key)
+}
+
 dependencies {
 
     implementation(project(":common"))
@@ -46,6 +98,7 @@ dependencies {
     implementation(project(":features:login:impl"))
     implementation(project(":features:main:impl"))
     implementation(project(":features:guide:impl"))
+    implementation(project(":features:audio_guide:impl"))
     implementation(project(":features:geo"))
 
     implementation(libs.core.ktx)

@@ -12,8 +12,7 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        //TODO remove key from git
-        setApiKey("2799c068-e03b-4ff4-908a-7802c28709e5")
+        setApiKey(BuildConfig.API_KEY)
         MapKitFactory.initialize(this)
 
         appProvider = DaggerAppComponent.factory()
