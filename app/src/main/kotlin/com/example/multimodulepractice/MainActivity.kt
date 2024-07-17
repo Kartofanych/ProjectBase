@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         val guideFeature = destinations.find<GuideEntry>()
         val audioGuideFeature = destinations.find<AudioGuideFeatureEntry>()
         val startDestination = when (appProvider.authInfoManager.authInfo().token) {
-            "null" -> loginFeature.featureRoute
+            null -> loginFeature.featureRoute
             else -> mainFeature.featureRoute
         }
 

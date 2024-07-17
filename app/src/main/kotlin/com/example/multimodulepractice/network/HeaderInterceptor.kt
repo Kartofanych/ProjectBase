@@ -19,9 +19,8 @@ class HeaderInterceptor @Inject constructor(
 
         val requestBuilder = request.newBuilder()
 
-        val token = authInfoManager.authInfo().token
-        if (token != "null") {
-            requestBuilder.addHeader("Authorization", "Bearer $token")
+        authInfoManager.authInfo().token?.let {
+            requestBuilder.addHeader("Authorization", "Bearer $it")
         }
 
         return chain.proceed(requestBuilder.build())
