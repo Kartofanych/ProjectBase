@@ -43,14 +43,15 @@ class MainActivity : AppCompatActivity() {
         val navController = rememberNavController()
         val destinations = LocalAppProvider.current.destinations
 
-        val loginFeature = destinations.find<MainFeatureEntry>()
-        val mainFeature = destinations.find<LoginFeatureEntry>()
+        val mainFeature = destinations.find<MainFeatureEntry>()
+        val loginFeature = destinations.find<LoginFeatureEntry>()
         val guideFeature = destinations.find<GuideEntry>()
         val audioGuideFeature = destinations.find<AudioGuideFeatureEntry>()
         val startDestination = when (appProvider.authInfoManager.authInfo().token) {
             "null" -> loginFeature.featureRoute
             else -> mainFeature.featureRoute
         }
+
         Scaffold {
             NavHost(
                 navController = navController,
