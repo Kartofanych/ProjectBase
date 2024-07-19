@@ -33,6 +33,7 @@ compose-material = "1.3.1"
 
 #libs
 auth = "3.1.0"
+richtext-commonmark = "1.0.0-alpha01"
 ui-tooling = "1.6.8"
 
 [libraries]
@@ -88,6 +89,9 @@ auth-sdk = { group = "com.yandex.android", name = "authsdk", version.ref = "auth
 
 #maps
 maps-mobile = { module = "com.yandex.android:maps.mobile", version.ref = "maps-mobile" }
+
+#markdown
+richtext-commonmark = { module = "com.halilibo.compose-richtext:richtext-commonmark", version.ref = "richtext-commonmark" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }

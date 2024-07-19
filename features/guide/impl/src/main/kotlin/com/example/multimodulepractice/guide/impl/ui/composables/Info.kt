@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.multimodulepractice.common.utils.markdown.MarkdownText
+import com.example.multimodulepractice.common.composables.MarkDownText
 
 @Composable
 fun Info(text: String, index: Int) {
@@ -25,12 +25,13 @@ fun Info(text: String, index: Int) {
             .background(color = Color.White, shape = shape)
             .clip(shape)
     ) {
-        MarkdownText(
-            markdown = text,
+
+        MarkDownText(
             modifier = Modifier
                 .background(Color.White)
                 .padding(horizontal = 20.dp)
-                .padding(bottom = 30.dp)
+                .padding(bottom = 30.dp),
+            text = text
         )
     }
 }
