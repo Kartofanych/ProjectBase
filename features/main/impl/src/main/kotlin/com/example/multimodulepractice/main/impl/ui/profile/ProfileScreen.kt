@@ -75,7 +75,6 @@ fun getMockCloseAttraction(): CloseAttraction {
     )
 }
 
-
 @Composable
 fun ProfileSection() {
     Column(
