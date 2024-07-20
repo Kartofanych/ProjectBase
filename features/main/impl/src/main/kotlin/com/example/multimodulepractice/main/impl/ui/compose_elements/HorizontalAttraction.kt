@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -53,7 +54,7 @@ fun HorizontalAttraction(
         Row {
             Column(
                 modifier = Modifier
-                    .width(208.dp)
+                    .width(200.dp)
             ) {
 
                 Text(
@@ -64,7 +65,7 @@ fun HorizontalAttraction(
                 )
 
                 Text(
-                    text = attraction.name,
+                    text = attraction.shortInfo,
                     style = mediumTextStyle.copy(fontSize = 11.sp),
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis,
@@ -84,13 +85,15 @@ fun HorizontalAttraction(
                 }
 
                 Text(
-                    text = attraction.dateCreation,
+                    text = "Дата основания: ${attraction.dateCreation}",
                     style = mediumTextStyle.copy(fontSize = 11.sp, color = Color(0xFF959595)),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.padding(top = 10.dp)
                 )
             }
+
+            Spacer(modifier = Modifier.width(8.dp))
             AsyncImage(
                 model = ImageRequest.Builder(context)
                     .data(attraction.icon)
