@@ -1,6 +1,6 @@
 package com.example.multimodulepractice.main.impl.ui.profile
 
-import androidx.compose.foundation.Image
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,27 +26,26 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.multimodulepractice.common.theme.regularTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.example.multimodulepractice.landmark.data.AttractionCategory
-import com.example.multimodulepractice.main.impl.R
 import com.example.multimodulepractice.main.impl.data.local_models.list.CloseAttraction
 import com.example.multimodulepractice.main.impl.ui.compose_elements.HorizontalAttraction
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(context: Context) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFF6F6F6))
     ) {
         item {
-            ProfileSection()
+            ProfileSection(context)
 
             Spacer(
                 modifier = Modifier
@@ -54,18 +53,21 @@ fun ProfileScreen() {
                     .height(24.dp)
             )
 
-            FavoritesSection()
+            FavoritesSection(context)
         }
     }
 }
-
 // Mock data
+fun mockProfile(): String{
+    return "https://upload.wikimedia.org/wikipedia/commons/0/0e/Felis_silvestris_silvestris.jpg"
+}
+
 fun getMockCloseAttraction(): CloseAttraction {
     return CloseAttraction(
         id = "1",
         name = "Example Attraction",
         distance = "5 km",
-        icon = "",
+        icon = "https://upload.wikimedia.org/wikipedia/commons/0/0e/Felis_silvestris_silvestris.jpg",
         shortInfo = "This is a short description of the attraction.",
         categories = listOf(
             AttractionCategory(name = "Category 1", color = Color(0xFFE57373)),
@@ -76,7 +78,7 @@ fun getMockCloseAttraction(): CloseAttraction {
 }
 
 @Composable
-fun ProfileSection() {
+fun ProfileSection(context: Context) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -122,39 +124,37 @@ fun ProfileSection() {
             Box(
                 modifier = Modifier
                     .shadow(
-                        elevation = 12.dp, shape = RoundedCornerShape(16.dp), clip = true
+                        elevation = 12.dp,
+                        shape = RoundedCornerShape(16.dp),
+                        clip = true
                     )
                     .background(Color.White)
                     .size(108.dp)
             ) {
-//                AsyncImage(
-//                    model = ImageRequest.Builder(context)
-//                        .build(),
-//                    contentScale = ContentScale.Crop,
-//                    contentDescription = null,
-//                    modifier = Modifier
-//                        .size(108.dp)
-//                        .clip(RoundedCornerShape(16.dp)),
-//                )
-
-                Image(
-                    painter = painterResource(id = R.drawable.supra),
+                AsyncImage(
+                    model = ImageRequest.Builder(context)
+                        .data(mockProfile())
+                        .build(),
                     contentScale = ContentScale.Crop,
                     contentDescription = null,
                     modifier = Modifier
                         .size(108.dp)
-                        .clip(RoundedCornerShape(16.dp))
+                        .clip(RoundedCornerShape(16.dp)),
                 )
             }
 
             Spacer(modifier = Modifier.width(16.dp))
 
             Column(
-                modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.Start
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.Start
             ) {
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Text("Насыбуллин \nКарим", style = semiboldTextStyle.copy(fontSize = 20.sp))
+                Text(
+                    "Насыбуллин \nКарим",
+                    style = semiboldTextStyle.copy(fontSize = 20.sp)
+                )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -165,7 +165,10 @@ fun ProfileSection() {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Text("Движение это жизнь", style = regularTextStyle.copy(fontSize = 12.sp))
+                Text(
+                    "Движение это жизнь",
+                    style = regularTextStyle.copy(fontSize = 12.sp)
+                )
             }
         }
 
@@ -180,7 +183,7 @@ fun ProfileSection() {
 }
 
 @Composable
-fun FavoritesSection() {
+fun FavoritesSection(context: Context) {
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -196,7 +199,8 @@ fun FavoritesSection() {
                 .height(16.dp)
         )
 
-        HorizontalAttraction(context = LocalContext.current,
+        HorizontalAttraction(
+            context = context,
             attraction = getMockCloseAttraction(),
             onListAction = {}
         )
@@ -207,7 +211,8 @@ fun FavoritesSection() {
                 .height(24.dp)
         )
 
-        HorizontalAttraction(context = LocalContext.current,
+        HorizontalAttraction(
+            context = context,
             attraction = getMockCloseAttraction(),
             onListAction = {}
         )
@@ -218,7 +223,8 @@ fun FavoritesSection() {
                 .height(24.dp)
         )
 
-        HorizontalAttraction(context = LocalContext.current,
+        HorizontalAttraction(
+            context = context,
             attraction = getMockCloseAttraction(),
             onListAction = {}
         )

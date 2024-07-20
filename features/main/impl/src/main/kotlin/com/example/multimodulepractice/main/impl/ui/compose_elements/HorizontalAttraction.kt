@@ -85,7 +85,7 @@ fun HorizontalAttraction(
                 }
 
                 Text(
-                    text = "Дата основания: " + attraction.dateCreation,
+                    text = "Дата основания: ${attraction.dateCreation}",
                     style = mediumTextStyle.copy(fontSize = 11.sp, color = Color(0xFF959595)),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
