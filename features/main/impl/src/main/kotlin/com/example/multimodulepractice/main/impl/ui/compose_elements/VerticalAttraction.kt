@@ -28,12 +28,12 @@ import coil.request.ImageRequest
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.example.multimodulepractice.main.impl.R
-import com.example.multimodulepractice.main.impl.data.local_models.list.VerticalAttraction
+import com.example.multimodulepractice.main.impl.data.local_models.list.Attraction
 import com.example.multimodulepractice.main.impl.ui.list.ListAction
 
 @Composable
 fun VerticalAttractionView(
-    attraction: VerticalAttraction,
+    attraction: Attraction,
     context: Context,
     onListAction: (ListAction) -> Unit
 ) {

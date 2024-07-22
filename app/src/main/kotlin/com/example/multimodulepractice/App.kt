@@ -17,8 +17,6 @@ class App : Application() {
 
         appProvider = DaggerAppComponent.factory()
             .create(this)
-
-        appProvider.geoManager.start()
     }
 
 }

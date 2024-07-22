@@ -82,7 +82,7 @@ fun AudioGidItemLayout(
             text = audioGid.title,
             modifier = Modifier
                 .padding(start = 98.dp, end = 70.dp),
-            style = semiboldTextStyle.copy(fontSize = 12.sp)
+            style = semiboldTextStyle.copy(fontSize = 14.sp)
         )
 
         Row(

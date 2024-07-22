@@ -3,6 +3,7 @@ package com.example.multimodulepractice.auth.impl.auth_info
 import android.content.Context
 import androidx.datastore.dataStore
 import com.example.multimodulepractice.auth.AuthInfoManager
+import com.example.multimodulepractice.auth.impl.auth_info.mappers.toDto
 import com.example.multimodulepractice.auth.models.AuthInfo
 import com.example.multimodulepractice.common.di.AppContext
 import com.example.multimodulepractice.common.di.AppScope
@@ -24,7 +25,7 @@ class AuthInfoManagerImpl @Inject constructor(
 
     override suspend fun updateAuthInfo(info: AuthInfo) {
         dataStore.updateData {
-            it.copy(token = info.token)
+            info.toDto()
         }
     }
 

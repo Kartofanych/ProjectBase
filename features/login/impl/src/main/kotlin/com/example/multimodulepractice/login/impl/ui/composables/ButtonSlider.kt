@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
@@ -114,6 +115,7 @@ fun YandexLoginButton(
                     )
                 }
                 .size(50.dp)
+                .rotate(maxOf(0f, minOf(360f, progress.value * 360)))
         )
     }
 }
