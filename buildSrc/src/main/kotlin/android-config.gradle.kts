@@ -4,7 +4,7 @@ fun android(configuration: BaseExtension.() -> Unit) = configure(configuration)
 
 // Common configuration for all Android modules.
 android {
-    compileSdkVersion(34)
+    compileSdkVersion(35)
 
     defaultConfig {
         minSdk = 28
