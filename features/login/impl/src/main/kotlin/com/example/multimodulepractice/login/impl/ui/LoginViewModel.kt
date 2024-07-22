@@ -9,6 +9,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.multimodulepractice.auth.AuthInfoManager
 import com.example.multimodulepractice.auth.models.AuthInfo
 import com.example.multimodulepractice.common.di.AppContext
+import com.example.multimodulepractice.common.models.local.ResponseState
+import com.example.multimodulepractice.login.impl.data.interactors.YandexAuthInfoInteractor
 import com.yandex.authsdk.YandexAuthLoginOptions
 import com.yandex.authsdk.YandexAuthOptions
 import com.yandex.authsdk.YandexAuthResult
@@ -20,7 +22,8 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     @AppContext
     private val context: Context,
-    private val authInfoManager: AuthInfoManager
+    private val authInfoManager: AuthInfoManager,
+    private val authInteractor: YandexAuthInfoInteractor
 ) : ViewModel() {
 
     private lateinit var events: LoginScreenEvents
@@ -72,9 +75,25 @@ class LoginViewModel @Inject constructor(
 
     private fun onSuccessAuth(token: YandexAuthToken) {
         viewModelScope.launch {
-            authInfoManager.updateAuthInfo(AuthInfo(token.value))
-            events.loginSuccess()
+            when (val response = authInteractor.getInfo(token.value)) {
+                is ResponseState.Error -> {
+                    onCancelled()
+                }
+
+                is ResponseState.Success -> {
+                    response.data.apply {
+                        authInfoManager.updateAuthInfo(
+                            AuthInfo.User(
+                                token.value,
+                                name,
+                                email,
+                                avatar
+                            )
+                        )
+                        events.loginSuccess()
+                    }
+                }
+            }
         }
     }
-
 }

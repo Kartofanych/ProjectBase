@@ -2,6 +2,7 @@ package com.example.multimodulepractice.network
 
 //TODO to network module
 import com.example.multimodulepractice.auth.AuthInfoManager
+import com.example.multimodulepractice.auth.models.AuthInfo
 import okhttp3.Interceptor
 import okhttp3.Interceptor.Chain
 import okhttp3.Response
@@ -19,7 +20,7 @@ class HeaderInterceptor @Inject constructor(
 
         val requestBuilder = request.newBuilder()
 
-        authInfoManager.authInfo().token?.let {
+        (authInfoManager.authInfo() as? AuthInfo.User)?.token?.let {
             requestBuilder.addHeader("Authorization", "Bearer $it")
         }
 

@@ -22,6 +22,7 @@ android {
 dependencies {
     api(project(":features:main:api"))
     api(project(":features:guide:api"))
+    api(project(":features:auth:api"))
     implementation(project(":features:geo"))
     implementation(project(":features:landmark"))
     implementation(project(":common"))

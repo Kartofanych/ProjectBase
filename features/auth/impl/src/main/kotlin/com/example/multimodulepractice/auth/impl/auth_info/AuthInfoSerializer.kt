@@ -11,7 +11,7 @@ import java.io.OutputStream
 
 class AuthInfoSerializer : Serializer<AuthInfoDto> {
     override val defaultValue: AuthInfoDto
-        get() = AuthInfoDto.EMPTY
+        get() = AuthInfoDto.Guest
 
     override suspend fun readFrom(input: InputStream): AuthInfoDto {
         return try {

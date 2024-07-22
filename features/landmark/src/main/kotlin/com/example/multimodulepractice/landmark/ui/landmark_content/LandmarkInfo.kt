@@ -82,6 +82,8 @@ fun LandmarkInfo(landmark: LandmarkResponse, onOpenAudioGuide: () -> Unit) {
             Spacer(modifier = Modifier.height(10.dp))
 
             AudioGidItemLayout(audioGid = landmark.audioGuides[0], onOpenAudioGuide = onOpenAudioGuide)
+
+            Spacer(modifier = Modifier.height(30.dp))
         }
     }
 }

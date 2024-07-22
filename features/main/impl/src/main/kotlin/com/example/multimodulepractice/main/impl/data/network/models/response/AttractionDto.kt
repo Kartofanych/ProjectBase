@@ -4,7 +4,7 @@ import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
 @Keep
-data class CloseAttractionDto(
+data class AttractionDto(
 
     @SerializedName("uid")
     val id: String,

@@ -33,14 +33,14 @@ import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.regularTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.example.multimodulepractice.landmark.ui.landmark_content.Chip
-import com.example.multimodulepractice.main.impl.data.local_models.list.CloseAttraction
+import com.example.multimodulepractice.main.impl.data.local_models.list.Attraction
 import com.example.multimodulepractice.main.impl.ui.list.ListAction
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun BigHorizontalAttraction(
     context: Context,
-    attraction: CloseAttraction,
+    attraction: Attraction,
     onListAction: (ListAction) -> Unit
 ) {
     Column(

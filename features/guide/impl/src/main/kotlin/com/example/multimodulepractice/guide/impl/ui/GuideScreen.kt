@@ -46,7 +46,7 @@ fun GuideScreen(uiState: GuideUiState, onAction: (GuideAction) -> Unit) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     LazyColumn(
                         modifier = Modifier
-                            .fillMaxSize()
+                            .wrapContentHeight()
                             .background(Color.Black)
                     ) {
                         item {

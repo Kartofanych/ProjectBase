@@ -5,10 +5,18 @@ import kotlinx.serialization.Serializable
 
 @Keep
 @Serializable
-data class AuthInfoDto(
-    val token: String?,
-) {
-    companion object {
-        val EMPTY = AuthInfoDto(null)
-    }
+sealed class AuthInfoDto {
+    @Keep
+    @Serializable
+    object Guest : AuthInfoDto()
+
+    @Keep
+    @Serializable
+    data class User(
+        val token: String,
+        val name: String,
+        val gmail: String,
+        val image: String
+    ) : AuthInfoDto()
 }
+

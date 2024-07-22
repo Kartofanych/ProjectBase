@@ -6,6 +6,7 @@ import com.example.multimodulepractice.common.models.local.ResponseState
 import com.example.multimodulepractice.main.impl.data.interactors.ListInteractor
 import com.example.multimodulepractice.main.impl.di.MainScope
 import com.example.multimodulepractice.main.impl.repositories.AttractionRepository
+import com.example.multimodulepractice.main.impl.repositories.RecommendedAttractionsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -15,7 +16,8 @@ import javax.inject.Inject
 @MainScope
 class ListViewModel @Inject constructor(
     private val listInteractor: ListInteractor,
-    private val attractionRepository: AttractionRepository
+    private val attractionRepository: AttractionRepository,
+    private val recommendedAttractionsRepository: RecommendedAttractionsRepository
 ) : ViewModel() {
 
     private val _uiStateFlow = MutableStateFlow<ListUiState>(ListUiState.Loading)
@@ -36,10 +38,11 @@ class ListViewModel @Inject constructor(
                 is ResponseState.Success -> {
                     _uiStateFlow.update {
                         ListUiState.Content(
-                            result.data.popularList,
+                            result.data.recommendList,
                             result.data.closeList
                         )
                     }
+                    recommendedAttractionsRepository.updateAttractions(result.data.recommendList)
                 }
             }
         }
@@ -52,6 +55,4 @@ class ListViewModel @Inject constructor(
             }
         }
     }
-
-
 }

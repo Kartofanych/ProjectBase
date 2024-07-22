@@ -29,15 +29,15 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
-import com.example.multimodulepractice.main.impl.data.local_models.list.CloseAttraction
-import com.example.multimodulepractice.main.impl.ui.list.ListAction
+import com.example.multimodulepractice.main.impl.data.local_models.list.Attraction
+import com.example.multimodulepractice.main.impl.ui.profile.ProfileAction
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun HorizontalAttraction(
     context: Context,
-    attraction: CloseAttraction,
-    onListAction: (ListAction) -> Unit
+    attraction: Attraction,
+    onProfileAction: (ProfileAction) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -46,7 +46,7 @@ fun HorizontalAttraction(
             .background(color = Color.White, shape = RoundedCornerShape(16.dp))
             .clip(RoundedCornerShape(16.dp))
             .clickable {
-                onListAction(ListAction.OpenAttraction(attraction.id))
+                onProfileAction(ProfileAction.OnOpenAttraction(attraction.id))
             }
             .padding(top = 13.dp)
             .padding(start = 14.dp, end = 8.dp),

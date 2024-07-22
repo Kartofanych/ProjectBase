@@ -1,6 +1,7 @@
 package com.example.multimodulepractice.main.impl.di
 
 import android.content.Context
+import com.example.multimodulepractice.auth.AuthInfoManager
 import com.example.multimodulepractice.common.di.AppContext
 import com.example.multimodulepractice.geo.repository.GeoRepository
 import com.example.multimodulepractice.main.impl.data.network.MainApi
@@ -12,5 +13,6 @@ class MainDependencies @Inject constructor(
     val context: Context,
     val geoRepository: GeoRepository,
     val mainApi: MainApi,
-    val scope: CoroutineScope
+    val scope: CoroutineScope,
+    val authInfoManager: AuthInfoManager
 )

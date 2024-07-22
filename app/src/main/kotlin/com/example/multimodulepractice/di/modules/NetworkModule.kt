@@ -33,6 +33,17 @@ interface NetworkModule {
 
         @Provides
         @AppScope
+        @Named("YandexRetrofit")
+        fun provideEmptyRetrofit(): Retrofit {
+            return Retrofit.Builder()
+                .baseUrl("https://login.yandex.ru/")
+                .client(OkHttpClient.Builder().retryOnConnectionFailure(true).build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        }
+
+        @Provides
+        @AppScope
         fun provideHttpClient(
             @Named("Logging") loggingInterceptor: Interceptor,
             @Named("Header") headerInterceptor: Interceptor

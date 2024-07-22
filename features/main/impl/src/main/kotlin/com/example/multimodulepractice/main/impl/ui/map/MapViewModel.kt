@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import coil.ImageLoader
@@ -151,7 +153,7 @@ class MapViewModel @Inject constructor(
 
             userMapObject = mapObjectCollection.addPlacemark().apply {
                 geometry = location
-                setIcon(ImageProvider.fromResource(map.context, R.drawable.ic_dollar_pin))
+                setIcon(ImageProvider.fromBitmap(getDrawable(context, R.drawable.ic_me_pin)!!.toBitmap()))
             }
             moveToLocation(geoPoint)
         } else {

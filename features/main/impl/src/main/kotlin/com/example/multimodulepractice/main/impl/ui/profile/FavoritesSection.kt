@@ -1,25 +1,14 @@
 package com.example.multimodulepractice.main.impl.ui.profile
 
-import android.content.Context
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.theme.semiboldTextStyle
+import androidx.compose.ui.platform.LocalContext
 import com.example.multimodulepractice.landmark.data.AttractionCategory
-import com.example.multimodulepractice.main.impl.data.local_models.list.CloseAttraction
-import com.example.multimodulepractice.main.impl.ui.compose_elements.HorizontalAttraction
+import com.example.multimodulepractice.main.impl.data.local_models.list.Attraction
 
 
-fun getMockCloseAttraction(): CloseAttraction {
-    return CloseAttraction(
+fun getMockCloseAttraction(): Attraction {
+    return Attraction(
         id = "1",
         name = "Example Attraction",
         distance = "5 km",
@@ -34,56 +23,8 @@ fun getMockCloseAttraction(): CloseAttraction {
 }
 
 @Composable
-fun FavoritesSection(context: Context) {
-    Column(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Text(
-            "Избранное",
-            style = semiboldTextStyle.copy(fontSize = 16.sp),
-            modifier = Modifier.padding(horizontal = 16.dp)
-        )
+fun FavoritesSection(uiState: ProfileUiState) {
 
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(16.dp)
-        )
+    val context = LocalContext.current
 
-        HorizontalAttraction(
-            context = context,
-            attraction = getMockCloseAttraction(),
-            onListAction = {}
-        )
-
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(24.dp)
-        )
-
-        HorizontalAttraction(
-            context = context,
-            attraction = getMockCloseAttraction(),
-            onListAction = {}
-        )
-
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(24.dp)
-        )
-
-        HorizontalAttraction(
-            context = context,
-            attraction = getMockCloseAttraction(),
-            onListAction = {}
-        )
-
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(48.dp)
-        )
-    }
 }

@@ -54,7 +54,11 @@ class MainFeatureImpl @Inject constructor(
                     listViewModel = injectedViewModel {
                         component.listViewModel
                     },
-                    navController = insideNavController
+                    profileViewModel = injectedViewModel {
+                        component.profileViewModel
+                    },
+                    navController = insideNavController,
+                    navigateToLogin = { navController.navigate("login") }
                 )
 
                 BottomNavBar(

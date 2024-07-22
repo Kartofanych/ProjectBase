@@ -1,7 +1,6 @@
 package com.example.multimodulepractice.main.impl.ui.list
 
-import com.example.multimodulepractice.main.impl.data.local_models.list.CloseAttraction
-import com.example.multimodulepractice.main.impl.data.local_models.list.VerticalAttraction
+import com.example.multimodulepractice.main.impl.data.local_models.list.Attraction
 
 sealed interface ListUiState {
 
@@ -10,8 +9,8 @@ sealed interface ListUiState {
     object Loading : ListUiState
 
     class Content(
-        val popularList: List<VerticalAttraction>,
-        val closeList: List<CloseAttraction>
+        val popularList: List<Attraction>,
+        val closeList: List<Attraction>
     ) : ListUiState
 
 }

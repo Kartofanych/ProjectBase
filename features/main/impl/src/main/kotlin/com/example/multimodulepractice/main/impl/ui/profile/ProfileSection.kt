@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -31,15 +32,10 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.multimodulepractice.common.theme.regularTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
-
-// Mock data
-fun mockProfile(): String{
-    return "https://upload.wikimedia.org/wikipedia/commons/0/0e/Felis_silvestris_silvestris.jpg"
-}
-
+import com.example.multimodulepractice.main.impl.ui.profile.ProfileUiState.ProfileMode.*
 
 @Composable
-fun ProfileSection(context: Context) {
+fun ProfileSection(uiState: ProfileUiState, onAction: (ProfileAction) -> Unit, context: Context) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -53,7 +49,7 @@ fun ProfileSection(context: Context) {
             )
             .background(Color.White)
             .padding(16.dp, 8.dp)
-            .height(285.dp)
+            .wrapContentHeight()
             .safeDrawingPadding(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -72,7 +68,9 @@ fun ProfileSection(context: Context) {
                 ),
                 modifier = Modifier
                     .clip(RoundedCornerShape(8.dp))
-                    .clickable { }
+                    .clickable {
+                        onAction(ProfileAction.OnLogOut)
+                    }
                     .padding(12.dp, 8.dp)
             )
         }
@@ -94,7 +92,7 @@ fun ProfileSection(context: Context) {
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(context)
-                        .data(mockProfile())
+                        .data((uiState.mode as? UserProfile)?.image)
                         .build(),
                     contentScale = ContentScale.Crop,
                     contentDescription = null,
@@ -113,23 +111,26 @@ fun ProfileSection(context: Context) {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    "Насыбуллин \nКарим",
+                    (uiState.mode as? UserProfile)?.name ?: "Гостевой аккаунт",
                     style = semiboldTextStyle.copy(fontSize = 20.sp)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    "kartofanych@gmail.com",
+                    (uiState.mode as? UserProfile)?.email ?: "",
                     style = regularTextStyle.copy(fontSize = 10.sp, color = Color(0xFF838383))
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Text(
-                    "Движение это жизнь",
-                    style = regularTextStyle.copy(fontSize = 12.sp)
-                )
+                //TODO
+                if (false) {
+                    Text(
+                        "Движение это жизнь",
+                        style = regularTextStyle.copy(fontSize = 12.sp)
+                    )
+                }
             }
         }
 

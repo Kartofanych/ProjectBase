@@ -27,5 +27,4 @@ class LoginFeatureImpl @Inject constructor(
             )
         }
     }
-
 }

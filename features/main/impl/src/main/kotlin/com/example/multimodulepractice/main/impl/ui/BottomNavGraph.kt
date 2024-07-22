@@ -18,12 +18,16 @@ import com.example.multimodulepractice.main.impl.ui.map.MapScreen
 import com.example.multimodulepractice.main.impl.ui.map.MapScreenEventHandler
 import com.example.multimodulepractice.main.impl.ui.map.MapViewModel
 import com.example.multimodulepractice.main.impl.ui.profile.ProfileScreen
+import com.example.multimodulepractice.main.impl.ui.profile.ProfileScreenEventHandler
+import com.example.multimodulepractice.main.impl.ui.profile.ProfileViewModel
 
 @Composable
 fun BottomNavGraph(
     navController: NavHostController,
     mapViewModel: MapViewModel,
-    listViewModel: ListViewModel
+    listViewModel: ListViewModel,
+    profileViewModel: ProfileViewModel,
+    navigateToLogin: () -> Unit
 ) {
 
     Box(modifier = Modifier.padding(bottom = 40.dp)) {
@@ -52,7 +56,15 @@ fun BottomNavGraph(
             }
 
             composable(route = SCREEN_PROFILE_ROUTE) {
-                ProfileScreen()
+                ProfileScreenEventHandler(
+                    navigateToLogin = navigateToLogin,
+                    uiEvent = profileViewModel.uiEvent
+                )
+
+                ProfileScreen(
+                    profileViewModel.uiStateFlow.collectAsState().value,
+                    profileViewModel::onProfileAction
+                )
             }
         }
     }
