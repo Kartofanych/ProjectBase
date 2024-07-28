@@ -3,9 +3,10 @@ package com.example.multimodulepractice.main.impl.ui
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -36,13 +37,12 @@ fun BottomNavGraph(
             startDestination = SCREEN_MAP_ROUTE
         ) {
             composable(route = SCREEN_MAP_ROUTE) {
-
                 MapScreenEventHandler(
                     uiEvent = mapViewModel.uiEvent
                 )
 
                 MapScreen(
-                    mapViewModel.uiStateFlow.collectAsState().value,
+                    mapViewModel.uiStateFlow.collectAsStateWithLifecycle().value,
                     mapViewModel::onMapAction,
                     mapViewModel.map
                 )
@@ -50,7 +50,7 @@ fun BottomNavGraph(
 
             composable(route = SCREEN_LIST_ROUTE) {
                 ListScreen(
-                    listViewModel.uiStateFlow.collectAsState().value,
+                    listViewModel.uiStateFlow.collectAsStateWithLifecycle().value,
                     listViewModel::onListAction
                 )
             }
@@ -62,7 +62,7 @@ fun BottomNavGraph(
                 )
 
                 ProfileScreen(
-                    profileViewModel.uiStateFlow.collectAsState().value,
+                    profileViewModel.uiStateFlow.collectAsStateWithLifecycle().value,
                     profileViewModel::onProfileAction
                 )
             }

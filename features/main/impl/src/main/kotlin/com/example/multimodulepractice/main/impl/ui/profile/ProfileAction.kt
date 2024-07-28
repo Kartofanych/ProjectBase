@@ -4,7 +4,6 @@ sealed interface ProfileAction {
 
     object OnLogOut : ProfileAction
 
-
     class OnOpenAttraction(val attractionId: String) : ProfileAction
 
 }

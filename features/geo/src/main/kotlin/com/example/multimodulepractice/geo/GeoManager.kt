@@ -31,12 +31,12 @@ class GeoManager @Inject constructor(
     fun start() {
         if (listener != null) return
 
-        locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+        locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
             ?.let(::updateLocation)
 
         listener = LocationListener(::updateLocation).also {
             locationManager.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER,
+                LocationManager.GPS_PROVIDER,
                 MIN_UPDATE_TIME,
                 MIN_UPDATE_DISTANCE,
                 it

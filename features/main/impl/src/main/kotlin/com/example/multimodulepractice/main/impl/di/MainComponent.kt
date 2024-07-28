@@ -1,6 +1,5 @@
 package com.example.multimodulepractice.main.impl.di
 
-import com.example.multimodulepractice.common.di.AppScope
 import com.example.multimodulepractice.main.impl.repositories.AttractionRepository
 import com.example.multimodulepractice.main.impl.repositories.RecommendedAttractionsRepository
 import com.example.multimodulepractice.main.impl.ui.list.ListViewModel
@@ -8,7 +7,7 @@ import com.example.multimodulepractice.main.impl.ui.map.MapViewModel
 import com.example.multimodulepractice.main.impl.ui.profile.ProfileViewModel
 import dagger.Component
 
-@AppScope
+@MainScope
 @Component(
     dependencies = [MainDependencies::class],
     modules = [MainDataModule::class]
