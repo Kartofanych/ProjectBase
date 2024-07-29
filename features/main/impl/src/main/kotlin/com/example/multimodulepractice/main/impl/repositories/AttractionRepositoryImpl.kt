@@ -1,10 +1,10 @@
 package com.example.multimodulepractice.main.impl.repositories
 
-import com.example.multimodulepractice.common.di.AppScope
 import com.example.multimodulepractice.common.models.local.ResponseState
 import com.example.multimodulepractice.common.utils.runWithMinTime
 import com.example.multimodulepractice.landmark.ui.Landmark
 import com.example.multimodulepractice.main.impl.data.interactors.LandmarkInteractor
+import com.example.multimodulepractice.main.impl.di.MainScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@AppScope
+@MainScope
 class AttractionRepositoryImpl @Inject constructor(
     private val scope: CoroutineScope,
     private val landmarkInteractor: LandmarkInteractor
@@ -21,7 +21,6 @@ class AttractionRepositoryImpl @Inject constructor(
 
     private val _currentLandmark = MutableStateFlow<Landmark?>(null)
     override fun currentLandmark(): StateFlow<Landmark?> = _currentLandmark.asStateFlow()
-
 
     private fun changeCurrentLandmark(landmark: Landmark) {
         _currentLandmark.update { landmark }

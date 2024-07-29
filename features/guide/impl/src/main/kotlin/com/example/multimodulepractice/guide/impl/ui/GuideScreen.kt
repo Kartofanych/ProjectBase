@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.CircularProgressIndicator
@@ -52,10 +53,15 @@ fun GuideScreen(uiState: GuideUiState, onAction: (GuideAction) -> Unit) {
                         item {
                             ContentImage(uiState.topics[page].image)
                         }
-                        items(
-                            count = uiState.topics[page].texts.size
-                        ) {
-                            Info(uiState.topics[page].texts[it], it)
+                        itemsIndexed(
+                            items = uiState.topics[page].texts,
+                            key = { index, _ -> index }
+                        ) { index, item ->
+                            Info(
+                                item,
+                                isLast = index == uiState.topics[page].texts.size - 1,
+                                isFirst = index == 0
+                            )
                         }
                     }
                 }

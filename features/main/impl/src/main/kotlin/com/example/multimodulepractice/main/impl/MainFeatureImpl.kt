@@ -5,10 +5,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -44,7 +44,7 @@ class MainFeatureImpl @Inject constructor(
         navGraphBuilder.composable(featureRoute) {
             val insideNavController = rememberNavController()
             val sheetState = rememberModalBottomSheetState()
-            val landmark = attractionRepository.currentLandmark().collectAsState().value
+            val landmark = attractionRepository.currentLandmark().collectAsStateWithLifecycle().value
 
             Box(modifier = Modifier.fillMaxSize()) {
                 BottomNavGraph(

@@ -1,8 +1,10 @@
 package com.example.multimodulepractice.guide.impl.ui.composables
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -13,12 +15,12 @@ import androidx.compose.ui.unit.dp
 import com.example.multimodulepractice.common.composables.MarkDownText
 
 @Composable
-fun Info(text: String, index: Int) {
+fun Info(text: String, isLast: Boolean, isFirst: Boolean) {
     val shape = when {
-        (index == 0) -> RoundedCornerShape(bottomEnd = 28.dp, bottomStart = 28.dp)
+        isFirst -> RoundedCornerShape(bottomEnd = 28.dp, bottomStart = 28.dp)
         else -> RoundedCornerShape(28.dp)
     }
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 5.dp)
@@ -33,5 +35,8 @@ fun Info(text: String, index: Int) {
                 .padding(bottom = 30.dp),
             text = text
         )
+        if (isLast) {
+            Spacer(modifier = Modifier.height(30.dp))
+        }
     }
 }

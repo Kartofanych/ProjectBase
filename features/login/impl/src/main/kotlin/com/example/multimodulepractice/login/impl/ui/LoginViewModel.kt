@@ -90,8 +90,9 @@ class LoginViewModel @Inject constructor(
                                 avatar
                             )
                         )
-                        events.loginSuccess()
                     }
+                    events.loginSuccess()
+                    isAuthOpen = false
                 }
             }
         }

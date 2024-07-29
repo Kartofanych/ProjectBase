@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import coil.ImageLoader
 import coil.request.ImageRequest
+import com.example.multimodulepractice.common.di.AppContext
 import com.example.multimodulepractice.common.models.local.GeoPoint
 import com.example.multimodulepractice.common.models.local.ResponseState
 import com.example.multimodulepractice.common.utils.runWithMinTime
@@ -46,6 +47,7 @@ import javax.inject.Inject
 class MapViewModel @Inject constructor(
     private val interactor: MapInteractor,
     private val repository: GeoRepository,
+    @AppContext
     private val context: Context,
     private val attractionRepository: AttractionRepository
 ) : ViewModel() {
