@@ -6,6 +6,7 @@ import com.example.multimodulepractice.common.navigation.Destinations
 import com.example.multimodulepractice.geo.GeoManager
 import com.example.multimodulepractice.guide.impl.di.GuideDependencies
 import com.example.multimodulepractice.main.impl.di.MainDependencies
+import com.filters.impl.di.FiltersDependencies
 import com.travelling.api.AppConfig
 
 interface AppProvider {
@@ -21,6 +22,8 @@ interface AppProvider {
     val guideDependencies: GuideDependencies
 
     val appConfig: AppConfig
+
+    val filtersDependencies: FiltersDependencies
 }
 
 val LocalAppProvider = compositionLocalOf<AppProvider> { error("No app provider found!") }

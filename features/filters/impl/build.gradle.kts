@@ -2,13 +2,11 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
     kotlin("kapt")
-    // Precompiled plugin with the base android configuration.
-    // Declared in buildSrc/.../android-config.gradle.kts.
     `android-config`
 }
 
 android {
-    namespace = ProjectConfig.namespace("login")
+    namespace = ProjectConfig.namespace("filters.impl")
 
     buildFeatures.compose = true
     composeOptions {
@@ -17,8 +15,7 @@ android {
 }
 
 dependencies {
-    api(project(":features:guide:api"))
-    api(project(":features:main:api"))
+    api(project(":features:filters:api"))
     implementation(project(":common"))
     implementation(libs.core.ktx)
 

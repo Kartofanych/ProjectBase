@@ -9,8 +9,6 @@ plugins {
     kotlin("kapt")
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
-    // Precompiled plugin with the base android configuration.
-    // Declared in buildSrc/.../android-config.gradle.kts.
     `android-config`
 }
 
@@ -101,6 +99,7 @@ dependencies {
     implementation(project(":features:audio_guide:impl"))
     implementation(project(":features:geo"))
     implementation(project(":features:app_config:impl"))
+    implementation(project(":features:filters:impl"))
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
