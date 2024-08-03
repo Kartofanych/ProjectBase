@@ -9,21 +9,37 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.example.multimodulepractice.auth.models.AuthInfo
 import com.example.multimodulepractice.common.navigation.find
 import com.example.multimodulepractice.common.theme.MultimodulePracticeTheme
+import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.guide.GuideEntry
-import com.example.multimodulepractice.main.MainFeatureEntry
 import com.example.multimodulepractice.login.LoginFeatureEntry
+import com.example.multimodulepractice.main.MainFeatureEntry
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,6 +51,17 @@ class MainActivity : AppCompatActivity() {
         Manifest.permission.ACCESS_COARSE_LOCATION,
         Manifest.permission.ACCESS_FINE_LOCATION
     )
+
+    private val permissionRequest =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            val granted = permissions.entries.all {
+                it.value
+            }
+
+            if (granted) {
+                appProvider.geoManager.start()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -74,37 +101,98 @@ class MainActivity : AppCompatActivity() {
         val guideFeature = destinations.find<GuideEntry>()
         val audioGuideFeature = destinations.find<AudioGuideFeatureEntry>()
 
+        val isDebug = BuildConfig.DEBUG
+        val isProduction = appProvider.appConfig.isProduction()
 
         Scaffold {
-            NavHost(
-                navController = navController,
-                startDestination = startDestination,
+            Box(modifier = Modifier.fillMaxSize()) {
+                NavHost(
+                    navController = navController,
+                    startDestination = startDestination,
+                    modifier = Modifier
+                        .background(Color.White)
+                        .padding(bottom = it.calculateBottomPadding())
+                ) {
+                    register(
+                        loginFeature,
+                        navController = navController,
+                        modifier = Modifier
+                    )
+
+                    register(
+                        mainFeature,
+                        navController = navController,
+                        modifier = Modifier
+                    )
+
+                    register(
+                        guideFeature,
+                        navController = navController,
+                        modifier = Modifier
+                    )
+
+                    register(
+                        audioGuideFeature,
+                        navController = navController,
+                        modifier = Modifier
+                    )
+                }
+                if (isDebug) {
+                    DebugPanel(
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd),
+                        isProduction = isProduction
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun DebugPanel(modifier: Modifier, isProduction: Boolean) {
+        val activeColor = Color(0xFFEBEBEB)
+        val passiveColor = Color(0xFFCCCCCC)
+        Column(
+            modifier = modifier
+        ) {
+            Box(
                 modifier = Modifier
-                    .background(Color.White)
-                    .padding(bottom = it.calculateBottomPadding())
+                    .padding(horizontal = 8.dp, vertical = 8.dp)
+                    .size(50.dp)
+                    .background(
+                        color = if (!isProduction) activeColor else passiveColor,
+                        shape = CircleShape
+                    )
+                    .clip(CircleShape)
+                    .clickable(enabled = !isProduction) {
+                        appProvider.appConfig.updateMode(isProduction = true)
+                        restartApp()
+                    },
+                contentAlignment = Alignment.Center
             ) {
-                register(
-                    loginFeature,
-                    navController = navController,
-                    modifier = Modifier
+                Text(
+                    text = PRODUCTION_TITLE,
+                    style = mediumTextStyle.copy(fontSize = 10.sp)
                 )
-
-                register(
-                    mainFeature,
-                    navController = navController,
-                    modifier = Modifier
-                )
-
-                register(
-                    guideFeature,
-                    navController = navController,
-                    modifier = Modifier
-                )
-
-                register(
-                    audioGuideFeature,
-                    navController = navController,
-                    modifier = Modifier
+            }
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 8.dp, vertical = 8.dp)
+                    .size(50.dp)
+                    .background(
+                        color = if (!isProduction) passiveColor else activeColor,
+                        shape = CircleShape
+                    )
+                    .clip(CircleShape)
+                    .clickable(enabled = isProduction) {
+                        appProvider.appConfig.updateMode(isProduction = false)
+                        restartApp()
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = TESTING_TITLE,
+                    style = mediumTextStyle.copy(fontSize = 10.sp)
                 )
             }
         }
@@ -123,14 +211,18 @@ class MainActivity : AppCompatActivity() {
         permissionRequest.launch(locationPermissions)
     }
 
-    private val permissionRequest =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            val granted = permissions.entries.all {
-                it.value
-            }
-
-            if (granted) {
-                appProvider.geoManager.start()
-            }
+    private fun restartApp() {
+        lifecycleScope.launch {
+            delay(100)
+            val intent = packageManager.getLaunchIntentForPackage(packageName)
+            finishAffinity()
+            startActivity(intent)
+            exitProcess(0)
         }
+    }
+
+    private companion object {
+        const val PRODUCTION_TITLE = "Prod"
+        const val TESTING_TITLE = "Testing"
+    }
 }

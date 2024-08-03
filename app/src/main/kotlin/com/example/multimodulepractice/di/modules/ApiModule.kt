@@ -1,5 +1,6 @@
 package com.example.multimodulepractice.di.modules
 
+import com.example.multimodulepractice.di.modules.NetworkModule.Companion.YANDEX_RETROFIT
 import com.example.multimodulepractice.guide.impl.data.GuideApi
 import com.example.multimodulepractice.login.impl.data.AuthApi
 import com.example.multimodulepractice.main.impl.data.network.MainApi
@@ -22,7 +23,7 @@ class ApiModule {
     }
 
     @Provides
-    fun provideAuthApi(@Named("YandexRetrofit") retrofit: Retrofit): AuthApi {
+    fun provideAuthApi(@Named(YANDEX_RETROFIT) retrofit: Retrofit): AuthApi {
         return retrofit.create(AuthApi::class.java)
     }
 

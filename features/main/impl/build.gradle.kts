@@ -23,6 +23,7 @@ dependencies {
     api(project(":features:main:api"))
     api(project(":features:guide:api"))
     api(project(":features:auth:api"))
+    api(project(":features:app_config:api"))
     implementation(project(":features:geo"))
     implementation(project(":features:landmark"))
     implementation(project(":common"))

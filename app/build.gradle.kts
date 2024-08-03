@@ -38,9 +38,9 @@ android {
             )
             signingConfig = signingConfigs.create("release").apply {
                 keyAlias = "travelling"
-                keyPassword = "AiratRegina55"
+                keyPassword = getLocalProperty("KEY_PASSWORD").toString()
                 storeFile = File("$projectDir/keys.jks")
-                storePassword = "AiratRegina55"
+                storePassword = getLocalProperty("KEY_PASSWORD").toString()
             }
             buildConfigField("String", "API_KEY", "\"${getLocalProperty("API_KEY")}\"")
         }
@@ -100,6 +100,7 @@ dependencies {
     implementation(project(":features:guide:impl"))
     implementation(project(":features:audio_guide:impl"))
     implementation(project(":features:geo"))
+    implementation(project(":features:app_config:impl"))
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
