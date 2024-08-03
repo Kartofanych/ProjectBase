@@ -8,6 +8,6 @@ data class MapInfoResponseDto(
     @SerializedName("city")
     val city: CityDto,
 
-    @SerializedName("attractions")
+    @SerializedName("landmarks")
     val list: List<MapLandmarkDto>
 )

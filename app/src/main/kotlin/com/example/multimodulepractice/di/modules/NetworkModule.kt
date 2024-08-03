@@ -2,6 +2,7 @@ package com.example.multimodulepractice.di.modules
 
 import com.example.multimodulepractice.common.di.AppScope
 import com.example.multimodulepractice.network.HeaderInterceptor
+import com.travelling.api.AppConfig
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -16,27 +17,41 @@ import javax.inject.Named
 interface NetworkModule {
 
     @Binds
-    @Named("Header")
+    @Named(HEADER_INTERCEPTOR)
     @AppScope
     fun bindHeaderInterceptor(interceptor: HeaderInterceptor): Interceptor
 
     companion object {
+
+        const val YANDEX_RETROFIT = "YandexRetrofit"
+        private const val HEADER_INTERCEPTOR = "Header"
+        private const val LOGGING_INTERCEPTOR = "Logging"
+
+        private const val TESTING_BASE_URL = "http://91.224.86.138:8005/"
+        private const val PRODUCTION_BASE_URL = "http://91.224.86.138:8000/"
+        private const val YANDEX_API_BASE_URL = "https://login.yandex.ru/"
+
         @Provides
         @AppScope
-        fun provideRetrofit(client: OkHttpClient): Retrofit {
+        fun provideRetrofit(appConfig: AppConfig, client: OkHttpClient): Retrofit {
+            val url = when {
+                appConfig.isProduction() -> PRODUCTION_BASE_URL
+                else -> TESTING_BASE_URL
+            }
+
             return Retrofit.Builder()
                 .client(client)
-                .baseUrl("http://91.224.86.138:8000/")
+                .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
 
         @Provides
         @AppScope
-        @Named("YandexRetrofit")
+        @Named(YANDEX_RETROFIT)
         fun provideEmptyRetrofit(): Retrofit {
             return Retrofit.Builder()
-                .baseUrl("https://login.yandex.ru/")
+                .baseUrl(YANDEX_API_BASE_URL)
                 .client(OkHttpClient.Builder().retryOnConnectionFailure(true).build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
@@ -45,8 +60,8 @@ interface NetworkModule {
         @Provides
         @AppScope
         fun provideHttpClient(
-            @Named("Logging") loggingInterceptor: Interceptor,
-            @Named("Header") headerInterceptor: Interceptor
+            @Named(LOGGING_INTERCEPTOR) loggingInterceptor: Interceptor,
+            @Named(HEADER_INTERCEPTOR) headerInterceptor: Interceptor
         ): OkHttpClient =
             OkHttpClient.Builder().retryOnConnectionFailure(true)
                 .addInterceptor(loggingInterceptor)
@@ -54,7 +69,7 @@ interface NetworkModule {
                 .build()
 
         @Provides
-        @Named("Logging")
+        @Named(LOGGING_INTERCEPTOR)
         fun getInterceptor(): Interceptor {
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
