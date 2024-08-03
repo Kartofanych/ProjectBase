@@ -138,6 +138,12 @@ class MainActivity : AppCompatActivity() {
                         navController = navController,
                         modifier = Modifier
                     )
+
+                    register(
+                        filtersFeature,
+                        navController = navController,
+                        modifier = Modifier
+                    )
                 }
                 if (isDebug) {
                     DebugPanel(
