@@ -202,12 +202,6 @@ class MainActivity : AppCompatActivity() {
                     text = TESTING_TITLE,
                     style = mediumTextStyle.copy(fontSize = 10.sp)
                 )
-
-                register(
-                    filtersFeature,
-                    navController = navController,
-                    modifier = Modifier
-                )
             }
         }
     }
