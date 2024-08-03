@@ -24,6 +24,7 @@ import com.example.multimodulepractice.common.theme.MultimodulePracticeTheme
 import com.example.multimodulepractice.guide.GuideEntry
 import com.example.multimodulepractice.main.MainFeatureEntry
 import com.example.multimodulepractice.login.LoginFeatureEntry
+import com.filters.api.FiltersEntry
 
 class MainActivity : AppCompatActivity() {
 
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         val loginFeature = destinations.find<LoginFeatureEntry>()
         val guideFeature = destinations.find<GuideEntry>()
         val audioGuideFeature = destinations.find<AudioGuideFeatureEntry>()
-
+        val filtersFeature = destinations.find<FiltersEntry>()
 
         Scaffold {
             NavHost(
@@ -103,6 +104,12 @@ class MainActivity : AppCompatActivity() {
 
                 register(
                     audioGuideFeature,
+                    navController = navController,
+                    modifier = Modifier
+                )
+
+                register(
+                    filtersFeature,
                     navController = navController,
                     modifier = Modifier
                 )
