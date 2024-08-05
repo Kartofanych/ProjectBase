@@ -1,7 +1,7 @@
 package com.example.multimodulepractice.main.impl.repositories
 
 import com.example.multimodulepractice.main.impl.data.local_models.list.Attraction
-import com.example.multimodulepractice.main.impl.di.MainScope
+import com.example.multimodulepractice.common.di.MainScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject

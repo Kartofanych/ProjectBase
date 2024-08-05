@@ -18,11 +18,12 @@ import com.example.multimodulepractice.main.impl.R
 import com.example.multimodulepractice.geo.repository.GeoRepository
 import com.example.multimodulepractice.main.impl.data.interactors.MapInteractor
 import com.example.multimodulepractice.main.impl.data.local_models.map.MapLandmark
-import com.example.multimodulepractice.main.impl.di.MainScope
+import com.example.multimodulepractice.common.di.MainScope
 import com.example.multimodulepractice.main.impl.repositories.AttractionRepository
 import com.example.multimodulepractice.main.impl.ui.map.MapUiState.MapState
 import com.example.multimodulepractice.main.impl.utils.iconTextStyle
 import com.example.multimodulepractice.main.impl.utils.toMapKitPoint
+import com.filters.api.data.FiltersRepository
 import com.yandex.mapkit.geometry.LinearRing
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.geometry.Polygon
@@ -49,7 +50,8 @@ class MapViewModel @Inject constructor(
     private val repository: GeoRepository,
     @AppContext
     private val context: Context,
-    private val attractionRepository: AttractionRepository
+    private val attractionRepository: AttractionRepository,
+    private val filtersRepository: FiltersRepository
 ) : ViewModel() {
 
     private var userMapObject: PlacemarkMapObject? = null
@@ -81,6 +83,7 @@ class MapViewModel @Inject constructor(
                     _uiStateFlow.update { it.copy(state = MapState.Content) }
                     drawBoundary(result.data.city.points)
                     addAttractions(result.data.list)
+                    filtersRepository.updateFilters(result.data.filters)
                 }
 
                 is ResponseState.Error -> {
@@ -155,7 +158,14 @@ class MapViewModel @Inject constructor(
 
             userMapObject = mapObjectCollection.addPlacemark().apply {
                 geometry = location
-                setIcon(ImageProvider.fromBitmap(getDrawable(context, R.drawable.ic_me_pin)!!.toBitmap()))
+                setIcon(
+                    ImageProvider.fromBitmap(
+                        getDrawable(
+                            context,
+                            R.drawable.ic_me_pin
+                        )!!.toBitmap()
+                    )
+                )
             }
             moveToLocation(geoPoint)
         } else {

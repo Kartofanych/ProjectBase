@@ -5,7 +5,7 @@ import com.example.multimodulepractice.common.models.network.GeoPointDto
 import com.google.gson.annotations.SerializedName
 
 @Keep
-data class StartInfoRequest(
+data class GeoRequest(
     @SerializedName("coordinates")
     val geoPoint: GeoPointDto
 )

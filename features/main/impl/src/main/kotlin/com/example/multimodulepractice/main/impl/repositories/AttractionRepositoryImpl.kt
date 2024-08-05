@@ -4,7 +4,7 @@ import com.example.multimodulepractice.common.models.local.ResponseState
 import com.example.multimodulepractice.common.utils.runWithMinTime
 import com.example.multimodulepractice.landmark.ui.Landmark
 import com.example.multimodulepractice.main.impl.data.interactors.LandmarkInteractor
-import com.example.multimodulepractice.main.impl.di.MainScope
+import com.example.multimodulepractice.common.di.MainScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

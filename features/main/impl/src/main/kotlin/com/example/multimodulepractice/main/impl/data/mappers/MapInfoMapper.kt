@@ -5,8 +5,11 @@ import com.example.multimodulepractice.main.impl.data.local_models.map.City
 import com.example.multimodulepractice.main.impl.data.local_models.map.MapInfoResponse
 import com.example.multimodulepractice.main.impl.data.local_models.map.MapLandmark
 import com.example.multimodulepractice.main.impl.data.network.models.response.CityDto
+import com.example.multimodulepractice.main.impl.data.network.models.response.FiltersDto
 import com.example.multimodulepractice.main.impl.data.network.models.response.MapInfoResponseDto
 import com.example.multimodulepractice.main.impl.data.network.models.response.MapLandmarkDto
+import com.filters.api.data.models.Filters
+import com.filters.api.data.models.FiltersCategory
 import javax.inject.Inject
 
 class MapInfoMapper @Inject constructor(
@@ -16,7 +19,8 @@ class MapInfoMapper @Inject constructor(
     fun mapResponse(response: MapInfoResponseDto): MapInfoResponse {
         return MapInfoResponse(
             mapCity(response.city),
-            response.list.map { mapLandmark(it) }
+            response.list.map { mapLandmark(it) },
+            mapFilters(response.filters)
         )
     }
 
@@ -33,7 +37,15 @@ class MapInfoMapper @Inject constructor(
             landmarkDto.name,
             landmarkDto.geoPoint.toLocalModel(),
             landmarkDto.icon,
-            colorMapper.mapColorToInt(landmarkDto.color)
+            colorMapper.mapColorToInt(landmarkDto.color),
+            landmarkDto.distance,
+            landmarkDto.categoryIds
+        )
+    }
+
+    private fun mapFilters(filtersDto: FiltersDto): Filters {
+        return Filters(
+            categories = filtersDto.categories.map { FiltersCategory(it.id, it.name, it.isDefault) }
         )
     }
 
