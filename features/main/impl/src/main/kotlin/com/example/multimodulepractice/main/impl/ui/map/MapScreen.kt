@@ -7,6 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -24,6 +27,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -34,6 +38,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.example.multimodulepractice.common.utils.screenWidthDp
+import com.example.multimodulepractice.main.impl.R
 import com.example.multimodulepractice.main.impl.ui.map.MapUiState.MapState
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.mapview.MapView
@@ -144,6 +149,66 @@ fun MapScreen(
                     }
                 }
             }
+        }
+
+        if (uiState.state is MapState.Content) {
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(bottom = 36.dp, end = 8.dp),
+            ) {
+                FiltersButton(onMapAction)
+                Spacer(modifier = Modifier.height(16.dp))
+                MyLocationButton(onMapAction)
+            }
+        }
+    }
+}
+
+@Composable
+fun FiltersButton(onMapAction: (MapActions) -> Unit) {
+    FloatingActionButton(
+        modifier = Modifier.size(54.dp),
+        onClick = {
+            onMapAction(MapActions.OnFiltersOpen)
+        },
+        containerColor = Color.White,
+        shape = CircleShape
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_filters),
+                contentDescription = null,
+                modifier = Modifier.size(25.dp),
+                tint = Color.Black
+            )
+        }
+    }
+}
+
+@Composable
+fun MyLocationButton(onMapAction: (MapActions) -> Unit) {
+    FloatingActionButton(
+        modifier = Modifier.size(54.dp),
+        onClick = {
+            onMapAction(MapActions.OnMyLocationClick)
+        },
+        containerColor = Color.White,
+        shape = CircleShape
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_my_location),
+                contentDescription = null,
+                modifier = Modifier.size(25.dp),
+                tint = Color.Black
+            )
         }
     }
 }

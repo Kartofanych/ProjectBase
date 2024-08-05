@@ -23,6 +23,7 @@ import com.example.multimodulepractice.main.impl.repositories.AttractionReposito
 import com.example.multimodulepractice.main.impl.ui.map.MapUiState.MapState
 import com.example.multimodulepractice.main.impl.utils.iconTextStyle
 import com.example.multimodulepractice.main.impl.utils.toMapKitPoint
+import com.yandex.mapkit.Animation
 import com.yandex.mapkit.geometry.LinearRing
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.geometry.Polygon
@@ -46,7 +47,7 @@ import javax.inject.Inject
 @MainScope
 class MapViewModel @Inject constructor(
     private val interactor: MapInteractor,
-    private val repository: GeoRepository,
+    private val geoRepository: GeoRepository,
     @AppContext
     private val context: Context,
     private val attractionRepository: AttractionRepository
@@ -127,7 +128,7 @@ class MapViewModel @Inject constructor(
 
     private fun subscribeToGeo() {
         viewModelScope.launch {
-            repository.geoInfoFlow().collectLatest { geoInfo ->
+            geoRepository.geoInfoFlow().collectLatest { geoInfo ->
                 updateUserLocation(geoPoint = geoInfo.currentPoint)
             }
         }
@@ -145,6 +146,16 @@ class MapViewModel @Inject constructor(
             MapActions.OnMapStopped -> onStop()
 
             MapActions.OnRelaunchMap -> launch()
+
+            MapActions.OnFiltersOpen -> {
+                viewModelScope.launch {
+                    _uiEvent.send(MapUiEvent.OnFiltersOpen)
+                }
+            }
+
+            MapActions.OnMyLocationClick -> {
+                moveToLocation(geoRepository.geoInfoImmediately().currentPoint, true)
+            }
         }
     }
 
@@ -155,9 +166,16 @@ class MapViewModel @Inject constructor(
 
             userMapObject = mapObjectCollection.addPlacemark().apply {
                 geometry = location
-                setIcon(ImageProvider.fromBitmap(getDrawable(context, R.drawable.ic_me_pin)!!.toBitmap()))
+                setIcon(
+                    ImageProvider.fromBitmap(
+                        getDrawable(
+                            context,
+                            R.drawable.ic_me_pin
+                        )!!.toBitmap()
+                    )
+                )
             }
-            moveToLocation(geoPoint)
+            moveToLocation(geoPoint, false)
         } else {
             userMapObject?.let {
                 it.geometry = location
@@ -165,10 +183,17 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    private fun moveToLocation(geoPoint: GeoPoint) {
+    private fun moveToLocation(geoPoint: GeoPoint, isAnimated: Boolean) {
         val location = geoPoint.toMapKitPoint()
         val zoomValue = 16.5f
-        map.mapWindow.map.move(CameraPosition(location, zoomValue, 0.0f, 0.0f))
+        when {
+            !isAnimated -> map.mapWindow.map.move(CameraPosition(location, zoomValue, 0.0f, 0.0f))
+            else -> map.mapWindow.map.move(
+                CameraPosition(location, zoomValue, 0.0f, 0.0f),
+                Animation(Animation.Type.SMOOTH, 0.5f),
+                null
+            )
+        }
     }
 
     private fun drawBoundary(points: List<GeoPoint>) {

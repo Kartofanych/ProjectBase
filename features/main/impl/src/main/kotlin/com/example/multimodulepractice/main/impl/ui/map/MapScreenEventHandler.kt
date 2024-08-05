@@ -6,12 +6,15 @@ import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun MapScreenEventHandler(
-    uiEvent: Flow<MapUiEvent>
+    uiEvent: Flow<MapUiEvent>,
+    openFilters: () -> Unit
 ) {
 
     LaunchedEffect(Unit) {
         uiEvent.collect { event ->
+            when (event) {
+                MapUiEvent.OnFiltersOpen -> openFilters()
+            }
         }
     }
-
 }
