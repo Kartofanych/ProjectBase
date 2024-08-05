@@ -30,11 +30,20 @@ class FiltersEntryImpl @Inject constructor(
         navGraphBuilder.composable(
             featureRoute,
             arguments,
-            popEnterTransition = {
-                slideInHorizontally()
+            enterTransition = {
+                slideInHorizontally {
+                    it
+                }
+            },
+            exitTransition = {
+                slideOutHorizontally {
+                    it
+                }
             },
             popExitTransition = {
-                slideOutHorizontally()
+                slideOutHorizontally {
+                    it
+                }
             },
         ) {
             val viewModel = injectedViewModel {

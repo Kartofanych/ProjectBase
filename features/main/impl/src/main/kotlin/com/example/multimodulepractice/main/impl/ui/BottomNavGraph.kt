@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -28,7 +27,8 @@ fun BottomNavGraph(
     mapViewModel: MapViewModel,
     listViewModel: ListViewModel,
     profileViewModel: ProfileViewModel,
-    navigateToLogin: () -> Unit
+    navigateToLogin: () -> Unit,
+    openFilters: () -> Unit
 ) {
 
     Box(modifier = Modifier.padding(bottom = 40.dp)) {
@@ -38,7 +38,8 @@ fun BottomNavGraph(
         ) {
             composable(route = SCREEN_MAP_ROUTE) {
                 MapScreenEventHandler(
-                    uiEvent = mapViewModel.uiEvent
+                    uiEvent = mapViewModel.uiEvent,
+                    openFilters = openFilters
                 )
 
                 MapScreen(
