@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface FiltersRepository {
 
+    val zeroFilters: Filters
+
     val filters: StateFlow<Filters?>
 
     fun setDefaultFilters(filters: Filters)

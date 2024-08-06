@@ -14,30 +14,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
-import com.filters.impl.ui.models.FilterModel
+import com.filters.api.data.models.FiltersCategory
+import com.filters.impl.ui.FiltersAction
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun CategoriesSection(items: List<FilterModel>) {
+fun CategoriesSection(items: List<FiltersCategory>, onAction: (FiltersAction) -> Unit) {
     Column(
         modifier = Modifier
-            .padding(start = 27.dp, end = 12.dp)
+            .padding(top = 90.dp, start = 27.dp, end = 12.dp)
     ) {
         Text(
             text = "Категории",
             style = semiboldTextStyle.copy(fontSize = 20.sp)
         )
-        Spacer(modifier = Modifier
-            .height(20.dp))
+        Spacer(
+            modifier = Modifier
+                .height(20.dp)
+        )
 
         FlowRow(
-            modifier = Modifier
-                .padding(top = 8.dp)
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             for (item in items) {
-                FilterItem(text = "${item.text} (${item.count})", isSelected = item.isSelected)
+                FilterItem(item = item, onAction = onAction)
             }
         }
     }

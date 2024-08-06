@@ -45,7 +45,15 @@ class MapInfoMapper @Inject constructor(
 
     private fun mapFilters(filtersDto: FiltersDto): Filters {
         return Filters(
-            categories = filtersDto.categories.map { FiltersCategory(it.id, it.name, it.isDefault) }
+            categories = filtersDto.categories.mapIndexed { index, item ->
+                FiltersCategory(
+                    item.id,
+                    index,
+                    item.name,
+                    3,
+                    item.isDefault
+                )
+            }
         )
     }
 

@@ -1,6 +1,7 @@
 package com.filters.impl.ui.composables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -18,10 +19,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.filters.impl.R
+import com.filters.impl.ui.FiltersAction
 
 @Composable
-fun HeaderSection() {
+fun HeaderSection(onAction: (FiltersAction) -> Unit) {
     Row(
         modifier = Modifier
             .padding(start = 18.dp, top = 20.dp, end = 18.dp)
@@ -31,19 +34,23 @@ fun HeaderSection() {
     ) {
         Text(
             text = "Сбросить",
-            color = Color(0xFF85889E),
-            fontSize = 12.sp,
+            style = mediumTextStyle.copy(color = Color(0xFF85889E)),
+            modifier = Modifier.clickable {
+                onAction(FiltersAction.OnZeroFilters)
+            }
         )
         Text(
             text = "Фильтры",
-            color = Color.Black,
-            fontSize = 15.sp
+            style = mediumTextStyle.copy(fontSize = 15.sp, color = Color.Black)
         )
         Box(
             modifier = Modifier
-                .size(22.dp)
+                .size(34.dp)
                 .background(Color.White, RoundedCornerShape(12.dp))
-                .clip(RoundedCornerShape(12.dp)),
+                .clip(RoundedCornerShape(12.dp))
+                .clickable {
+                    onAction(FiltersAction.OnClose(false))
+                },
             contentAlignment = Alignment.Center
         ) {
             Icon(

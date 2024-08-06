@@ -13,6 +13,9 @@ class FiltersRepositoryImpl @Inject constructor() : FiltersRepository {
     private val _filters = MutableStateFlow<Filters?>(null)
     override val filters = _filters.asStateFlow()
 
+    override val zeroFilters: Filters
+        get() = defaultFilters ?: Filters()
+
     override fun setDefaultFilters(filters: Filters) {
         defaultFilters = filters
         _filters.value = filters
