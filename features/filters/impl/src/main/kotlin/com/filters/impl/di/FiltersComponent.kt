@@ -3,6 +3,7 @@ package com.filters.impl.di
 import com.filters.impl.ui.FiltersViewModel
 import dagger.Component
 
+@FiltersScope
 @Component(
     dependencies = [FiltersDependencies::class]
 )

@@ -1,7 +1,9 @@
 package com.filters.api.data.models
 
-class FiltersCategory(
+data class FiltersCategory(
     val id: String,
+    val index: Int,
     val name: String,
-    val isDefault: Boolean
+    val count: Int,
+    val isSelected: Boolean
 )

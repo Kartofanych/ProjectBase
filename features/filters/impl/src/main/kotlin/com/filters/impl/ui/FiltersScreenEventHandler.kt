@@ -5,11 +5,13 @@ import androidx.compose.runtime.LaunchedEffect
 import kotlinx.coroutines.flow.Flow
 
 @Composable
-fun FiltersScreenEventHandler(uiEvent: Flow<FiltersUiEvent>) {
+fun FiltersScreenEventHandler(uiEvent: Flow<FiltersUiEvent>, back: () -> Boolean) {
 
     LaunchedEffect(Unit) {
         uiEvent.collect {
-
+            when (it) {
+                is FiltersUiEvent.OnClose -> back()
+            }
         }
     }
 }

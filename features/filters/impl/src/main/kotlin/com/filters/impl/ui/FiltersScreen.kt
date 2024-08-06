@@ -1,60 +1,62 @@
 package com.filters.impl.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableFloatState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.filters.impl.ui.composables.CategoriesSection
 import com.filters.impl.ui.composables.DistanceSection
 import com.filters.impl.ui.composables.HeaderSection
-import com.filters.impl.ui.models.FilterModel
 
 @Composable
-fun FiltersScreen(uiState: FiltersUiState, onFilterAction: (FiltersAction) -> Unit) {
+fun FiltersScreen(
+    distanceStateFlow: MutableFloatState,
+    uiState: FiltersUiState,
+    onAction: (FiltersAction) -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.White)
+            .safeDrawingPadding()
     ) {
-        Column(
+
+        HeaderSection(onAction)
+
+        CategoriesSection(uiState.categories, onAction)
+
+        DistanceSection(distanceStateFlow, onAction)
+
+        Box(
             modifier = Modifier
-                .fillMaxSize()
+                .align(Alignment.BottomCenter)
+                .height(45.dp)
+                .width(225.dp)
+                .background(color = Color(0xFF74A3FF), shape = CircleShape)
+                .clip(CircleShape)
+                .clickable {
+                    onAction(FiltersAction.OnClose(withUpdates = true))
+                },
+            contentAlignment = Alignment.Center
         ) {
-            HeaderSection()
-
-            Spacer(
-                modifier = Modifier
-                    .height(45.dp)
+            Text(
+                text = "Применить",
+                style = semiboldTextStyle.copy(fontSize = 18.sp, color = Color.White)
             )
-
-            CategoriesSection(mockedItems)
-
-            Spacer(
-                modifier = Modifier
-                    .height(45.dp)
-            )
-
-            DistanceSection(listOf("500m", "1km", "1.5km", "2km", "5km"), 2f) {
-                onFilterAction(FiltersAction.Action1)
-            }
         }
     }
 }
-
-
-private val mockedItems = mutableListOf(
-    FilterModel(text = "Достопримечательности", isSelected = true, 6),
-    FilterModel(text = "Развлечения", isSelected = true, 2),
-    FilterModel(text = "Инфраструктура", isSelected = true, 1),
-    FilterModel(text = "Где поесть", isSelected = false, 10),
-    FilterModel(text = "Спорт", isSelected = false, 5),
-    FilterModel(text = "Шоппинг", isSelected = false, 3),
-    FilterModel(text = "Фотозона", isSelected = false, 1),
-    FilterModel(text = "Уборная", isSelected = false, 3),
-)

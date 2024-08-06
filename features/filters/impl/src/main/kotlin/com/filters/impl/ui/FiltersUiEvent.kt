@@ -1,3 +1,5 @@
 package com.filters.impl.ui
 
-sealed interface FiltersUiEvent
+sealed interface FiltersUiEvent {
+    object OnClose : FiltersUiEvent
+}

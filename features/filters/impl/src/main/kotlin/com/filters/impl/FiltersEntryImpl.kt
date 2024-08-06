@@ -2,8 +2,8 @@ package com.filters.impl
 
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -20,6 +20,10 @@ import javax.inject.Inject
 class FiltersEntryImpl @Inject constructor(
     private val filtersDependencies: FiltersDependencies
 ) : FiltersEntry() {
+
+    private val component by lazy {
+        DaggerFiltersComponent.factory().create(filtersDependencies)
+    }
 
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
@@ -47,14 +51,16 @@ class FiltersEntryImpl @Inject constructor(
             },
         ) {
             val viewModel = injectedViewModel {
-                DaggerFiltersComponent.factory().create(filtersDependencies).viewModel
+                component.viewModel
             }
 
             FiltersScreenEventHandler(
-                uiEvent = viewModel.uiEvent
+                uiEvent = viewModel.uiEvent,
+                back = { navController.popBackStack() }
             )
             FiltersScreen(
-                viewModel.uiStateFlow.collectAsStateWithLifecycle().value,
+                viewModel.distanceStateFlow,
+                viewModel.uiStateFlow.collectAsState().value,
                 viewModel::onFiltersAction
             )
         }

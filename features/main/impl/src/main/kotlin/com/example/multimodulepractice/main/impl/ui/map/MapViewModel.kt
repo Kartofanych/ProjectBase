@@ -84,7 +84,7 @@ class MapViewModel @Inject constructor(
                     _uiStateFlow.update { it.copy(state = MapState.Content) }
                     drawBoundary(result.data.city.points)
                     addAttractions(result.data.list)
-                    filtersRepository.updateFilters(result.data.filters)
+                    filtersRepository.setDefaultFilters(result.data.filters)
                 }
 
                 is ResponseState.Error -> {
