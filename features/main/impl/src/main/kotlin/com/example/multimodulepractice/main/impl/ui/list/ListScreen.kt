@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.multimodulepractice.common.theme.mediumTextStyle
@@ -32,10 +33,10 @@ import com.example.multimodulepractice.main.impl.R
 import com.example.multimodulepractice.main.impl.ui.compose_elements.BigHorizontalAttraction
 import com.example.multimodulepractice.main.impl.ui.compose_elements.VerticalAttractionView
 
+
 @Composable
 fun ListScreen(uiState: ListUiState, onListAction: (ListAction) -> Unit) {
     val context = LocalContext.current
-
     Scaffold(
         modifier = Modifier.padding(bottom = 20.dp)
     ) {
