@@ -1,10 +1,10 @@
 package com.filters.impl.ui.composables
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,14 +20,11 @@ import androidx.compose.runtime.MutableFloatState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
-import com.example.multimodulepractice.common.utils.dpToPx
 import com.filters.impl.ui.FiltersAction
 import kotlin.math.abs
 import kotlin.math.min
@@ -37,11 +34,15 @@ fun DistanceSection(distanceFloatState: MutableFloatState, onAction: (FiltersAct
     Column(
         modifier = Modifier
             .padding(top = 300.dp)
-            .padding(horizontal = 27.dp)
+            .padding(horizontal = 27.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(25.dp))
+
         Text(
             text = "Дистанция",
-            style = semiboldTextStyle.copy(fontSize = 20.sp)
+            style = semiboldTextStyle.copy(fontSize = 24.sp),
+            modifier = Modifier.align(Alignment.Start)
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -53,56 +54,23 @@ fun DistanceSection(distanceFloatState: MutableFloatState, onAction: (FiltersAct
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SliderItem(distanceFloatState: MutableFloatState, onAction: (FiltersAction) -> Unit) {
-    val items = listOf("500м", "1 км", "2 км", "5 км", "Город")
+    val items = listOf("500 м", "1 км", "2 км", "5 км", "Город")
     val multiplier = 100f
 
     val interactionSource = remember { MutableInteractionSource() }
 
-    val context = LocalContext.current
-
-    val drawPadding = context.dpToPx(10f)
-    val textSize = context.dpToPx(10f)
-    val lineHeightPx = context.dpToPx(3f)
-    val canvasHeight = 50.dp
-    val textPaint = android.graphics.Paint().apply {
-        color = if (isSystemInDarkTheme()) 0xffffffff.toInt() else 0xffff47586B.toInt()
-        textAlign = android.graphics.Paint.Align.CENTER
-        this.textSize = textSize
-    }
-    Box(contentAlignment = Alignment.Center) {
-        Canvas(
-            modifier = Modifier
-                .height(canvasHeight)
-                .fillMaxWidth()
-                .padding(
-                    top = canvasHeight
-                        .div(2)
-                        .minus(10.dp.div(2))
-                )
-        ) {
-            val yStart = 0f
-            val distance = (size.width.minus(2 * drawPadding)).div(items.size.minus(1))
-            items.forEachIndexed { index, date ->
-                drawLine(
-                    color = Color.DarkGray,
-                    start = Offset(x = drawPadding + index.times(distance), y = yStart),
-                    end = Offset(x = drawPadding + index.times(distance), y = lineHeightPx)
-                )
-                this.drawContext.canvas.nativeCanvas.drawText(
-                    date,
-                    drawPadding + index.times(distance),
-                    size.height,
-                    textPaint
-                )
-            }
-        }
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
         Slider(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp),
             value = distanceFloatState.floatValue,
             interactionSource = interactionSource,
             valueRange = 0f..(items.size - 1) * multiplier,
             steps = (items.size - 2) * multiplier.toInt(),
-            colors = customSliderColors(),
             onValueChange = {
                 distanceFloatState.floatValue = it
             },
@@ -123,24 +91,49 @@ private fun SliderItem(distanceFloatState: MutableFloatState, onAction: (Filters
                 SliderDefaults.Thumb(
                     modifier = Modifier.size(20.dp),
                     interactionSource = interactionSource,
-                    colors = customSliderColors()
+                    colors = customColors()
                 )
             },
             track = {
                 SliderDefaults.Track(
                     sliderState = it,
-                    colors = customSliderColors(),
                     modifier = Modifier.height(3.dp),
-                    drawStopIndicator = null
+                    drawStopIndicator = null,
+                    colors = customColors()
                 )
             }
         )
+        Row(
+            modifier = Modifier
+                .padding(top = 40.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            for (i in 0 until 5) {
+                Text(
+                    text = items[i],
+                    style = mediumTextStyle.copy(
+                        fontSize = 14.sp,
+                        color = if (i.toFloat() * multiplier == distanceFloatState.floatValue) Color.Black else Color(
+                            0xFF959595
+                        )
+                    )
+                )
+            }
+        }
     }
+
 }
 
+val s = Color(0xFFB71C1C)
+val s1 = Color(0xFFEF9A9A)
+val s2 = Color(0xFFFFEBEE)
+val s3 = Color(0xFFEF9A9A)
+val s4 = Color(0xFFB71C1C)
+
 @Composable
-private fun customSliderColors(): SliderColors = SliderDefaults.colors(
-    activeTickColor = Color.Transparent,
+private fun customColors(): SliderColors = SliderDefaults.colors(
+    activeTickColor = Color(0xFF74A3FF),
     inactiveTickColor = Color.Transparent,
     thumbColor = Color(0xFF74A3FF),
     activeTrackColor = Color(0xFF74A3FF),

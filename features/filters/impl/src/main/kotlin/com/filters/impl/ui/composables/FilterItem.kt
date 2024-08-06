@@ -37,15 +37,14 @@ fun FilterItem(
             .clickable {
                 onAction(FiltersAction.OnCategoryClicked(item))
             }
-            .padding(horizontal = 8.dp, vertical = 5.dp)
-            .height(14.dp),
+            .padding(horizontal = 10.dp, vertical = 5.dp)
+            .height(20.dp),
     ) {
         Text(
             text = item.name,
             color = textColor,
-            style = semiboldTextStyle.copy(fontSize = 10.sp),
+            style = semiboldTextStyle.copy(fontSize = 12.sp),
             modifier = Modifier
-                .fillMaxHeight()
                 .align(Alignment.Center)
         )
     }

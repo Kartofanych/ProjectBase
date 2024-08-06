@@ -145,13 +145,13 @@ class MainActivity : AppCompatActivity() {
                         modifier = Modifier
                     )
                 }
-                if (isDebug) {
+                /*if (isDebug) {
                     DebugPanel(
                         modifier = Modifier
                             .align(Alignment.CenterEnd),
                         isProduction = isProduction
                     )
-                }
+                }*/
             }
         }
     }
