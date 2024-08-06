@@ -1,0 +1,44 @@
+package com.filters.impl.ui.composables
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.multimodulepractice.common.theme.semiboldTextStyle
+import com.filters.impl.ui.models.FilterModel
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun CategoriesSection(items: List<FilterModel>) {
+    Column(
+        modifier = Modifier
+            .padding(start = 27.dp, end = 12.dp)
+    ) {
+        Text(
+            text = "Категории",
+            style = semiboldTextStyle.copy(fontSize = 20.sp)
+        )
+        Spacer(modifier = Modifier
+            .height(20.dp))
+
+        FlowRow(
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            for (item in items) {
+                FilterItem(text = "${item.text} (${item.count})", isSelected = item.isSelected)
+            }
+        }
+    }
+}

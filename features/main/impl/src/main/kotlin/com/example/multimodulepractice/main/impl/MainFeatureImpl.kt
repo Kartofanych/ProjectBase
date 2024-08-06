@@ -1,5 +1,7 @@
 package com.example.multimodulepractice.main.impl
 
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -41,10 +43,28 @@ class MainFeatureImpl @Inject constructor(
         modifier: Modifier
     ) {
 
-        navGraphBuilder.composable(featureRoute) {
+        navGraphBuilder.composable(
+            route = featureRoute,
+            enterTransition = {
+                slideInHorizontally {
+                    -it
+                }
+            },
+            exitTransition = {
+                slideOutHorizontally {
+                    -it
+                }
+            },
+            popExitTransition = {
+                slideOutHorizontally {
+                    -it
+                }
+            },
+        ) {
             val insideNavController = rememberNavController()
             val sheetState = rememberModalBottomSheetState()
-            val landmark = attractionRepository.currentLandmark().collectAsStateWithLifecycle().value
+            val landmark =
+                attractionRepository.currentLandmark().collectAsStateWithLifecycle().value
 
             Box(modifier = Modifier.fillMaxSize()) {
                 BottomNavGraph(
@@ -58,7 +78,8 @@ class MainFeatureImpl @Inject constructor(
                         component.profileViewModel
                     },
                     navController = insideNavController,
-                    navigateToLogin = { navController.navigate("login") }
+                    navigateToLogin = { navController.navigate("login") },
+                    openFilters = { navController.navigate("filters") },
                 )
 
                 BottomNavBar(
