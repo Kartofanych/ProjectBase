@@ -6,7 +6,7 @@ import com.example.multimodulepractice.geo.repository.GeoRepository
 import com.example.multimodulepractice.main.impl.data.local_models.list.RecommendationsResponse
 import com.example.multimodulepractice.main.impl.data.mappers.ListMapper
 import com.example.multimodulepractice.main.impl.data.network.MainApi
-import com.example.multimodulepractice.main.impl.data.network.models.request.StartInfoRequest
+import com.example.multimodulepractice.main.impl.data.network.models.request.GeoRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -22,7 +22,7 @@ class ListInteractor @Inject constructor(
             try {
                 val geoPoint = geoRepository.geoInfo().currentPoint.toDto()
                 val response = api.getRecommendations(
-                    StartInfoRequest(geoPoint = geoPoint)
+                    GeoRequest(geoPoint = geoPoint)
                 )
                 return@withContext ResponseState.Success(data = listMapper.mapResponse(response))
             } catch (exception: Exception) {

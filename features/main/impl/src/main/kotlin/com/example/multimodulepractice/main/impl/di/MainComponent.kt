@@ -1,5 +1,6 @@
 package com.example.multimodulepractice.main.impl.di
 
+import com.example.multimodulepractice.common.di.MainScope
 import com.example.multimodulepractice.main.impl.repositories.AttractionRepository
 import com.example.multimodulepractice.main.impl.repositories.RecommendedAttractionsRepository
 import com.example.multimodulepractice.main.impl.ui.list.ListViewModel

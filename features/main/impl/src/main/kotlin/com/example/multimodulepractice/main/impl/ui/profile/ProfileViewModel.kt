@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.multimodulepractice.auth.AuthInfoManager
 import com.example.multimodulepractice.auth.models.AuthInfo
-import com.example.multimodulepractice.main.impl.di.MainScope
+import com.example.multimodulepractice.common.di.MainScope
 import com.example.multimodulepractice.main.impl.repositories.AttractionRepository
 import com.example.multimodulepractice.main.impl.repositories.RecommendedAttractionsRepository
 import com.example.multimodulepractice.main.impl.ui.profile.ProfileUiState.ProfileMode

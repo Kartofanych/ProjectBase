@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.multimodulepractice.common.models.local.ResponseState
 import com.example.multimodulepractice.main.impl.data.interactors.ListInteractor
-import com.example.multimodulepractice.main.impl.di.MainScope
+import com.example.multimodulepractice.common.di.MainScope
 import com.example.multimodulepractice.main.impl.repositories.AttractionRepository
 import com.example.multimodulepractice.main.impl.repositories.RecommendedAttractionsRepository
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -24,6 +24,7 @@ dependencies {
     api(project(":features:guide:api"))
     api(project(":features:auth:api"))
     api(project(":features:app_config:api"))
+    api(project(":features:filters:api"))
     implementation(project(":features:geo"))
     implementation(project(":features:landmark"))
     implementation(project(":common"))

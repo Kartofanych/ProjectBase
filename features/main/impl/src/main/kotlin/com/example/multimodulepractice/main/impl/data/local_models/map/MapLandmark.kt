@@ -7,5 +7,7 @@ data class MapLandmark(
     val name: String,
     val geoPoint: GeoPoint,
     val icon: String,
-    val color: Int
+    val color: Int,
+    val distance: Float,
+    val categoryIds: List<String>
 )

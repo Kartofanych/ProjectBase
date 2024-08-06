@@ -20,5 +20,11 @@ data class MapLandmarkDto(
     val icon: String,
 
     @SerializedName("color")
-    val color: String
+    val color: String,
+
+    @SerializedName("distance")
+    val distance: Float,
+
+    @SerializedName("categories")
+    val categoryIds: List<String>
 )
