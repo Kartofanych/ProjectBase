@@ -18,6 +18,7 @@ import androidx.compose.runtime.MutableFloatState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -60,6 +61,10 @@ fun FiltersScreen(
                 .padding(bottom = 40.dp)
                 .height(45.dp)
                 .width(225.dp)
+                .shadow(
+                    elevation = 3.dp,
+                    shape = CircleShape,
+                )
                 .background(color = Color(0xFF74A3FF), shape = CircleShape)
                 .clip(CircleShape)
                 .clickable {
@@ -69,7 +74,7 @@ fun FiltersScreen(
         ) {
             Text(
                 text = "Применить",
-                style = semiboldTextStyle.copy(fontSize = 18.sp, color = Color.White)
+                style = semiboldTextStyle.copy(fontSize = 18.sp, color = Color.White),
             )
         }
     }

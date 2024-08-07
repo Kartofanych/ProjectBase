@@ -17,6 +17,7 @@ android {
 dependencies {
     api(project(":features:filters:api"))
     implementation(project(":common"))
+    implementation(project(":features:geo"))
     implementation(libs.core.ktx)
 
     implementation(libs.bundles.compose)

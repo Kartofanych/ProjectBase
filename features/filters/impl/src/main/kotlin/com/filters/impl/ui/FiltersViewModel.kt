@@ -4,6 +4,7 @@ import androidx.compose.runtime.MutableFloatState
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.multimodulepractice.geo.repository.GeoRepository
 import com.filters.api.data.FiltersRepository
 import com.filters.api.data.models.FilterDistance
 import com.filters.api.data.models.Filters
@@ -19,7 +20,8 @@ import javax.inject.Inject
 
 @FiltersScope
 class FiltersViewModel @Inject constructor(
-    private val filtersRepository: FiltersRepository
+    private val filtersRepository: FiltersRepository,
+    private val geoRepository: GeoRepository,
 ) : ViewModel() {
 
     private val _uiEvent = Channel<FiltersUiEvent>()
@@ -42,6 +44,7 @@ class FiltersViewModel @Inject constructor(
         when (action) {
             is FiltersAction.OnDistanceChanged -> {
                 distanceStateFlow.floatValue = action.value
+                // Тут смена инфы с категориями?
             }
 
             is FiltersAction.OnCategoryClicked -> {
