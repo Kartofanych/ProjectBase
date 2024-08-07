@@ -26,7 +26,7 @@ fun CategoriesSection(items: List<FiltersCategory>, onAction: (FiltersAction) ->
     ) {
         Text(
             text = "Категории",
-            style = semiboldTextStyle.copy(fontSize = 20.sp)
+            style = semiboldTextStyle.copy(fontSize = 24.sp)
         )
         Spacer(
             modifier = Modifier

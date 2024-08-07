@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,15 +36,14 @@ fun FilterItem(
             .clickable {
                 onAction(FiltersAction.OnCategoryClicked(item))
             }
-            .padding(horizontal = 8.dp, vertical = 5.dp)
-            .height(14.dp),
+            .padding(horizontal = 10.dp, vertical = 5.dp)
+            .height(20.dp),
     ) {
         Text(
             text = item.name,
             color = textColor,
-            style = semiboldTextStyle.copy(fontSize = 10.sp),
+            style = semiboldTextStyle.copy(fontSize = 12.sp),
             modifier = Modifier
-                .fillMaxHeight()
                 .align(Alignment.Center)
         )
     }
