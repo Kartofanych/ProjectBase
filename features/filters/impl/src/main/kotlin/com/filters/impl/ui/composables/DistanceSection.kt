@@ -33,7 +33,6 @@ import kotlin.math.min
 fun DistanceSection(distanceFloatState: MutableFloatState, onAction: (FiltersAction) -> Unit) {
     Column(
         modifier = Modifier
-            .padding(top = 300.dp)
             .padding(horizontal = 27.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -41,7 +40,7 @@ fun DistanceSection(distanceFloatState: MutableFloatState, onAction: (FiltersAct
 
         Text(
             text = "Дистанция",
-            style = semiboldTextStyle.copy(fontSize = 24.sp),
+            style = semiboldTextStyle.copy(fontSize = 20.sp),
             modifier = Modifier.align(Alignment.Start)
         )
 

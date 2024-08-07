@@ -155,7 +155,7 @@ fun MapScreen(
                     .align(Alignment.BottomEnd)
                     .padding(bottom = 36.dp, end = 8.dp),
             ) {
-                FiltersButton(onMapAction)
+                FiltersButton(uiState, onMapAction)
                 Spacer(modifier = Modifier.height(16.dp))
                 MyLocationButton(onMapAction)
             }

@@ -3,7 +3,10 @@ package com.filters.impl.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
@@ -33,14 +36,23 @@ fun FiltersScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.White)
-            .safeDrawingPadding()
     ) {
 
-        HeaderSection(onAction)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .safeDrawingPadding()
+        ) {
+            HeaderSection(onAction)
 
-        CategoriesSection(uiState.categories, onAction)
+            Spacer(modifier = Modifier.height(45.dp))
 
-        DistanceSection(distanceStateFlow, onAction)
+            CategoriesSection(uiState.categories, onAction)
+
+            Spacer(modifier = Modifier.height(40.dp))
+
+            DistanceSection(distanceStateFlow, onAction)
+        }
 
         Box(
             modifier = Modifier

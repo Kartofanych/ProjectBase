@@ -22,11 +22,11 @@ import com.filters.impl.ui.FiltersAction
 fun CategoriesSection(items: List<FiltersCategory>, onAction: (FiltersAction) -> Unit) {
     Column(
         modifier = Modifier
-            .padding(top = 90.dp, start = 27.dp, end = 12.dp)
+            .padding(start = 27.dp, end = 12.dp)
     ) {
         Text(
             text = "Категории",
-            style = semiboldTextStyle.copy(fontSize = 24.sp)
+            style = semiboldTextStyle.copy(fontSize = 20.sp)
         )
         Spacer(
             modifier = Modifier

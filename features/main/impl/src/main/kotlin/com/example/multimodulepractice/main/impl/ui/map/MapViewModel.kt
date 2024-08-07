@@ -23,7 +23,9 @@ import com.example.multimodulepractice.main.impl.repositories.AttractionReposito
 import com.example.multimodulepractice.main.impl.ui.map.MapUiState.MapState
 import com.example.multimodulepractice.main.impl.utils.iconTextStyle
 import com.example.multimodulepractice.main.impl.utils.toMapKitPoint
+import com.example.multimodulepractice.main.impl.utils.toGeoPoint
 import com.filters.api.data.FiltersRepository
+import com.filters.api.data.models.Filters
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.geometry.LinearRing
 import com.yandex.mapkit.geometry.Point
@@ -39,11 +41,16 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 @MainScope
 class MapViewModel @Inject constructor(
@@ -58,6 +65,7 @@ class MapViewModel @Inject constructor(
     private var userMapObject: PlacemarkMapObject? = null
 
     private val tapListeners = mutableListOf<MapObjectTapListener>()
+    private val mapObjects = mutableListOf<Pair<PlacemarkMapObject, MapLandmark>>()
 
     @SuppressLint("StaticFieldLeak")
     val map = MapView(context)
@@ -71,7 +79,39 @@ class MapViewModel @Inject constructor(
 
     init {
         subscribeToGeo()
+        subscribeToFilters()
         launch()
+    }
+
+    private fun subscribeToFilters() {
+        viewModelScope.launch {
+            filtersRepository.filters.filterNotNull().collectLatest { filters ->
+                when (filters) {
+                    filtersRepository.zeroFilters -> _uiStateFlow.update {
+                        it.copy(isFiltersDefault = true)
+                    }
+
+                    else -> _uiStateFlow.update {
+                        it.copy(isFiltersDefault = false)
+                    }
+                }
+                val distance = filters.distance.km
+                val filterCategories = filters.categories
+                for (item in mapObjects) {
+                    val placeMark = item.first
+                    val landmark = item.second
+                    if (calculateDistance(
+                            placeMark.geometry.toGeoPoint(),
+                            geoRepository.geoInfoImmediately().currentPoint
+                        ) > distance || !landmark.categoryIds.any { id -> filterCategories.any { it.id == id && it.isSelected } }
+                    ) {
+                        placeMark.setVisible(false, Animation(Animation.Type.SMOOTH, 200f), null)
+                    } else {
+                        placeMark.setVisible(true, Animation(Animation.Type.SMOOTH, 200f), null)
+                    }
+                }
+            }
+        }
     }
 
     private fun launch() {
@@ -83,7 +123,7 @@ class MapViewModel @Inject constructor(
                 is ResponseState.Success -> {
                     _uiStateFlow.update { it.copy(state = MapState.Content) }
                     drawBoundary(result.data.city.points)
-                    addAttractions(result.data.list)
+                    addAttractions(result.data.list, result.data.filters)
                     filtersRepository.setDefaultFilters(result.data.filters)
                 }
 
@@ -94,7 +134,7 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    private fun addAttractions(list: List<MapLandmark>) {
+    private fun addAttractions(list: List<MapLandmark>, filters: Filters) {
         for (landmark in list) {
             val mapObjectCollection = map.mapWindow.map.mapObjects
             mapObjectCollection.addPlacemark().apply {
@@ -110,7 +150,7 @@ class MapViewModel @Inject constructor(
                     addTapListener(it)
                 }
 
-                viewModelScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     val loader = ImageLoader(context)
                     val request = ImageRequest.Builder(context)
                         .data(landmark.icon)
@@ -125,6 +165,10 @@ class MapViewModel @Inject constructor(
                         setIcon(ImageProvider.fromBitmap(bitmap))
                     }
                 }
+                if (!landmark.categoryIds.any { id -> filters.categories.any { it.id == id && it.isSelected } }) {
+                    isVisible = false
+                }
+                mapObjects.add(this to landmark)
             }
         }
     }
@@ -223,6 +267,17 @@ class MapViewModel @Inject constructor(
         polygonMapObject.strokeWidth = 2.0f
     }
 
+    private fun calculateDistance(geoPoint1: GeoPoint, geoPoint2: GeoPoint): Double {
+        val r = 6371.0
+        val dLat = Math.toRadians(geoPoint2.lat.toDouble() - geoPoint1.lat.toDouble())
+        val dLon = Math.toRadians(geoPoint2.lon.toDouble() - geoPoint1.lon.toDouble())
+        val a = sin(dLat / 2) * sin(dLat / 2) +
+                cos(Math.toRadians(geoPoint1.lat.toDouble())) * cos(Math.toRadians(geoPoint2.lat.toDouble())) *
+                sin(dLon / 2) * sin(dLon / 2)
+        val c = 2 * atan2(sqrt(a), sqrt(1 - a))
+        return r * c
+    }
+
     private fun onStart() {
         map.onStart()
         val style = "[" +
@@ -244,5 +299,4 @@ class MapViewModel @Inject constructor(
     private fun onStop() {
         map.onStop()
     }
-
 }
