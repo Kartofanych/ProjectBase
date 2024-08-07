@@ -8,6 +8,10 @@ fun GeoPoint.toMapKitPoint(): Point {
     return Point(lat.toDouble(), lon.toDouble())
 }
 
+fun Point.toGeoPoint(): GeoPoint {
+    return GeoPoint(latitude.toFloat(), longitude.toFloat())
+}
+
 fun iconTextStyle(textColor: Int) = TextStyle(
     8f,
     textColor,

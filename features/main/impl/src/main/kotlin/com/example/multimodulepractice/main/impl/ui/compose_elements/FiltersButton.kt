@@ -14,15 +14,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.multimodulepractice.main.impl.R
 import com.example.multimodulepractice.main.impl.ui.map.MapActions
+import com.example.multimodulepractice.main.impl.ui.map.MapUiState
 
 @Composable
-fun FiltersButton(onMapAction: (MapActions) -> Unit) {
+fun FiltersButton(uiState: MapUiState, onMapAction: (MapActions) -> Unit) {
     FloatingActionButton(
         modifier = Modifier.size(54.dp),
         onClick = {
             onMapAction(MapActions.OnFiltersOpen)
         },
-        containerColor = Color.White,
+        containerColor = if (uiState.isFiltersDefault) Color.White else Color(0xFF74A3FF),
         shape = CircleShape
     ) {
         Box(
@@ -33,7 +34,7 @@ fun FiltersButton(onMapAction: (MapActions) -> Unit) {
                 painter = painterResource(id = R.drawable.ic_filters),
                 contentDescription = null,
                 modifier = Modifier.size(25.dp),
-                tint = Color.Black
+                tint = if (uiState.isFiltersDefault) Color.Black else Color.White
             )
         }
     }

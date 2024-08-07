@@ -11,6 +11,7 @@ import com.filters.impl.di.FiltersScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -26,7 +27,7 @@ class FiltersViewModel @Inject constructor(
 
     private val _uiStateFlow = MutableStateFlow(FiltersUiState.EMPTY)
     val uiStateFlow: StateFlow<FiltersUiState>
-        get() = _uiStateFlow
+        get() = _uiStateFlow.asStateFlow()
 
     val distanceStateFlow: MutableFloatState = mutableFloatStateOf(400f)
 
@@ -57,7 +58,7 @@ class FiltersViewModel @Inject constructor(
                     if (action.withUpdates) {
                         filtersRepository.updateFilters(
                             Filters(
-                                _uiStateFlow.value.categories,
+                                uiStateFlow.value.categories,
                                 distanceStateFlow.floatValue.asDistance()
                             )
                         )
