@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,17 +27,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.lifecycle.Lifecycle.Event.ON_START
-import androidx.lifecycle.Lifecycle.Event.ON_STOP
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.example.multimodulepractice.common.utils.screenWidthDp
 import com.example.multimodulepractice.main.impl.ui.compose_elements.FiltersButton
 import com.example.multimodulepractice.main.impl.ui.compose_elements.MyLocationButton
 import com.example.multimodulepractice.main.impl.ui.map.MapUiState.MapState
-import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.mapview.MapView
 
 @Composable
@@ -47,32 +41,6 @@ fun MapScreen(
     onMapAction: (MapActions) -> Unit,
     map: MapView
 ) {
-
-    val lifecycleOwner = LocalLifecycleOwner.current
-
-    DisposableEffect(lifecycleOwner) {
-        val lifecycleEventObserver = LifecycleEventObserver { _, event ->
-            when (event) {
-                ON_START -> {
-                    MapKitFactory.getInstance().onStart()
-                    onMapAction(MapActions.OnMapStarted)
-                }
-
-                ON_STOP -> {
-                    onMapAction(MapActions.OnMapStopped)
-                    MapKitFactory.getInstance().onStop()
-                }
-
-                else -> Unit
-            }
-        }
-
-        lifecycleOwner.lifecycle.addObserver(lifecycleEventObserver)
-
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(lifecycleEventObserver)
-        }
-    }
 
     Box(
         modifier = Modifier.fillMaxSize()

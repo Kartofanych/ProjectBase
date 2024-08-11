@@ -12,11 +12,6 @@ import dagger.Reusable
 @Module
 interface MainDataModule {
 
-    @Binds
-    @MainScope
-    @Reusable
-    fun bindAttractionRepository(attractionRepositoryImpl: AttractionRepositoryImpl): AttractionRepository
-
     companion object {
         @Provides
         @MainScope
