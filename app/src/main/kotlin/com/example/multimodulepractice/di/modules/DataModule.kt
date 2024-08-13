@@ -1,8 +1,10 @@
 package com.example.multimodulepractice.di.modules
 
 import com.example.multimodulepractice.auth.impl.di.AuthProviderModule
-import com.example.multimodulepractice.common.di.MainScope
+import com.example.multimodulepractice.common.di.AppScope
 import com.example.multimodulepractice.geo.di.GeoProviderModule
+import com.example.multimodulepractice.main.impl.repositories.AttractionRepository
+import com.example.multimodulepractice.main.impl.repositories.AttractionRepositoryImpl
 import com.filters.api.data.FiltersRepository
 import com.filters.impl.data.FiltersRepositoryImpl
 import com.travelling.impl.di.AppConfigModule
@@ -20,7 +22,13 @@ import dagger.Reusable
 interface DataModule {
 
     @Binds
-    @MainScope
+    @AppScope
     @Reusable
     fun bindFiltersRepository(filtersRepositoryImpl: FiltersRepositoryImpl): FiltersRepository
+
+    @Binds
+    @AppScope
+    @Reusable
+    fun bindAttractionRepository(attractionRepositoryImpl: AttractionRepositoryImpl): AttractionRepository
+
 }

@@ -20,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,16 +29,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.example.multimodulepractice.auth.models.AuthInfo
 import com.example.multimodulepractice.common.navigation.find
+import com.example.multimodulepractice.common.navigation.injectedViewModel
 import com.example.multimodulepractice.common.theme.MultimodulePracticeTheme
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.guide.GuideEntry
 import com.example.multimodulepractice.login.LoginFeatureEntry
 import com.filters.api.FiltersEntry
 import com.example.multimodulepractice.main.MainFeatureEntry
+import com.example.multimodulepractice.main.impl.ui.map.MapScreen
+import com.example.multimodulepractice.main.impl.ui.map.MapScreenEventHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.system.exitProcess
@@ -106,14 +111,24 @@ class MainActivity : AppCompatActivity() {
         val isDebug = BuildConfig.DEBUG
         val isProduction = appProvider.appConfig.isProduction()
 
-        Scaffold {
-            Box(modifier = Modifier.fillMaxSize()) {
+
+        Scaffold(containerColor = Color.Transparent) {
+
+            Map(
+                modifier = Modifier
+                    .padding(bottom = it.calculateBottomPadding() + 52.dp)
+                    .fillMaxSize(),
+                navController = navController
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
                 NavHost(
                     navController = navController,
                     startDestination = startDestination,
-                    modifier = Modifier
-                        .background(Color.White)
-                        .padding(bottom = it.calculateBottomPadding())
+                    modifier = Modifier.padding(bottom = it.calculateBottomPadding())
                 ) {
                     register(
                         loginFeature,
@@ -153,6 +168,28 @@ class MainActivity : AppCompatActivity() {
                     )
                 }
             }
+        }
+    }
+
+    @Composable
+    fun Map(navController: NavHostController, modifier: Modifier) {
+        val mapViewModel = injectedViewModel {
+            appProvider.mainDependencies.mapViewModel
+        }
+
+        val mapUiState = mapViewModel.uiStateFlow.collectAsState().value
+        Box(
+            modifier = modifier
+        ) {
+            MapScreenEventHandler(
+                uiEvent = mapViewModel.uiEvent,
+                openFilters = { navController.navigate("filters") }
+            )
+            MapScreen(
+                uiState = mapUiState,
+                onMapAction = mapViewModel::onMapAction,
+                map = mapViewModel.map
+            )
         }
     }
 

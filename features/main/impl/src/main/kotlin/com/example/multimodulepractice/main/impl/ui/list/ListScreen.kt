@@ -24,7 +24,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.multimodulepractice.common.theme.mediumTextStyle
@@ -37,12 +36,11 @@ import com.example.multimodulepractice.main.impl.ui.compose_elements.VerticalAtt
 @Composable
 fun ListScreen(uiState: ListUiState, onListAction: (ListAction) -> Unit) {
     val context = LocalContext.current
-    Scaffold(
-        modifier = Modifier.padding(bottom = 20.dp)
-    ) {
+    Scaffold {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(bottom = 20.dp)
                 .background(Color(0xFFF6F6F6))
         ) {
             item {

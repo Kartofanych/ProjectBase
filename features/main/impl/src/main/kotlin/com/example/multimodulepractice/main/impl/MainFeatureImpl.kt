@@ -1,6 +1,6 @@
 package com.example.multimodulepractice.main.impl
 
-import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,7 +33,7 @@ class MainFeatureImpl @Inject constructor(
     }
 
     private val attractionRepository by lazy {
-        component.attractionRepository
+        mainDependencies.attractionRepository
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -45,21 +45,14 @@ class MainFeatureImpl @Inject constructor(
 
         navGraphBuilder.composable(
             route = featureRoute,
-            enterTransition = {
-                slideInHorizontally {
-                    -it
-                }
-            },
             exitTransition = {
                 slideOutHorizontally {
                     -it
                 }
             },
-            popExitTransition = {
-                slideOutHorizontally {
-                    -it
-                }
-            },
+            enterTransition = {
+                EnterTransition.None
+            }
         ) {
             val insideNavController = rememberNavController()
             val sheetState = rememberModalBottomSheetState()
@@ -68,9 +61,6 @@ class MainFeatureImpl @Inject constructor(
 
             Box(modifier = Modifier.fillMaxSize()) {
                 BottomNavGraph(
-                    mapViewModel = injectedViewModel {
-                        component.mapViewModel
-                    },
                     listViewModel = injectedViewModel {
                         component.listViewModel
                     },
@@ -79,7 +69,6 @@ class MainFeatureImpl @Inject constructor(
                     },
                     navController = insideNavController,
                     navigateToLogin = { navController.navigate("login") },
-                    openFilters = { navController.navigate("filters") },
                 )
 
                 BottomNavBar(

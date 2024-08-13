@@ -1,6 +1,9 @@
 package com.example.multimodulepractice.main.impl.ui
 
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,9 +17,6 @@ import com.example.multimodulepractice.main.impl.MainFeatureImpl.Companion.SCREE
 import com.example.multimodulepractice.main.impl.MainFeatureImpl.Companion.SCREEN_PROFILE_ROUTE
 import com.example.multimodulepractice.main.impl.ui.list.ListScreen
 import com.example.multimodulepractice.main.impl.ui.list.ListViewModel
-import com.example.multimodulepractice.main.impl.ui.map.MapScreen
-import com.example.multimodulepractice.main.impl.ui.map.MapScreenEventHandler
-import com.example.multimodulepractice.main.impl.ui.map.MapViewModel
 import com.example.multimodulepractice.main.impl.ui.profile.ProfileScreen
 import com.example.multimodulepractice.main.impl.ui.profile.ProfileScreenEventHandler
 import com.example.multimodulepractice.main.impl.ui.profile.ProfileViewModel
@@ -24,11 +24,9 @@ import com.example.multimodulepractice.main.impl.ui.profile.ProfileViewModel
 @Composable
 fun BottomNavGraph(
     navController: NavHostController,
-    mapViewModel: MapViewModel,
     listViewModel: ListViewModel,
     profileViewModel: ProfileViewModel,
-    navigateToLogin: () -> Unit,
-    openFilters: () -> Unit
+    navigateToLogin: () -> Unit
 ) {
 
     Box(modifier = Modifier.padding(bottom = 40.dp)) {
@@ -37,26 +35,51 @@ fun BottomNavGraph(
             startDestination = SCREEN_MAP_ROUTE
         ) {
             composable(route = SCREEN_MAP_ROUTE) {
-                MapScreenEventHandler(
-                    uiEvent = mapViewModel.uiEvent,
-                    openFilters = openFilters
-                )
-
-                MapScreen(
-                    mapViewModel.uiStateFlow.collectAsStateWithLifecycle().value,
-                    mapViewModel::onMapAction,
-                    mapViewModel.map
-                )
+                Box(modifier = Modifier.fillMaxSize())
             }
 
-            composable(route = SCREEN_LIST_ROUTE) {
+            composable(
+                route = SCREEN_LIST_ROUTE,
+                enterTransition = {
+                    if (initialState.destination.route == SCREEN_MAP_ROUTE) {
+                        slideInHorizontally {
+                            it
+                        }
+                    } else {
+                        slideInHorizontally {
+                            -it
+                        }
+                    }
+                },
+                exitTransition = {
+                    if (targetState.destination.route == SCREEN_MAP_ROUTE) {
+                        slideOutHorizontally {
+                            it
+                        }
+                    } else {
+                        slideOutHorizontally {
+                            -it
+                        }
+                    }
+                }
+            ) {
                 ListScreen(
                     listViewModel.uiStateFlow.collectAsStateWithLifecycle().value,
                     listViewModel::onListAction
                 )
             }
 
-            composable(route = SCREEN_PROFILE_ROUTE) {
+            composable(route = SCREEN_PROFILE_ROUTE,
+                enterTransition = {
+                    slideInHorizontally {
+                        it
+                    }
+                },
+                exitTransition = {
+                    slideOutHorizontally {
+                        it
+                    }
+                }) {
                 ProfileScreenEventHandler(
                     navigateToLogin = navigateToLogin,
                     uiEvent = profileViewModel.uiEvent
