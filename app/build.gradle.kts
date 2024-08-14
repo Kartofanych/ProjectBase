@@ -100,6 +100,7 @@ dependencies {
     implementation(project(":features:geo"))
     implementation(project(":features:app_config:impl"))
     implementation(project(":features:filters:impl"))
+    implementation(project(":features:splash:impl"))
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)

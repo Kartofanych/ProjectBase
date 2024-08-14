@@ -32,7 +32,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.example.multimodulepractice.auth.models.AuthInfo
 import com.example.multimodulepractice.common.navigation.find
 import com.example.multimodulepractice.common.navigation.injectedViewModel
 import com.example.multimodulepractice.common.theme.MultimodulePracticeTheme
@@ -43,6 +42,7 @@ import com.filters.api.FiltersEntry
 import com.example.multimodulepractice.main.MainFeatureEntry
 import com.example.multimodulepractice.main.impl.ui.map.MapScreen
 import com.example.multimodulepractice.main.impl.ui.map.MapScreenEventHandler
+import com.splash.api.SplashEntry
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.system.exitProcess
@@ -50,8 +50,6 @@ import kotlin.system.exitProcess
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appProvider: AppProvider
-
-    private var startDestination = "login"
 
     private var locationPermissions = arrayOf(
         Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -74,11 +72,6 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         appProvider = (this.applicationContext as App).appProvider
-
-        startDestination = when (appProvider.authInfoManager.authInfo()) {
-            AuthInfo.Guest -> "login"
-            is AuthInfo.User -> "main"
-        }
 
         setContent {
             MultimodulePracticeTheme {
@@ -107,6 +100,7 @@ class MainActivity : AppCompatActivity() {
         val guideFeature = destinations.find<GuideEntry>()
         val audioGuideFeature = destinations.find<AudioGuideFeatureEntry>()
         val filtersFeature = destinations.find<FiltersEntry>()
+        val splashFeature = destinations.find<SplashEntry>()
 
         val isDebug = BuildConfig.DEBUG
         val isProduction = appProvider.appConfig.isProduction()
@@ -127,9 +121,15 @@ class MainActivity : AppCompatActivity() {
             ) {
                 NavHost(
                     navController = navController,
-                    startDestination = startDestination,
+                    startDestination = splashFeature.featureRoute,
                     modifier = Modifier.padding(bottom = it.calculateBottomPadding())
                 ) {
+                    register(
+                        splashFeature,
+                        navController = navController,
+                        modifier = Modifier
+                    )
+
                     register(
                         loginFeature,
                         navController = navController,

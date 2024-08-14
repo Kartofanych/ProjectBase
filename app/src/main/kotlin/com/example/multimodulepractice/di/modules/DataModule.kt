@@ -7,6 +7,8 @@ import com.example.multimodulepractice.main.impl.repositories.AttractionReposito
 import com.example.multimodulepractice.main.impl.repositories.AttractionRepositoryImpl
 import com.filters.api.data.FiltersRepository
 import com.filters.impl.data.FiltersRepositoryImpl
+import com.splash.api.domain.CitiesRepository
+import com.splash.impl.data.repository.CitiesRepositoryImpl
 import com.travelling.impl.di.AppConfigModule
 import dagger.Binds
 import dagger.Module
@@ -31,4 +33,8 @@ interface DataModule {
     @Reusable
     fun bindAttractionRepository(attractionRepositoryImpl: AttractionRepositoryImpl): AttractionRepository
 
+    @Binds
+    @AppScope
+    @Reusable
+    fun bindCitiesRepository(citiesRepositoryImpl: CitiesRepositoryImpl): CitiesRepository
 }

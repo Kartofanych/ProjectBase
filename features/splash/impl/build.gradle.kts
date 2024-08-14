@@ -1,7 +1,6 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("org.jetbrains.kotlin.plugin.serialization")
     kotlin("kapt")
     // Precompiled plugin with the base android configuration.
     // Declared in buildSrc/.../android-config.gradle.kts.
@@ -9,10 +8,13 @@ plugins {
 }
 
 android {
-    namespace = ProjectConfig.namespace("main.impl")
+    namespace = ProjectConfig.namespace("splash.impl")
 
-    buildFeatures.viewBinding = true
-    // ===== compose =====
+    defaultConfig {
+        buildConfigField("String", "VERSION_NAME", "\"${ProjectConfig.versionName}\"")
+    }
+
+    buildFeatures.buildConfig = true
     buildFeatures.compose = true
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.kotlinCompiler
@@ -20,28 +22,19 @@ android {
 }
 
 dependencies {
-    api(project(":features:main:api"))
-    api(project(":features:guide:api"))
-    api(project(":features:auth:api"))
-    api(project(":features:app_config:api"))
-    api(project(":features:filters:api"))
     api(project(":features:splash:api"))
-    implementation(project(":features:geo"))
-    implementation(project(":features:landmark"))
+    api(project(":features:auth:api"))
+    api(project(":features:filters:api"))
     implementation(project(":common"))
-
+    implementation(project(":features:geo"))
     implementation(libs.core.ktx)
+
     implementation(libs.bundles.compose)
-
-    implementation(libs.bundles.navigation)
-
-    implementation(libs.bundles.datastore)
-    implementation(libs.json)
-
-    implementation(libs.maps.mobile)
 
     implementation(libs.bundles.dagger)
     kapt(libs.bundles.daggerCompiler)
+
+    implementation(libs.auth.sdk)
 
     implementation(libs.bundles.network)
 }

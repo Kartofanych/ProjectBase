@@ -1,4 +1,4 @@
-package com.example.multimodulepractice.main.impl.data.network.models.response
+package com.splash.impl.data.models.dto
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName

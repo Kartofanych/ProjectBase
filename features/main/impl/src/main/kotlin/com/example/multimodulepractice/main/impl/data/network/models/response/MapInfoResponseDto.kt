@@ -10,7 +10,4 @@ data class MapInfoResponseDto(
 
     @SerializedName("landmarks")
     val list: List<MapLandmarkDto>,
-
-    @SerializedName("filters")
-    val filters: FiltersDto
 )
