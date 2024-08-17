@@ -6,7 +6,6 @@ data class MapUiState(
 ) {
 
     sealed interface MapState {
-        object Error : MapState
         object Loading : MapState
         object Content : MapState
     }
@@ -14,7 +13,7 @@ data class MapUiState(
 
     companion object {
         fun EMPTY(): MapUiState = MapUiState(
-            state = MapState.Loading,
+            state = MapState.Content,
             isFiltersDefault = true
         )
     }

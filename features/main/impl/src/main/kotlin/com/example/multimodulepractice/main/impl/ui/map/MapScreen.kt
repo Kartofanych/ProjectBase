@@ -52,7 +52,7 @@ fun MapScreen(
             modifier = Modifier.fillMaxSize()
         )
 
-        if (uiState.state == MapState.Error || uiState.state == MapState.Loading) {
+        if (uiState.state == MapState.Loading) {
             val width =
                 animateDpAsState(
                     targetValue = if (uiState.state == MapState.Loading) 50.dp else LocalContext.current.screenWidthDp() - 160.dp,
@@ -77,43 +77,15 @@ fun MapScreen(
                         width = 2.dp,
                         color = color.value,
                         shape = CircleShape
-                    )
-                    .clickable(enabled = uiState.state == MapState.Error) {
-                        onMapAction(MapActions.OnRelaunchMap)
-                    },
+                    ),
                 contentAlignment = Alignment.Center
             ) {
-                when (uiState.state) {
-                    MapState.Error -> {
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = "Что-то с интернетом",
-                                style = semiboldTextStyle.copy(color = Color.Red),
-                                maxLines = 1,
-                                softWrap = false
-                            )
-                            Text(
-                                text = "Нажмите чтобы перезагрузить",
-                                style = mediumTextStyle.copy(
-                                    fontSize = 10.sp, color = Color.Red
-                                ),
-                                maxLines = 1,
-                                softWrap = false
-                            )
-                        }
-                    }
-
-                    else -> {
-                        CircularProgressIndicator(
-                            color = Color(0xFF47D88D),
-                            strokeWidth = 3.dp,
-                            modifier = Modifier.size(28.dp),
-                            strokeCap = StrokeCap.Round
-                        )
-                    }
-                }
+                CircularProgressIndicator(
+                    color = Color(0xFF47D88D),
+                    strokeWidth = 3.dp,
+                    modifier = Modifier.size(28.dp),
+                    strokeCap = StrokeCap.Round
+                )
             }
         }
 
