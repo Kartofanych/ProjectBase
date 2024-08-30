@@ -24,5 +24,4 @@ class GuideInteractor @Inject constructor(
             }
         }
     }
-
 }

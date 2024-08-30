@@ -1,13 +1,13 @@
 package com.example.multimodulepractice.main.impl.data.mappers
 
-import android.annotation.SuppressLint
-import com.example.multimodulepractice.common.models.local.Image
-import com.example.multimodulepractice.landmark.data.LandmarkAudioGid
+import com.example.multimodulepractice.landmark.data.Service
 import com.example.multimodulepractice.landmark.data.AttractionCategory
 import com.example.multimodulepractice.landmark.data.LandmarkResponse
-import com.example.multimodulepractice.main.impl.data.network.models.response.LandmarkAudioGidDto
+import com.example.multimodulepractice.landmark.data.ServiceGroup
 import com.example.multimodulepractice.main.impl.data.network.models.response.LandmarkCategoryDto
 import com.example.multimodulepractice.main.impl.data.network.models.response.LandmarkResponseDto
+import com.example.multimodulepractice.main.impl.data.network.models.response.ServiceDto
+import com.example.multimodulepractice.main.impl.data.network.models.response.ServiceGroupDto
 import javax.inject.Inject
 
 class LandmarkMapper @Inject constructor(
@@ -22,31 +22,35 @@ class LandmarkMapper @Inject constructor(
             address = response.address,
             categories = response.categories.map { mapCategory(it) },
             images = response.images.map { it.url },
-            audioGuides = response.audioGuides.map { mapAudioGid(it) }
+            serviceGroups = response.serviceGroups.map { mapServiceGroup(it) }
         )
     }
 
-    fun mapCategory(categoryDto: LandmarkCategoryDto): AttractionCategory {
+    private fun mapServiceGroup(dto: ServiceGroupDto): ServiceGroup {
+        return ServiceGroup(
+            title = dto.title,
+            subtitle = dto.subtitle,
+            services = dto.services.map { mapService(it) }
+        )
+    }
+
+    private fun mapService(dto: ServiceDto): Service {
+        return Service(
+            id = dto.id,
+            title = dto.title,
+            subtitle = dto.subtitle,
+            icon = dto.icon,
+            price = dto.price,
+            rating = dto.rating,
+            organizationId = dto.organizationId,
+            isIconOrganization = dto.isIconOrganization
+        )
+    }
+
+    fun mapCategory(dto: LandmarkCategoryDto): AttractionCategory {
         return AttractionCategory(
-            categoryDto.name,
-            colorMapper.mapColor(categoryDto.color)
+            dto.name,
+            colorMapper.mapColor(dto.color)
         )
     }
-
-    private fun mapAudioGid(audioGid: LandmarkAudioGidDto): LandmarkAudioGid {
-        return LandmarkAudioGid(
-            audioGid.id,
-            audioGid.title,
-            secondsToReadableString(audioGid.time),
-            Image(audioGid.icon ?: "")
-        )
-    }
-
-    @SuppressLint("DefaultLocale")
-    private fun secondsToReadableString(seconds: Long): String {
-        val hours = seconds / 3600
-        val minutes = (seconds % 3600) / 60
-        return String.format("%02d:%02d:%02d", hours, minutes, seconds % 60)
-    }
-
 }

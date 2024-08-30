@@ -21,7 +21,7 @@ import com.example.multimodulepractice.landmark.data.LandmarkResponse
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun LandmarkInfo(landmark: LandmarkResponse, onOpenAudioGuide: () -> Unit) {
+fun LandmarkInfo(landmark: LandmarkResponse) {
     Column(
         modifier = Modifier
             .padding(horizontal = 10.dp)
@@ -72,18 +72,6 @@ fun LandmarkInfo(landmark: LandmarkResponse, onOpenAudioGuide: () -> Unit) {
 
         Spacer(modifier = Modifier.height(11.dp))
 
-        if (landmark.audioGuides.isNotEmpty()) {
-            Text(
-                text = "Аудио гид",
-                fontSize = 16.sp,
-                style = semiboldTextStyle
-            )
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            AudioGidItemLayout(audioGid = landmark.audioGuides[0], onOpenAudioGuide = onOpenAudioGuide)
-
-            Spacer(modifier = Modifier.height(30.dp))
-        }
+        Spacer(modifier = Modifier.height(30.dp))
     }
 }

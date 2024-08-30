@@ -92,7 +92,7 @@ class MainFeatureImpl @Inject constructor(
                         onDismiss = attractionRepository::dismissLandmark,
                         recallLandmark = { attractionRepository.getLandmark(landmarkId = landmark.id) },
                         onOpenGuide = { navController.navigate("guide/${landmark.id}") },
-                        onOpenAudioGuide = { navController.navigate("audioguide") },
+                        onOpenService = { serviceId -> navController.navigate("service/$serviceId") },
                         landmark = landmark
                     )
                 }

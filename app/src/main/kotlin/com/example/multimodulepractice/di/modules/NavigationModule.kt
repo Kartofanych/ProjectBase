@@ -5,6 +5,7 @@ import com.example.multimodulepractice.guide.impl.di.GuideNavigationModule
 import com.example.multimodulepractice.main.impl.di.MainNavigationModule
 import com.example.multimodulepractice.login.impl.di.LoginNavigationModule
 import com.filters.impl.di.FiltersNavigationModule
+import com.service.impl.di.ServiceNavigationModule
 import com.splash.impl.di.SplashNavigationModule
 import dagger.Module
 
@@ -15,7 +16,8 @@ import dagger.Module
         GuideNavigationModule::class,
         AudioGuideNavigationModule::class,
         FiltersNavigationModule::class,
-        SplashNavigationModule::class
+        SplashNavigationModule::class,
+        ServiceNavigationModule::class
     ]
 )
 interface NavigationModule

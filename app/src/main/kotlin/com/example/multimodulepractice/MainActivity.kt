@@ -42,6 +42,7 @@ import com.filters.api.FiltersEntry
 import com.example.multimodulepractice.main.MainFeatureEntry
 import com.example.multimodulepractice.main.impl.ui.map.MapScreen
 import com.example.multimodulepractice.main.impl.ui.map.MapScreenEventHandler
+import com.service.api.ServiceEntry
 import com.splash.api.SplashEntry
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -101,6 +102,7 @@ class MainActivity : AppCompatActivity() {
         val audioGuideFeature = destinations.find<AudioGuideFeatureEntry>()
         val filtersFeature = destinations.find<FiltersEntry>()
         val splashFeature = destinations.find<SplashEntry>()
+        val serviceFeature = destinations.find<ServiceEntry>()
 
         val isDebug = BuildConfig.DEBUG
         val isProduction = appProvider.appConfig.isProduction()
@@ -156,6 +158,12 @@ class MainActivity : AppCompatActivity() {
 
                     register(
                         filtersFeature,
+                        navController = navController,
+                        modifier = Modifier
+                    )
+
+                    register(
+                        serviceFeature,
                         navController = navController,
                         modifier = Modifier
                     )

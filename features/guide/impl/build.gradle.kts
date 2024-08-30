@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = ProjectConfig.namespace("login")
+    namespace = ProjectConfig.namespace("guide.impl")
 
     buildFeatures.compose = true
     composeOptions {

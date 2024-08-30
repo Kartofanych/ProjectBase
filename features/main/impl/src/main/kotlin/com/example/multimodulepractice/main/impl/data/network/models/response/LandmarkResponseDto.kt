@@ -24,7 +24,6 @@ data class LandmarkResponseDto(
     @SerializedName("categories")
     val categories: List<LandmarkCategoryDto>,
 
-    @SerializedName("audio_guide")
-    val audioGuides: List<LandmarkAudioGidDto>
-
+    @SerializedName("service_groups")
+    val serviceGroups: List<ServiceGroupDto> = emptyList()
 )

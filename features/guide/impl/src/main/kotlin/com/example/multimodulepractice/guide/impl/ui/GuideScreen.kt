@@ -7,18 +7,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import com.example.multimodulepractice.common.composables.DefaultLoading
 import com.example.multimodulepractice.guide.impl.ui.composables.ContentImage
 import com.example.multimodulepractice.guide.impl.ui.composables.Footer
 import com.example.multimodulepractice.guide.impl.ui.composables.Header
@@ -87,17 +85,6 @@ fun GuideScreen(uiState: GuideUiState, onAction: (GuideAction) -> Unit) {
         visible = uiState == GuideUiState.Loading,
         exit = fadeOut()
     ) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White)
-        ) {
-            CircularProgressIndicator(
-                color = Color(0xFF47D88D),
-                strokeWidth = 4.dp,
-                modifier = Modifier.size(50.dp)
-            )
-        }
+        DefaultLoading(modifier = Modifier.fillMaxSize())
     }
 }
