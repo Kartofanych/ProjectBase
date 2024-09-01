@@ -14,6 +14,7 @@ import coil.ImageLoader
 import coil.request.ImageRequest
 import com.example.multimodulepractice.common.di.AppContext
 import com.example.multimodulepractice.common.di.AppScope
+import com.example.multimodulepractice.common.models.local.City
 import com.example.multimodulepractice.common.models.local.GeoPoint
 import com.example.multimodulepractice.common.models.local.ResponseState
 import com.example.multimodulepractice.common.utils.calculateDistance
@@ -57,6 +58,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -75,11 +77,18 @@ class MapViewModel @Inject constructor(
 
     @SuppressLint("StaticFieldLeak")
     val map = MapView(context)
+    private val camera: CameraPosition
+        get() = map.mapWindow.map.cameraPosition
 
     private var userMapObject: PlacemarkMapObject? = null
 
     private val tapListeners = mutableListOf<MapObjectTapListener>()
-    private val mapObjects = mutableListOf<Pair<PlacemarkMapObject, MapLandmark>>()
+    private val objectsCollection = map.mapWindow.map.mapObjects.addCollection()
+    private val citiesCollection = map.mapWindow.map.mapObjects.addCollection()
+
+    //TODO remove to cities
+    private val mapObjects = mutableListOf<PlacemarkMapObject>()
+    private val cityObjects = mutableListOf<PlacemarkMapObject>()
     private var boundary: PolygonMapObject? = null
     private val boundaryPolygonList: MutableList<LinearRing> = ArrayList()
 
@@ -106,10 +115,23 @@ class MapViewModel @Inject constructor(
     }
 
     private val cameraListener = CameraListener { _, cameraPosition, _, _ ->
-        mapInfo(cameraPosition.target.toGeoPoint())
+        mapInfo(cameraPosition.target.toGeoPoint(), cameraPosition.zoom)
+        invalidateObjectsByZoom(cameraPosition.zoom)
     }
 
-    private val collection = map.mapWindow.map.mapObjects.addCollection()
+    private fun invalidateObjectsByZoom(zoom: Float) {
+        when {
+            zoom > 12f -> {
+                objectsCollection.setVisible(true, Animation(Animation.Type.LINEAR, 500f), null)
+                citiesCollection.setVisible(false, Animation(Animation.Type.LINEAR, 500f), null)
+            }
+
+            else -> {
+                objectsCollection.setVisible(false, Animation(Animation.Type.LINEAR, 500f), null)
+                citiesCollection.setVisible(true, Animation(Animation.Type.LINEAR, 500f), null)
+            }
+        }
+    }
 
     private var mapRequestJob: MapInfoJob = MapInfoJob()
 
@@ -121,13 +143,25 @@ class MapViewModel @Inject constructor(
         get() = _uiStateFlow
 
     private var clusteredCollection: ClusterizedPlacemarkCollection =
-        collection.addClusterizedPlacemarkCollection(clusterListener)
+        objectsCollection.addClusterizedPlacemarkCollection(clusterListener)
 
     init {
         onStart()
+        subscribeToCities()
         subscribeToGeo()
         subscribeToFilters()
         map.mapWindow.map.addCameraListener(cameraListener)
+    }
+
+    private fun subscribeToCities() {
+        viewModelScope.launch {
+            citiesRepository.citiesFlow().drop(1).take(1).collect {
+                it.forEach { city ->
+                    cityObjects.add(createCityObject(city))
+                }
+                mapInfo(camera.target.toGeoPoint(), camera.zoom)
+            }
+        }
     }
 
     private fun subscribeToFilters() {
@@ -147,7 +181,16 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    private fun mapInfo(point: GeoPoint) {
+    private fun subscribeToGeo() {
+        viewModelScope.launch {
+            geoRepository.geoInfoFlow().collectLatest { geoInfo ->
+                updateUserLocation(geoPoint = geoInfo.currentPoint)
+            }
+        }
+    }
+
+    private fun mapInfo(point: GeoPoint, zoom: Float) {
+        if (zoom < 12f) return
         citiesRepository.closestCity(point)?.let { city ->
             if (mapRequestJob.city != city) {
                 _uiStateFlow.update {
@@ -165,7 +208,7 @@ class MapViewModel @Inject constructor(
 
                         is ResponseState.Error -> {
                             mapRequestJob = MapInfoJob()
-                            mapInfo(point)
+                            mapInfo(point, camera.zoom)
                         }
                     }
                 }
@@ -175,23 +218,15 @@ class MapViewModel @Inject constructor(
     }
 
     private fun addAttractions(list: List<MapLandmark>) {
-        val filters = filtersRepository.zeroFilters
+        val filters = filtersRepository.filters.value ?: filtersRepository.zeroFilters
         for (landmark in list) {
-            mapObjects.add(addObjectToCollection(landmark) to landmark)
+            mapObjects.add(createLandmarkObject(landmark))
         }
         invalidateMapObjects(filters)
         clusteredCollection.clusterPlacemarks(60.0, 15)
     }
 
-    private fun subscribeToGeo() {
-        viewModelScope.launch {
-            geoRepository.geoInfoFlow().collectLatest { geoInfo ->
-                updateUserLocation(geoPoint = geoInfo.currentPoint)
-            }
-        }
-    }
-
-    private fun addObjectToCollection(landmark: MapLandmark): PlacemarkMapObject {
+    private fun createLandmarkObject(landmark: MapLandmark): PlacemarkMapObject {
         return clusteredCollection.addPlacemark().apply {
             geometry = landmark.geoPoint.toMapKitPoint()
             val textStyle = iconTextStyle(landmark.color)
@@ -222,6 +257,21 @@ class MapViewModel @Inject constructor(
             }
             isDraggable = true
             setDragListener(pinDragListener)
+            userData = landmark
+        }
+    }
+
+    private fun createCityObject(city: City): PlacemarkMapObject {
+        return citiesCollection.addPlacemark().apply {
+            geometry = city.geoPoint.toMapKitPoint()
+            setIcon(
+                ImageProvider.fromBitmap(
+                    getDrawable(
+                        context,
+                        R.drawable.ic_city_pin
+                    )!!.toBitmap()
+                )
+            )
         }
     }
 
@@ -232,8 +282,8 @@ class MapViewModel @Inject constructor(
         val mapObjectsCurrent = ArrayList(mapObjects)
 
         for (item in mapObjectsCurrent.withIndex()) {
-            val placeMark = item.value.first
-            val landmark = item.value.second
+            val placeMark = item.value
+            val landmark = item.value.userData as MapLandmark
 
             try {
                 clusteredCollection.remove(placeMark)
@@ -245,8 +295,7 @@ class MapViewModel @Inject constructor(
                     geoRepository.geoInfoImmediately().currentPoint
                 ) <= distance && landmark.categoryIds.any { id -> filterCategories.any { it.id == id && it.isSelected } }
             ) {
-                mapObjects[item.index] =
-                    mapObjects[item.index].copy(first = addObjectToCollection(landmark))
+                mapObjects[item.index] = createLandmarkObject(landmark)
             }
         }
         clusteredCollection.clusterPlacemarks(60.0, 15)
@@ -274,7 +323,7 @@ class MapViewModel @Inject constructor(
     private fun updateUserLocation(geoPoint: GeoPoint) {
         val location = geoPoint.toMapKitPoint()
         if (userMapObject == null) {
-            userMapObject = collection.addPlacemark().apply {
+            userMapObject = objectsCollection.addPlacemark().apply {
                 geometry = location
                 setIcon(
                     ImageProvider.fromBitmap(
@@ -307,7 +356,7 @@ class MapViewModel @Inject constructor(
     }
 
     private fun drawBoundary(points: List<GeoPoint>) {
-        boundary?.let(collection::remove)
+        boundary?.let(objectsCollection::remove)
         val outerBoundaryCoordinates = listOf(
             Point(89.0, -170.0),
             Point(89.0, 170.0),
@@ -320,7 +369,7 @@ class MapViewModel @Inject constructor(
             LinearRing(outerBoundaryCoordinates),
             boundaryPolygonList
         )
-        boundary = collection.addPolygon(polygon).apply {
+        boundary = objectsCollection.addPolygon(polygon).apply {
             fillColor = Color.argb(50, 255, 0, 0)
             strokeColor = Color.argb(100, 255, 0, 0)
             strokeWidth = 2.0f

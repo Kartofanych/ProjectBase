@@ -5,22 +5,28 @@ import com.splash.api.domain.CitiesRepository
 import com.example.multimodulepractice.common.models.local.City
 import com.example.multimodulepractice.common.models.local.GeoPoint
 import com.example.multimodulepractice.common.utils.calculateDistance
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @AppScope
 class CitiesRepositoryImpl @Inject constructor() : CitiesRepository {
 
-    private val _cities: MutableList<City> = ArrayList()
+    private val _cities = MutableStateFlow<List<City>>(emptyList())
 
-    override fun cities(): List<City> = _cities
+    override fun cities(): List<City> = _cities.value
 
-    override fun updateCities(list: List<City>) {
-        _cities.clear()
-        _cities.addAll(list)
+    override fun citiesFlow(): Flow<List<City>> = _cities.asStateFlow()
+
+    override suspend fun updateCities(list: List<City>) {
+        _cities.emit(list)
     }
 
-    override fun loadedCity(city: City) {
-        _cities[city.index] = city.copy(isLoaded = true)
+    override suspend fun loadedCity(city: City) {
+        val current = _cities.value.toMutableList()
+        current[city.index] = city.copy(isLoaded = true)
+        _cities.emit(current)
     }
 
     override fun closestCity(pinPoint: GeoPoint): City? {

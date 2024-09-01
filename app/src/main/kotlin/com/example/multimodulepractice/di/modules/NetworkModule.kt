@@ -27,8 +27,8 @@ interface NetworkModule {
         private const val HEADER_INTERCEPTOR = "Header"
         private const val LOGGING_INTERCEPTOR = "Logging"
 
-        private const val TESTING_BASE_URL = "http://91.224.86.138:8005/"
-        private const val PRODUCTION_BASE_URL = "http://91.224.86.138:8000/"
+        private const val TESTING_BASE_URL = "http://91.224.86.138:8010/test/"
+        private const val PRODUCTION_BASE_URL = "http://91.224.86.138:8010/prod/"
         private const val YANDEX_API_BASE_URL = "https://login.yandex.ru/"
 
         @Provides
