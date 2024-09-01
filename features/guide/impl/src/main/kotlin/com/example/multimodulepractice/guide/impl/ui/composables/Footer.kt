@@ -20,8 +20,8 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.multimodulepractice.guide.impl.R
 import com.example.multimodulepractice.guide.impl.ui.GuideUiState
-import com.example.multimodulepractice.login.R
 import kotlinx.coroutines.launch
 
 @Composable

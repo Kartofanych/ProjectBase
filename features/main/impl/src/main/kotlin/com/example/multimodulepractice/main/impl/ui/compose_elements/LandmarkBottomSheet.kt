@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
@@ -22,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material.Icon
+import com.example.multimodulepractice.common.composables.DefaultLoading
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.example.multimodulepractice.main.impl.R
@@ -36,7 +36,7 @@ fun LandmarkBottomSheet(
     onDismiss: () -> Unit,
     recallLandmark: () -> Unit,
     onOpenGuide: () -> Unit,
-    onOpenAudioGuide: () -> Unit,
+    onOpenService: (String) -> Unit,
     landmark: Landmark
 ) {
     ModalBottomSheet(
@@ -51,7 +51,7 @@ fun LandmarkBottomSheet(
                     landmark = state.landmark,
                     sheetState = sheetState,
                     onOpenGuide = onOpenGuide,
-                    onOpenAudioGuide = onOpenAudioGuide
+                    onOpenService = onOpenService
                 )
             }
 
@@ -96,21 +96,12 @@ fun LandmarkBottomSheet(
             }
 
             LandmarkState.Loading -> {
-                Box(
+                DefaultLoading(
                     modifier = Modifier
                         .height(300.dp)
                         .fillMaxWidth()
-                        .background(Color.White),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(
-                        color = Color(0xFF47D88D),
-                        strokeWidth = 4.dp,
-                        modifier = Modifier.size(50.dp)
-                    )
-                }
+                )
             }
         }
     }
-
 }

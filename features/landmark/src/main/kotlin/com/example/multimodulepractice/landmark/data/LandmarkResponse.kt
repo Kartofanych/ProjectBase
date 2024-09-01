@@ -7,5 +7,5 @@ data class LandmarkResponse(
     val address: String,
     val images: List<String>,
     val categories: List<AttractionCategory>,
-    val audioGuides: List<LandmarkAudioGid>
+    val serviceGroups: List<ServiceGroup>
 )

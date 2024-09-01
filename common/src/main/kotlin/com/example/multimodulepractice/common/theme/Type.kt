@@ -23,7 +23,7 @@ val tabTextStyle = TextStyle(
 
 val regularTextStyle = TextStyle(
     fontFamily = montserratFamily,
-    fontWeight = FontWeight.Normal,
+    fontWeight = FontWeight.Light,
     fontSize = 12.sp,
     letterSpacing = 0.5.sp
 )
