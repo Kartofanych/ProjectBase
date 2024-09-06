@@ -12,7 +12,7 @@ import javax.inject.Inject
 class LaunchMapper @Inject constructor() {
 
     fun map(response: LaunchResponseDto): LaunchResponse {
-        return LaunchResponse(
+        return LaunchResponse.Success(
             cities = response.cities.mapIndexed(::mapCity),
             filters = mapFilters(response.filters)
         )

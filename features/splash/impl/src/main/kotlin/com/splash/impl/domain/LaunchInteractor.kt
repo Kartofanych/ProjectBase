@@ -1,5 +1,6 @@
 package com.splash.impl.domain
 
+import android.util.Log
 import com.example.multimodulepractice.common.models.local.ResponseState
 import com.example.multimodulepractice.splash.impl.BuildConfig
 import com.splash.impl.data.LaunchApi
@@ -8,6 +9,8 @@ import com.splash.impl.data.models.dto.LaunchRequest
 import com.splash.impl.data.models.local.LaunchResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.Connection
+import java.net.ConnectException
 import javax.inject.Inject
 
 class LaunchInteractor @Inject constructor(
@@ -21,7 +24,8 @@ class LaunchInteractor @Inject constructor(
                 val response = launchApi.launch(LaunchRequest(BuildConfig.VERSION_NAME))
                 ResponseState.Success(launchMapper.map(response))
             } catch (exception: Exception) {
-                ResponseState.Error()
+                Log.d("LaunchInteractor", "${exception.cause is ConnectException}")
+                ResponseState.Error(LaunchResponse.Error(exception))
             }
         }
     }

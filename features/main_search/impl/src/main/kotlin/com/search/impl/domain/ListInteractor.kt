@@ -26,7 +26,7 @@ class ListInteractor @Inject constructor(
                 )
                 return@withContext ResponseState.Success(data = listMapper.mapResponse(response))
             } catch (exception: Exception) {
-                return@withContext ResponseState.Error()
+                return@withContext ResponseState.Error(exception)
             }
         }
     }
