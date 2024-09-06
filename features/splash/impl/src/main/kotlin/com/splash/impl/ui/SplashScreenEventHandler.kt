@@ -13,7 +13,9 @@ fun SplashScreenEventHandler(uiEvent: Flow<SplashEvent>, start: () -> Unit) {
         uiEvent.collectLatest { event ->
             when (event) {
                 SplashEvent.Start -> start()
-                else -> Log.d("HSHS", "SS")
+                else -> {
+                    // Не совсем понятно что тут делать, если у меня еррор
+                }
             }
         }
     }

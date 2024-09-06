@@ -40,11 +40,15 @@ class SplashEntryImpl @Inject constructor(
             val viewModel = injectedViewModel {
                 component.viewModel
             }
-
+            /**
+             * Вопрос тут: что делать, если у меня например еррор прилетел
+             * Я так понимаю просто сплеш скрин хендлер не обрабатывать, или как
+             */
             SplashScreenEventHandler(
                 uiEvent = viewModel.uiEvent,
                 start = { navController.navigate(startDestination) }
             )
+
             SplashScreen()
         }
     }
