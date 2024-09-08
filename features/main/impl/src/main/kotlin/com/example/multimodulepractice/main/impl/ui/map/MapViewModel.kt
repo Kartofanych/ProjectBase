@@ -26,7 +26,8 @@ import com.example.multimodulepractice.main.impl.data.local_models.map.MapLandma
 import com.example.multimodulepractice.main.impl.databinding.ClusteredViewBinding
 import com.example.multimodulepractice.main.impl.repositories.AttractionRepository
 import com.example.multimodulepractice.main.impl.ui.map.MapUiState.MapState
-import com.example.multimodulepractice.main.impl.utils.iconTextStyle
+import com.example.multimodulepractice.main.impl.utils.cityTextStyle
+import com.example.multimodulepractice.main.impl.utils.landmarkTextStyle
 import com.example.multimodulepractice.main.impl.utils.toGeoPoint
 import com.example.multimodulepractice.main.impl.utils.toMapKitPoint
 import com.filters.api.data.FiltersRepository
@@ -229,7 +230,7 @@ class MapViewModel @Inject constructor(
     private fun createLandmarkObject(landmark: MapLandmark): PlacemarkMapObject {
         return clusteredCollection.addPlacemark().apply {
             geometry = landmark.geoPoint.toMapKitPoint()
-            val textStyle = iconTextStyle(landmark.color)
+            val textStyle = landmarkTextStyle(landmark.color)
             setText(landmark.name, textStyle)
 
             MapObjectTapListener { _, _ ->
@@ -264,14 +265,21 @@ class MapViewModel @Inject constructor(
     private fun createCityObject(city: City): PlacemarkMapObject {
         return citiesCollection.addPlacemark().apply {
             geometry = city.geoPoint.toMapKitPoint()
-            setIcon(
-                ImageProvider.fromBitmap(
-                    getDrawable(
-                        context,
-                        R.drawable.ic_city_pin
-                    )!!.toBitmap()
-                )
-            )
+            setText(city.name, cityTextStyle)
+            viewModelScope.launch(Dispatchers.IO) {
+                val loader = ImageLoader(context)
+                val request = ImageRequest.Builder(context)
+                    .data(city.icon)
+                    .error(R.drawable.ic_city_pin)
+                    .fallback(R.drawable.ic_city_pin)
+                    .allowHardware(false)
+                    .build()
+
+                val bitmap = (loader.execute(request).drawable as BitmapDrawable).bitmap
+                withContext(Dispatchers.Main) {
+                    setIcon(ImageProvider.fromBitmap(bitmap))
+                }
+            }
         }
     }
 

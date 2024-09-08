@@ -25,7 +25,8 @@ class LaunchMapper @Inject constructor() {
             radius = dto.radius,
             geoPoint = dto.geoPoint.toLocalModel(),
             isLoaded = false,
-            index = index
+            index = index,
+            icon = dto.icon
         )
     }
 

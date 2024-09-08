@@ -88,7 +88,7 @@ fun LandmarkContent(
                 }
             )
         },
-        content = { it ->
+        content = {
             it
             LazyColumn(
                 modifier = Modifier

@@ -14,5 +14,8 @@ class CityDto(
     val geoPoint: GeoPointDto,
 
     @SerializedName("radius")
-    val radius: Float
+    val radius: Float,
+
+    @SerializedName("icon")
+    val icon: String
 )
