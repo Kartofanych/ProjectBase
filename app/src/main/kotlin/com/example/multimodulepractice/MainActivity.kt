@@ -34,6 +34,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.example.multimodulepractice.common.navigation.find
 import com.example.multimodulepractice.common.navigation.injectedViewModel
+import com.example.multimodulepractice.common.navigation.register
 import com.example.multimodulepractice.common.theme.MultimodulePracticeTheme
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.guide.GuideEntry
@@ -182,7 +183,7 @@ class MainActivity : AppCompatActivity() {
     @Composable
     fun Map(navController: NavHostController, modifier: Modifier) {
         val mapViewModel = injectedViewModel {
-            appProvider.mainDependencies.mapViewModel
+            appProvider.mapViewModel
         }
 
         val mapUiState = mapViewModel.uiStateFlow.collectAsState().value

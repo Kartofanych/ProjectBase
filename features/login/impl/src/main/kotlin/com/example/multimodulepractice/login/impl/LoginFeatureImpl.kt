@@ -16,6 +16,7 @@ class LoginFeatureImpl @Inject constructor(
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
         navController: NavController,
+        mainNavController: NavController,
         modifier: Modifier
     ) {
         navGraphBuilder.composable(featureRoute) {

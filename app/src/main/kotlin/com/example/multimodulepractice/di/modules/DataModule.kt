@@ -3,8 +3,8 @@ package com.example.multimodulepractice.di.modules
 import com.example.multimodulepractice.auth.impl.di.AuthProviderModule
 import com.example.multimodulepractice.common.di.AppScope
 import com.example.multimodulepractice.geo.di.GeoProviderModule
-import com.example.multimodulepractice.main.impl.repositories.AttractionRepository
-import com.example.multimodulepractice.main.impl.repositories.AttractionRepositoryImpl
+import com.example.multimodulepractice.main.impl.data.repositories.AttractionRepositoryImpl
+import com.example.multimodulepractice.main.impl.di.MainDataModule
 import com.filters.api.data.FiltersRepository
 import com.filters.impl.data.FiltersRepositoryImpl
 import com.splash.api.domain.CitiesRepository
@@ -19,6 +19,7 @@ import dagger.Reusable
         AppConfigModule::class,
         AuthProviderModule::class,
         GeoProviderModule::class,
+        MainDataModule::class
     ]
 )
 interface DataModule {
@@ -31,7 +32,7 @@ interface DataModule {
     @Binds
     @AppScope
     @Reusable
-    fun bindAttractionRepository(attractionRepositoryImpl: AttractionRepositoryImpl): AttractionRepository
+    fun bindAttractionRepository(attractionRepositoryImpl: AttractionRepositoryImpl): com.main.common.domain.AttractionRepository
 
     @Binds
     @AppScope

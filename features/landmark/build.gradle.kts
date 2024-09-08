@@ -18,6 +18,7 @@ android {
 }
 
 dependencies {
+    api(project(":features:main:common"))
     implementation(project(":common"))
     implementation(libs.core.ktx)
 

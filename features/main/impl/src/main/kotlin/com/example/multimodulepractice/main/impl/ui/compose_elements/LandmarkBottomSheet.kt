@@ -25,8 +25,8 @@ import com.example.multimodulepractice.common.composables.DefaultLoading
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.example.multimodulepractice.main.impl.R
-import com.example.multimodulepractice.landmark.ui.Landmark
-import com.example.multimodulepractice.landmark.ui.Landmark.LandmarkState
+import com.main.common.data.local.Landmark
+import com.main.common.data.local.Landmark.LandmarkState
 import com.example.multimodulepractice.landmark.ui.landmark_content.LandmarkContent
 
 @OptIn(ExperimentalMaterial3Api::class)

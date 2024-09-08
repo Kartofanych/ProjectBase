@@ -1,12 +1,13 @@
 package com.example.multimodulepractice.main.impl.data.mappers
 
 import com.example.multimodulepractice.common.models.network.GeoPointDto.Companion.toLocalModel
-import com.example.multimodulepractice.main.impl.data.local_models.map.City
-import com.example.multimodulepractice.main.impl.data.local_models.map.MapInfoResponse
-import com.example.multimodulepractice.main.impl.data.local_models.map.MapLandmark
-import com.example.multimodulepractice.main.impl.data.network.models.response.CityDto
-import com.example.multimodulepractice.main.impl.data.network.models.response.MapInfoResponseDto
-import com.example.multimodulepractice.main.impl.data.network.models.response.MapLandmarkDto
+import com.main.common.data.local.map.City
+import com.main.common.data.local.map.MapInfoResponse
+import com.main.common.data.local.map.MapLandmark
+import com.main.common.data.dto.CityDto
+import com.main.common.data.dto.MapInfoResponseDto
+import com.main.common.data.dto.MapLandmarkDto
+import com.main.common.domain.ColorMapper
 import javax.inject.Inject
 
 class MapInfoMapper @Inject constructor(

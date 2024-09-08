@@ -16,7 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.multimodulepractice.common.composables.TopShadow
-import com.example.multimodulepractice.main.impl.data.local_models.MainTab
+import com.example.multimodulepractice.main.impl.data.models.MainTab
 import com.example.multimodulepractice.main.impl.ui.compose_elements.Tab
 
 @Composable

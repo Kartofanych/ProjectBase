@@ -3,7 +3,7 @@ package com.example.multimodulepractice.di.modules
 import com.example.multimodulepractice.di.modules.NetworkModule.Companion.YANDEX_RETROFIT
 import com.example.multimodulepractice.guide.impl.data.GuideApi
 import com.example.multimodulepractice.login.impl.data.AuthApi
-import com.example.multimodulepractice.main.impl.data.network.MainApi
+import com.main.common.data.MainApi
 import com.service.impl.data.ServiceApi
 import com.splash.impl.data.LaunchApi
 import dagger.Module

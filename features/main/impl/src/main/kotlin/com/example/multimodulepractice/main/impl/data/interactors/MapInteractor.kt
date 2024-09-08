@@ -2,10 +2,10 @@ package com.example.multimodulepractice.main.impl.data.interactors
 
 import com.example.multimodulepractice.common.models.local.City
 import com.example.multimodulepractice.common.models.local.ResponseState
-import com.example.multimodulepractice.main.impl.data.local_models.map.MapInfoResponse
+import com.main.common.data.local.map.MapInfoResponse
 import com.example.multimodulepractice.main.impl.data.mappers.MapInfoMapper
-import com.example.multimodulepractice.main.impl.data.network.MainApi
-import com.example.multimodulepractice.main.impl.data.network.models.request.MapInfoRequest
+import com.main.common.data.MainApi
+import com.main.common.data.dto.MapInfoRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

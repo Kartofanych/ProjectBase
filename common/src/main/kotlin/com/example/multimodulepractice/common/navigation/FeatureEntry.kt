@@ -15,6 +15,7 @@ interface FeatureEntry {
     fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
         navController: NavController,
+        mainNavController: NavController,
         modifier: Modifier = Modifier
     )
 }

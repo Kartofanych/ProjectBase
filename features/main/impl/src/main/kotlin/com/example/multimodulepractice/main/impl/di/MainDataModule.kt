@@ -1,24 +1,13 @@
 package com.example.multimodulepractice.main.impl.di
 
-import com.example.multimodulepractice.common.di.MainScope
-import com.example.multimodulepractice.main.impl.repositories.AttractionRepository
-import com.example.multimodulepractice.main.impl.repositories.AttractionRepositoryImpl
-import com.example.multimodulepractice.main.impl.repositories.RecommendedAttractionsRepository
+import com.example.multimodulepractice.main.impl.data.mappers.ColorMapperImpl
+import com.main.common.domain.ColorMapper
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
-import dagger.Reusable
 
 @Module
 interface MainDataModule {
 
-    companion object {
-        @Provides
-        @MainScope
-        @Reusable
-        fun recommendedAttractionsRepository(): RecommendedAttractionsRepository {
-            return RecommendedAttractionsRepository()
-        }
-    }
-
+    @Binds
+    fun colorMapper(colorMapperImpl: ColorMapperImpl): ColorMapper
 }

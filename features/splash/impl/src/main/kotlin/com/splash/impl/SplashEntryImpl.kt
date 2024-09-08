@@ -26,6 +26,7 @@ class SplashEntryImpl @Inject constructor(
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
         navController: NavController,
+        mainNavController: NavController,
         modifier: Modifier
     ) {
         val startDestination = when (splashDependencies.authInfoManager.authInfo()) {
@@ -34,7 +35,7 @@ class SplashEntryImpl @Inject constructor(
         }
 
         navGraphBuilder.composable(
-            featureRoute
+            route = featureRoute
         ) {
             val viewModel = injectedViewModel {
                 component.viewModel

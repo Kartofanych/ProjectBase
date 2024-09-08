@@ -1,20 +1,19 @@
 package com.example.multimodulepractice.main.impl.data.interactors
 
 import com.example.multimodulepractice.common.models.local.ResponseState
-import com.example.multimodulepractice.landmark.data.LandmarkResponse
-import com.example.multimodulepractice.main.impl.data.mappers.LandmarkMapper
-import com.example.multimodulepractice.main.impl.data.network.MainApi
-import com.example.multimodulepractice.main.impl.data.network.models.request.LandmarkRequest
+import com.example.multimodulepractice.main.impl.data.mappers.LandmarkMapperImpl
+import com.main.common.data.MainApi
+import com.main.common.data.dto.LandmarkRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class LandmarkInteractor @Inject constructor(
     private val api: MainApi,
-    private val landmarkMapper: LandmarkMapper
+    private val landmarkMapper: LandmarkMapperImpl
 ) {
 
-    suspend fun getLandmarkInfo(id: String): ResponseState<LandmarkResponse> {
+    suspend fun getLandmarkInfo(id: String): ResponseState<com.main.common.data.local.LandmarkResponse> {
         return withContext(Dispatchers.IO) {
             try {
                 val response = api.getLandmark(LandmarkRequest(id = id))

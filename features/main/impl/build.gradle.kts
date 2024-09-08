@@ -3,8 +3,6 @@ plugins {
     id("kotlin-android")
     id("org.jetbrains.kotlin.plugin.serialization")
     kotlin("kapt")
-    // Precompiled plugin with the base android configuration.
-    // Declared in buildSrc/.../android-config.gradle.kts.
     `android-config`
 }
 
@@ -12,7 +10,6 @@ android {
     namespace = ProjectConfig.namespace("main.impl")
 
     buildFeatures.viewBinding = true
-    // ===== compose =====
     buildFeatures.compose = true
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.kotlinCompiler
@@ -21,11 +18,15 @@ android {
 
 dependencies {
     api(project(":features:main:api"))
+    api(project(":features:main:common"))
     api(project(":features:guide:api"))
     api(project(":features:auth:api"))
     api(project(":features:app_config:api"))
     api(project(":features:filters:api"))
     api(project(":features:splash:api"))
+    implementation(project(":features:main_map:impl"))
+    implementation(project(":features:main_search:impl"))
+    implementation(project(":features:main_favourites:impl"))
     implementation(project(":features:geo"))
     implementation(project(":features:landmark"))
     implementation(project(":common"))
