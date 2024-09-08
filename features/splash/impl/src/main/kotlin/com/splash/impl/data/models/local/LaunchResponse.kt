@@ -8,6 +8,4 @@ sealed interface LaunchResponse {
         val cities: List<City>,
         val filters: Filters,
     ): LaunchResponse
-
-    data class Error(val err: Exception): LaunchResponse
 }

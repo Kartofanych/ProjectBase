@@ -1,6 +1,7 @@
 package com.splash.impl
 
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -40,16 +41,13 @@ class SplashEntryImpl @Inject constructor(
             val viewModel = injectedViewModel {
                 component.viewModel
             }
-            /**
-             * Вопрос тут: что делать, если у меня например еррор прилетел
-             * Я так понимаю просто сплеш скрин хендлер не обрабатывать, или как
-             */
+
             SplashScreenEventHandler(
                 uiEvent = viewModel.uiEvent,
                 start = { navController.navigate(startDestination) }
             )
 
-            SplashScreen()
+            SplashScreen(viewModel.uiStateFlow.collectAsStateWithLifecycle().value, viewModel::onSplashAction)
         }
     }
 }

@@ -19,7 +19,7 @@ class LandmarkInteractor @Inject constructor(
                 val response = api.getLandmark(LandmarkRequest(id = id))
                 return@withContext ResponseState.Success(data = landmarkMapper.mapResponse(response))
             } catch (exception: Exception) {
-                return@withContext ResponseState.Error(exception)
+                return@withContext ResponseState.Error.Default()
             }
         }
     }

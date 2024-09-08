@@ -1,6 +1,5 @@
 package com.splash.impl.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.multimodulepractice.common.models.local.ResponseState
@@ -10,9 +9,12 @@ import com.splash.impl.data.models.local.LaunchResponse
 import com.splash.impl.di.SplashScope
 import com.splash.impl.domain.LaunchInteractor
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.net.ConnectException
 import javax.inject.Inject
 
 @SplashScope
@@ -25,33 +27,42 @@ class SplashViewModel @Inject constructor(
     private val _uiEvent = Channel<SplashEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
+    private val _uiStateFlow = MutableStateFlow<SplashUiState>(SplashUiState.Loading)
+    val uiStateFlow: StateFlow<SplashUiState>
+        get() = _uiStateFlow
+
     init {
         launch()
     }
 
     private fun launch() {
+        _uiStateFlow.update { SplashUiState.Loading }
         viewModelScope.launch {
             when (val result = launchInteractor.launch()) {
-                is ResponseState.Error -> {
-                    val data = result.data as LaunchResponse.Error
-                    when (data.err) {
-                        is ConnectException -> {
-                            _uiEvent.send(SplashEvent.Error(ErrorType.INTERNET_ERROR))
-                        }
-                        else -> {
-                            _uiEvent.send(SplashEvent.Error(ErrorType.APP_VERSION_ERROR))
-                        }
-                    }
+                is ResponseState.Error.OldVersion -> {
+                    _uiStateFlow.update { SplashUiState.OldVersion }
+                }
+
+                is ResponseState.Error.Default -> {
+                    delay(3000L)
+                    launch()
                 }
 
                 is ResponseState.Success -> {
-                    val data = result.data as LaunchResponse.Success
-                    citiesRepository.updateCities(data.cities)
-                    filtersRepository.setDefaultFilters(data.filters)
-                    viewModelScope.launch {
+                    with(result.data as LaunchResponse.Success) {
+                        citiesRepository.updateCities(cities)
+                        filtersRepository.setDefaultFilters(filters)
                         _uiEvent.send(SplashEvent.Start)
                     }
                 }
+            }
+        }
+    }
+
+    fun onSplashAction(action: SplashAction) {
+        when (action) {
+            SplashAction.Update -> {
+                _uiStateFlow.update { SplashUiState.Loading }
             }
         }
     }
