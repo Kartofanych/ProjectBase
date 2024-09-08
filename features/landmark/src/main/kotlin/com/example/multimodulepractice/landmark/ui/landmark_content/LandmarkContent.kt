@@ -46,12 +46,13 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Scale
-import com.example.multimodulepractice.landmark.data.Service
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.regularTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.example.multimodulepractice.landmark.R
-import com.example.multimodulepractice.landmark.data.LandmarkResponse
+import com.main.common.data.local.LandmarkResponse
+import com.main.common.data.local.Service
+import com.main.common.ui.Chip
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -130,7 +131,10 @@ fun LandmarkContent(
                             verticalArrangement = Arrangement.spacedBy(6.dp)
                         ) {
                             for (category in landmark.categories) {
-                                Chip(text = category.name, color = category.color)
+                                Chip(
+                                    text = category.name,
+                                    color = category.color
+                                )
                             }
                         }
 

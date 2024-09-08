@@ -22,9 +22,9 @@ import com.example.multimodulepractice.common.utils.runWithMinTime
 import com.example.multimodulepractice.geo.repository.GeoRepository
 import com.example.multimodulepractice.main.impl.R
 import com.example.multimodulepractice.main.impl.data.interactors.MapInteractor
-import com.example.multimodulepractice.main.impl.data.local_models.map.MapLandmark
+import com.main.common.data.local.map.MapLandmark
 import com.example.multimodulepractice.main.impl.databinding.ClusteredViewBinding
-import com.example.multimodulepractice.main.impl.repositories.AttractionRepository
+import com.main.common.domain.AttractionRepository
 import com.example.multimodulepractice.main.impl.ui.map.MapUiState.MapState
 import com.example.multimodulepractice.main.impl.utils.iconTextStyle
 import com.example.multimodulepractice.main.impl.utils.toGeoPoint

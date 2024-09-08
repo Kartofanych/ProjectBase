@@ -19,10 +19,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.multimodulepractice.common.theme.tabTextStyle
 import com.example.multimodulepractice.main.impl.R
-import com.example.multimodulepractice.main.impl.data.local_models.MainTab
+import com.example.multimodulepractice.main.impl.data.models.MainTab
 
 private const val MAP_TITLE = "Карты"
-private const val LIST_TITLE = "Список"
+private const val LIST_TITLE = "Поиск"
 private const val PROFILE_TITLE = "Профиль"
 
 

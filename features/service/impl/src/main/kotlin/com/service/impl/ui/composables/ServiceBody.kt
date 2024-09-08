@@ -268,7 +268,9 @@ fun ServiceBody(service: Service, scrollState: ScrollState) {
                 fontSize = 14.sp,
                 color = Color(0xFF737F89)
             ),
-            modifier = Modifier.padding(horizontal = 12.dp)
+            modifier = Modifier
+                .padding(horizontal = 12.dp)
+                .padding(bottom = 20.dp)
         )
     }
 }

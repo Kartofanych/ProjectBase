@@ -1,23 +1,29 @@
 package com.example.multimodulepractice.main.impl.di
 
 import com.example.multimodulepractice.common.di.MainScope
-import com.example.multimodulepractice.main.impl.repositories.RecommendedAttractionsRepository
-import com.example.multimodulepractice.main.impl.ui.list.ListViewModel
-import com.example.multimodulepractice.main.impl.ui.profile.ProfileViewModel
+import com.example.multimodulepractice.common.navigation.Destinations
+import com.example.multimodulepractice.main.impl.data.repositories.RecommendedAttractionsRepositoryImpl
+import com.favourites.impl.ui.FavouritesViewModel
+import com.search.impl.di.ListDependencies
+import com.search.impl.ui.ListViewModel
 import dagger.Component
 
 @MainScope
 @Component(
     dependencies = [MainDependencies::class],
-    modules = [MainDataModule::class]
+    modules = [MainLocalDataModule::class, MainLocalNavigationModule::class]
 )
 interface MainComponent {
 
     val listViewModel: ListViewModel
 
-    val profileViewModel: ProfileViewModel
+    val favouritesViewModel: FavouritesViewModel
 
-    val recommendedAttractionsRepository: RecommendedAttractionsRepository
+    val recommendedAttractionsRepository: RecommendedAttractionsRepositoryImpl
+
+    val destinations: Destinations
+
+    val listDependencies: ListDependencies
 
     @Component.Factory
     interface Factory {
