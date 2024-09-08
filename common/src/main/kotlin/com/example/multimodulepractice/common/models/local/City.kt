@@ -6,5 +6,6 @@ data class City(
     val geoPoint: GeoPoint,
     val radius: Float,
     val isLoaded: Boolean,
-    val index: Int
+    val index: Int,
+    val icon: String
 )

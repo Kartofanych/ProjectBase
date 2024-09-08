@@ -62,7 +62,7 @@ fun LandmarkContent(
                 }
             )
         },
-        content = { it ->
+        content = {
             it
             Column(
                 modifier = Modifier
