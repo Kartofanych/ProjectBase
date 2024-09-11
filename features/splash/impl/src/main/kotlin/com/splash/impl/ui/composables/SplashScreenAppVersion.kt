@@ -53,7 +53,7 @@ fun SplashScreenAppVersion(
                 modifier = Modifier
                     .width(300.dp)
                     .padding(top = 15.dp),
-                text = "Обновите ваше приложение до последней версии",
+                text = "Обновите приложение до последней версии",
                 style = semiboldTextStyle.copy(fontSize = 26.sp, color = Color(0xFF000000))
             )
             Text(

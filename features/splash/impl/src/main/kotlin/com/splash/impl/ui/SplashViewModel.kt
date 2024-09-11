@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.multimodulepractice.common.models.local.ResponseState
 import com.filters.api.data.FiltersRepository
 import com.splash.api.domain.CitiesRepository
-import com.splash.impl.data.models.local.LaunchResponse
 import com.splash.impl.di.SplashScope
 import com.splash.impl.domain.LaunchInteractor
 import kotlinx.coroutines.channels.Channel
@@ -49,11 +48,9 @@ class SplashViewModel @Inject constructor(
                 }
 
                 is ResponseState.Success -> {
-                    with(result.data as LaunchResponse.Success) {
-                        citiesRepository.updateCities(cities)
-                        filtersRepository.setDefaultFilters(filters)
-                        _uiEvent.send(SplashEvent.Start)
-                    }
+                    citiesRepository.updateCities(result.data.cities)
+                    filtersRepository.setDefaultFilters(result.data.filters)
+                    _uiEvent.send(SplashEvent.Start)
                 }
             }
         }
@@ -62,7 +59,10 @@ class SplashViewModel @Inject constructor(
     fun onSplashAction(action: SplashAction) {
         when (action) {
             SplashAction.Update -> {
-                _uiStateFlow.update { SplashUiState.Loading }
+                _uiStateFlow.update {
+                    // В будущем будет диплинк на обновление в маркете
+                    SplashUiState.Loading
+                }
             }
         }
     }
