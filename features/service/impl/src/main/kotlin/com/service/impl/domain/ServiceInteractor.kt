@@ -20,7 +20,7 @@ class ServiceInteractor @Inject constructor(
                 val response = api.service(ServiceRequest(serviceId))
                 ResponseState.Success(mapper.map(response))
             } catch (e: Exception) {
-                ResponseState.Error()
+                ResponseState.Error.Default()
             }
         }
     }

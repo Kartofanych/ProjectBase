@@ -20,7 +20,7 @@ class GuideInteractor @Inject constructor(
                 val response = api.attractionGuide(GuideRequestDto(landmarkId))
                 ResponseState.Success(mapper.map(response))
             } catch (e: Exception) {
-                ResponseState.Error()
+                ResponseState.Error.Default()
             }
         }
     }

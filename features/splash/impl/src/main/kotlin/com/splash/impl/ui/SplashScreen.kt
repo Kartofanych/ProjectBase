@@ -1,17 +1,15 @@
 package com.splash.impl.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import com.example.multimodulepractice.common.composables.DefaultLoading
+import com.splash.impl.ui.composables.SplashScreenAppVersion
 
 @Composable
-fun SplashScreen() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = Color.White)
-    )
+fun SplashScreen(uiState: SplashUiState, onAction: (SplashAction) -> Unit) {
+    when (uiState) {
+        SplashUiState.Loading -> DefaultLoading(modifier = Modifier.fillMaxSize())
+        SplashUiState.OldVersion -> SplashScreenAppVersion(onAction)
+    }
 }

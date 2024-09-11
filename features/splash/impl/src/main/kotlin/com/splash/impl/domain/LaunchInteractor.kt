@@ -8,6 +8,7 @@ import com.splash.impl.data.models.dto.LaunchRequest
 import com.splash.impl.data.models.local.LaunchResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class LaunchInteractor @Inject constructor(
@@ -21,8 +22,12 @@ class LaunchInteractor @Inject constructor(
                 val response = launchApi.launch(LaunchRequest(BuildConfig.VERSION_NAME))
                 ResponseState.Success(launchMapper.map(response))
             } catch (exception: Exception) {
-                ResponseState.Error()
+                when {
+                    exception is HttpException && exception.code() == 426 -> ResponseState.Error.OldVersion()
+                    else -> ResponseState.Error.Default()
+                }
             }
         }
     }
 }
+

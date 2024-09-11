@@ -21,7 +21,7 @@ class MapInteractor @Inject constructor(
                 val response = api.getStartInfo(MapInfoRequest(city.id))
                 return@withContext ResponseState.Success(data = mapInfoMapper.mapResponse(response))
             } catch (exception: Exception) {
-                return@withContext ResponseState.Error()
+                return@withContext ResponseState.Error.Default()
             }
         }
     }

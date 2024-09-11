@@ -23,7 +23,7 @@ class YandexAuthInfoInteractor @Inject constructor(
                     )
                 )
             } catch (err: Exception) {
-                ResponseState.Error()
+                ResponseState.Error.Default()
             }
         }
     }
