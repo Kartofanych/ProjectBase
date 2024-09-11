@@ -47,7 +47,10 @@ class SplashEntryImpl @Inject constructor(
                 start = { navController.navigate(startDestination) }
             )
 
-            SplashScreen(viewModel.uiStateFlow.collectAsStateWithLifecycle().value, viewModel::onSplashAction)
+            SplashScreen(
+                viewModel.uiStateFlow.collectAsStateWithLifecycle().value,
+                viewModel::onSplashAction
+            )
         }
     }
 }
