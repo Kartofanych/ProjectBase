@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = ProjectConfig.namespace("guide.impl")
+    namespace = ProjectConfig.namespace("search.impl")
 
     buildFeatures.compose = true
     composeOptions {
@@ -15,8 +15,7 @@ android {
 }
 
 dependencies {
-    api(project(":features:guide:api"))
-    api(project(":features:main:api"))
+    api(project(":features:search:api"))
     implementation(project(":common"))
     implementation(libs.core.ktx)
 

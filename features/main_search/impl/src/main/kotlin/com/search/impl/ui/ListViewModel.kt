@@ -3,7 +3,7 @@ package com.search.impl.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.multimodulepractice.common.di.MainScope
+import com.main.common.di.MainScope
 import com.example.multimodulepractice.common.models.local.ResponseState
 import com.main.common.domain.AttractionRepository
 import com.main.common.domain.RecommendedAttractionsRepository

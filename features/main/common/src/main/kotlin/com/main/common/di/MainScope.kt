@@ -1,4 +1,4 @@
-package com.example.multimodulepractice.common.di
+package com.main.common.di
 
 @MainScope
 @Retention(AnnotationRetention.RUNTIME)

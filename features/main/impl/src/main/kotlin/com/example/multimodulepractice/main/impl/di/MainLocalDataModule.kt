@@ -1,6 +1,6 @@
 package com.example.multimodulepractice.main.impl.di
 
-import com.example.multimodulepractice.common.di.MainScope
+import com.main.common.di.MainScope
 import com.example.multimodulepractice.main.impl.data.mappers.ColorMapperImpl
 import com.example.multimodulepractice.main.impl.data.repositories.RecommendedAttractionsRepositoryImpl
 import com.main.common.domain.RecommendedAttractionsRepository

@@ -1,10 +1,10 @@
 package com.example.multimodulepractice.main.impl.data.repositories
 
+import com.example.multimodulepractice.common.di.AppScope
 import com.example.multimodulepractice.common.models.local.ResponseState
 import com.example.multimodulepractice.common.utils.runWithMinTime
 import com.main.common.data.local.Landmark
 import com.example.multimodulepractice.main.impl.data.interactors.LandmarkInteractor
-import com.example.multimodulepractice.common.di.MainScope
 import com.main.common.domain.AttractionRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@MainScope
+@AppScope
 class AttractionRepositoryImpl @Inject constructor(
     private val scope: CoroutineScope,
     private val landmarkInteractor: LandmarkInteractor
