@@ -20,7 +20,7 @@ class AttractionInteractor @Inject constructor(
                 val response = api.getLandmark(LandmarkRequest(id = id))
                 return@withContext ResponseState.Success(data = attractionMapper.mapResponse(response))
             } catch (exception: Exception) {
-                return@withContext ResponseState.Error()
+                return@withContext ResponseState.Error.Default()
             }
         }
     }
