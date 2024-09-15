@@ -2,8 +2,8 @@ package com.splash.impl.data.repository
 
 import com.example.multimodulepractice.common.di.AppScope
 import com.splash.api.domain.CitiesRepository
-import com.example.multimodulepractice.common.models.local.City
-import com.example.multimodulepractice.common.models.local.GeoPoint
+import com.example.multimodulepractice.common.data.models.local.City
+import com.example.multimodulepractice.common.data.models.local.GeoPoint
 import com.example.multimodulepractice.common.utils.calculateDistance
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

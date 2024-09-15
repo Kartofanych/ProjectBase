@@ -1,6 +1,6 @@
 package com.main_map.impl.di
 
-import com.example.multimodulepractice.common.di.MainScope
+import com.example.multimodulepractice.common.di.AppScope
 import com.example.multimodulepractice.common.navigation.FeatureEntry
 import com.example.multimodulepractice.common.navigation.FeatureEntryKey
 import com.main_map.api.MapFeatureEntry
@@ -13,7 +13,7 @@ import dagger.multibindings.IntoMap
 interface MapNavigationModule {
 
     @Binds
-    @MainScope
+    @AppScope
     @IntoMap
     @FeatureEntryKey(MapFeatureEntry::class)
     fun mainNavigation(mainFeatureImpl: MapFeatureImpl): FeatureEntry

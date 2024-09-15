@@ -2,7 +2,7 @@ package com.service.impl.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.multimodulepractice.common.models.local.ResponseState
+import com.example.multimodulepractice.common.data.models.local.ResponseState
 import com.example.multimodulepractice.common.utils.runWithMinTime
 import com.service.impl.di.ServiceScope
 import com.service.impl.domain.ServiceInteractor

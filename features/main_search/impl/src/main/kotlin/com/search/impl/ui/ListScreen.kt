@@ -58,7 +58,7 @@ fun ListScreen(uiState: ListUiState, onListAction: (ListAction) -> Unit) {
                         .background(color = Color.White, RoundedCornerShape(18.dp))
                         .clip(RoundedCornerShape(18.dp))
                         .clickable {
-
+                            onListAction(ListAction.OpenSearch)
                         }
                         .padding(horizontal = 10.dp),
                     verticalAlignment = Alignment.CenterVertically

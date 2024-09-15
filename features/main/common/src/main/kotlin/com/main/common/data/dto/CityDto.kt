@@ -2,7 +2,7 @@ package com.main.common.data.dto
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
-import com.example.multimodulepractice.common.models.network.GeoPointDto
+import com.example.multimodulepractice.common.data.models.network.GeoPointDto
 
 @Keep
 data class CityDto(
@@ -12,5 +12,4 @@ data class CityDto(
 
     @SerializedName("shape")
     val points: List<GeoPointDto>
-
 )

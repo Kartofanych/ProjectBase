@@ -7,13 +7,15 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun MapScreenEventHandler(
     uiEvent: Flow<MapUiEvent>,
-    openFilters: () -> Unit
+    openFilters: () -> Unit,
+    openAttraction: (String) -> Unit
 ) {
 
     LaunchedEffect(Unit) {
         uiEvent.collect { event ->
             when (event) {
                 MapUiEvent.OnFiltersOpen -> openFilters()
+                is MapUiEvent.OnAttractionOpen -> openAttraction(event.id)
             }
         }
     }

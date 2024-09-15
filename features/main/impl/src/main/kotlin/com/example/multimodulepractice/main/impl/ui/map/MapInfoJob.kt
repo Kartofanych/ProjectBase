@@ -1,6 +1,6 @@
 package com.example.multimodulepractice.main.impl.ui.map
 
-import com.example.multimodulepractice.common.models.local.City
+import com.example.multimodulepractice.common.data.models.local.City
 import kotlinx.coroutines.Job
 
 data class MapInfoJob(

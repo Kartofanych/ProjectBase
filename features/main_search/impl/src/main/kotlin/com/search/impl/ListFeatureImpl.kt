@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import com.search.api.SearchFeatureEntry
 import com.search.impl.di.DaggerListComponent
 import com.search.impl.di.ListDependencies
+import com.search.impl.ui.ListEventHandler
 import com.search.impl.ui.ListScreen
 import com.search.impl.ui.ListViewModel
 import javax.inject.Inject
@@ -31,7 +32,7 @@ class ListFeatureImpl @Inject constructor(
     ) {
 
         navGraphBuilder.composable(
-            route = SCREEN_SEARCH_ROUTE,
+            route = featureRoute,
             enterTransition = {
                 if (initialState.destination.route == SCREEN_MAP_ROUTE) {
                     slideInHorizontally {
@@ -56,6 +57,12 @@ class ListFeatureImpl @Inject constructor(
             }
         ) {
 
+            ListEventHandler(
+                uiEvent = listViewModel.uiEvent,
+                navigateToSearch = { mainNavController.navigate(SCREEN_SEARCH_ROUTE) },
+                navigateToAttraction = { id -> mainNavController.navigate("$SCREEN_ATTRACTION_ROUTE/$id") },
+            )
+
             ListScreen(
                 listViewModel.uiStateFlow.collectAsStateWithLifecycle().value,
                 listViewModel::onListAction
@@ -65,6 +72,7 @@ class ListFeatureImpl @Inject constructor(
 
     private companion object {
         const val SCREEN_MAP_ROUTE = "main/map"
-        const val SCREEN_SEARCH_ROUTE = "main/search"
+        const val SCREEN_SEARCH_ROUTE = "search"
+        const val SCREEN_ATTRACTION_ROUTE = "attraction"
     }
 }

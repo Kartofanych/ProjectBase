@@ -1,5 +1,6 @@
 package com.service.impl
 
+import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -28,12 +29,17 @@ class ServiceEntryImpl @Inject constructor(
         navGraphBuilder.composable(
             featureRoute,
             arguments,
+            enterTransition = {
+                slideInVertically {
+                    it
+                }
+            },
+            popEnterTransition = null,
+            exitTransition = null,
             popExitTransition = {
-                slideOutVertically(
-                    targetOffsetY = {
-                        it / 2
-                    },
-                )
+                slideOutVertically {
+                    it
+                }
             },
         ) {
             val serviceId = it.arguments?.getString(ARG_SERVICE_ID)!!

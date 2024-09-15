@@ -1,6 +1,6 @@
 package com.example.multimodulepractice.main.impl.data.repositories
 
-import com.example.multimodulepractice.common.di.MainScope
+import com.main.common.di.MainScope
 import com.main.common.data.local.Attraction
 import com.main.common.domain.RecommendedAttractionsRepository
 import kotlinx.coroutines.flow.MutableStateFlow

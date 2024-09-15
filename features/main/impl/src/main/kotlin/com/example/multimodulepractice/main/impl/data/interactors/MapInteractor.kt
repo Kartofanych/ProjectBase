@@ -1,7 +1,7 @@
 package com.example.multimodulepractice.main.impl.data.interactors
 
-import com.example.multimodulepractice.common.models.local.City
-import com.example.multimodulepractice.common.models.local.ResponseState
+import com.example.multimodulepractice.common.data.models.local.City
+import com.example.multimodulepractice.common.data.models.local.ResponseState
 import com.main.common.data.local.map.MapInfoResponse
 import com.example.multimodulepractice.main.impl.data.mappers.MapInfoMapper
 import com.main.common.data.MainApi

@@ -1,6 +1,6 @@
 package com.splash.impl.data.models.dto
 
-import com.example.multimodulepractice.common.models.network.GeoPointDto
+import com.example.multimodulepractice.common.data.models.network.GeoPointDto
 import com.google.gson.annotations.SerializedName
 
 class CityDto(

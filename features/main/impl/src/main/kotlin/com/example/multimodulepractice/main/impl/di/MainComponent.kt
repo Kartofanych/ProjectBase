@@ -1,11 +1,9 @@
 package com.example.multimodulepractice.main.impl.di
 
-import com.example.multimodulepractice.common.di.MainScope
+import com.main.common.di.MainScope
 import com.example.multimodulepractice.common.navigation.Destinations
 import com.example.multimodulepractice.main.impl.data.repositories.RecommendedAttractionsRepositoryImpl
-import com.favourites.impl.ui.FavouritesViewModel
 import com.search.impl.di.ListDependencies
-import com.search.impl.ui.ListViewModel
 import dagger.Component
 
 @MainScope
@@ -14,10 +12,6 @@ import dagger.Component
     modules = [MainLocalDataModule::class, MainLocalNavigationModule::class]
 )
 interface MainComponent {
-
-    val listViewModel: ListViewModel
-
-    val favouritesViewModel: FavouritesViewModel
 
     val recommendedAttractionsRepository: RecommendedAttractionsRepositoryImpl
 

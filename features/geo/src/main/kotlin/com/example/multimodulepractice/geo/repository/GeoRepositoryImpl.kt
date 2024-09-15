@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.datastore.dataStore
 import com.example.multimodulepractice.common.di.AppContext
 import com.example.multimodulepractice.common.di.AppScope
-import com.example.multimodulepractice.common.models.local.GeoPoint
+import com.example.multimodulepractice.common.data.models.local.GeoPoint
 import com.example.multimodulepractice.geo.models.GeoInfo
 import com.example.multimodulepractice.geo.models.GeoInfoDto
 import kotlinx.coroutines.flow.Flow

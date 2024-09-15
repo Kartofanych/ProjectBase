@@ -28,7 +28,6 @@ dependencies {
     implementation(project(":features:main_search:impl"))
     implementation(project(":features:main_favourites:impl"))
     implementation(project(":features:geo"))
-    implementation(project(":features:landmark"))
     implementation(project(":common"))
 
     implementation(libs.core.ktx)

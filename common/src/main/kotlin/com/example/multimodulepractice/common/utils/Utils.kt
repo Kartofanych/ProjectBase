@@ -1,6 +1,6 @@
 package com.example.multimodulepractice.common.utils
 
-import com.example.multimodulepractice.common.models.local.GeoPoint
+import com.example.multimodulepractice.common.data.models.local.GeoPoint
 import kotlinx.coroutines.delay
 import kotlin.math.atan2
 import kotlin.math.cos

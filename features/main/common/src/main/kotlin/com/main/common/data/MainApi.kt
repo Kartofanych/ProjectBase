@@ -1,8 +1,6 @@
 package com.main.common.data
 
 import com.main.common.data.dto.GeoRequest
-import com.main.common.data.dto.LandmarkRequest
-import com.main.common.data.dto.LandmarkResponseDto
 import com.main.common.data.dto.MapInfoRequest
 import com.main.common.data.dto.MapInfoResponseDto
 import com.main.common.data.dto.RecommendationsResponseDto
@@ -14,10 +12,6 @@ interface MainApi {
     @POST("map_info")
     suspend fun getStartInfo(@Body body: MapInfoRequest): MapInfoResponseDto
 
-    @POST("attraction")
-    suspend fun getLandmark(@Body body: LandmarkRequest): LandmarkResponseDto
-
     @POST("recommendations")
     suspend fun getRecommendations(@Body body: GeoRequest): RecommendationsResponseDto
-
 }

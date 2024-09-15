@@ -1,6 +1,6 @@
 package com.example.multimodulepractice.geo.repository
 
-import com.example.multimodulepractice.common.models.local.GeoPoint
+import com.example.multimodulepractice.common.data.models.local.GeoPoint
 import com.example.multimodulepractice.geo.models.GeoInfo
 import kotlinx.coroutines.flow.Flow
 

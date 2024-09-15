@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun ProfileScreenEventHandler(
     navigateToLogin: () -> Unit,
+    navigateToAttraction: (String) -> Unit,
     uiEvent: Flow<FavouritesUiEvent>
 ) {
 
@@ -14,6 +15,7 @@ fun ProfileScreenEventHandler(
         uiEvent.collect { event ->
             when (event) {
                 FavouritesUiEvent.LogOut -> navigateToLogin()
+                is FavouritesUiEvent.OpenAttraction -> navigateToAttraction(event.id)
             }
         }
     }

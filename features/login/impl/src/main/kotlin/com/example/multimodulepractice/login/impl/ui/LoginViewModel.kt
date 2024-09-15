@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.multimodulepractice.auth.AuthInfoManager
 import com.example.multimodulepractice.auth.models.AuthInfo
 import com.example.multimodulepractice.common.di.AppContext
-import com.example.multimodulepractice.common.models.local.ResponseState
+import com.example.multimodulepractice.common.data.models.local.ResponseState
 import com.example.multimodulepractice.login.impl.data.interactors.YandexAuthInfoInteractor
 import com.yandex.authsdk.YandexAuthLoginOptions
 import com.yandex.authsdk.YandexAuthOptions

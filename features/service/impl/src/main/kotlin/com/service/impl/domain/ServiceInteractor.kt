@@ -1,6 +1,6 @@
 package com.service.impl.domain
 
-import com.example.multimodulepractice.common.models.local.ResponseState
+import com.example.multimodulepractice.common.data.models.local.ResponseState
 import com.service.impl.data.ServiceApi
 import com.service.impl.data.mappers.ServiceMapper
 import com.service.impl.data.models.local.Service

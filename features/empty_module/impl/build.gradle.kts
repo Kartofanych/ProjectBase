@@ -1,8 +1,6 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    // Precompiled plugin with the base android configuration.
-    // Declared in buildSrc/.../android-config.gradle.kts.
     `android-config`
 }
 
@@ -11,6 +9,7 @@ android {
 }
 
 dependencies {
+    api(project(":features:empty_module:api"))
     implementation(project(":common"))
     implementation(libs.core.ktx)
 }

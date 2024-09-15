@@ -2,7 +2,7 @@ package com.example.multimodulepractice.guide.impl.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.multimodulepractice.common.models.local.ResponseState
+import com.example.multimodulepractice.common.data.models.local.ResponseState
 import com.example.multimodulepractice.common.utils.runWithMinTime
 import com.example.multimodulepractice.guide.impl.di.GuideScope
 import com.example.multimodulepractice.guide.impl.interactors.GuideInteractor
