@@ -32,6 +32,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.attraction.api.AttractionEntry
 import com.example.multimodulepractice.common.navigation.find
 import com.example.multimodulepractice.common.navigation.injectedViewModel
 import com.example.multimodulepractice.common.navigation.register
@@ -43,6 +44,7 @@ import com.filters.api.FiltersEntry
 import com.example.multimodulepractice.main.MainFeatureEntry
 import com.example.multimodulepractice.main.impl.ui.map.MapScreen
 import com.example.multimodulepractice.main.impl.ui.map.MapScreenEventHandler
+import com.search.api.SearchEntry
 import com.service.api.ServiceEntry
 import com.splash.api.SplashEntry
 import kotlinx.coroutines.delay
@@ -104,6 +106,8 @@ class MainActivity : AppCompatActivity() {
         val filtersFeature = destinations.find<FiltersEntry>()
         val splashFeature = destinations.find<SplashEntry>()
         val serviceFeature = destinations.find<ServiceEntry>()
+        val searchFeature = destinations.find<SearchEntry>()
+        val attractionFeature = destinations.find<AttractionEntry>()
 
         val isDebug = BuildConfig.DEBUG
         val isProduction = appProvider.appConfig.isProduction()
@@ -168,6 +172,18 @@ class MainActivity : AppCompatActivity() {
                         navController = navController,
                         modifier = Modifier
                     )
+
+                    register(
+                        searchFeature,
+                        navController = navController,
+                        modifier = Modifier
+                    )
+
+                    register(
+                        attractionFeature,
+                        navController = navController,
+                        modifier = Modifier
+                    )
                 }
                 if (isDebug) {
                     DebugPanel(
@@ -192,7 +208,8 @@ class MainActivity : AppCompatActivity() {
         ) {
             MapScreenEventHandler(
                 uiEvent = mapViewModel.uiEvent,
-                openFilters = { navController.navigate("filters") }
+                openFilters = { navController.navigate("filters") },
+                openAttraction = { id -> navController.navigate("attraction/$id") },
             )
             MapScreen(
                 uiState = mapUiState,

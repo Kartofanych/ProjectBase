@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.multimodulepractice.auth.AuthInfoManager
 import com.example.multimodulepractice.auth.models.AuthInfo
 import com.main.common.di.MainScope
-import com.main.common.domain.AttractionRepository
 import com.favourites.impl.ui.FavouritesUiState.ProfileMode
 import com.main.common.domain.RecommendedAttractionsRepository
 import dagger.Reusable
@@ -22,8 +21,7 @@ import javax.inject.Inject
 @Reusable
 class FavouritesViewModel @Inject constructor(
     private val authInfoManager: AuthInfoManager,
-    private val recommendedAttractionsRepository: RecommendedAttractionsRepository,
-    private val attractionRepository: AttractionRepository
+    private val recommendedAttractionsRepository: RecommendedAttractionsRepository
 ) : ViewModel() {
 
     private val _uiStateFlow = MutableStateFlow(FavouritesUiState())
@@ -85,7 +83,9 @@ class FavouritesViewModel @Inject constructor(
             }
 
             is FavouritesAction.OnOpenAttraction -> {
-                attractionRepository.getLandmark(action.attractionId)
+                viewModelScope.launch {
+                    _uiEvent.send(FavouritesUiEvent.OpenAttraction(action.attractionId))
+                }
             }
         }
     }

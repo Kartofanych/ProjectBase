@@ -14,9 +14,9 @@ import coil.ImageLoader
 import coil.request.ImageRequest
 import com.example.multimodulepractice.common.di.AppContext
 import com.example.multimodulepractice.common.di.AppScope
-import com.example.multimodulepractice.common.models.local.City
-import com.example.multimodulepractice.common.models.local.GeoPoint
-import com.example.multimodulepractice.common.models.local.ResponseState
+import com.example.multimodulepractice.common.data.models.local.City
+import com.example.multimodulepractice.common.data.models.local.GeoPoint
+import com.example.multimodulepractice.common.data.models.local.ResponseState
 import com.example.multimodulepractice.common.utils.calculateDistance
 import com.example.multimodulepractice.common.utils.runWithMinTime
 import com.example.multimodulepractice.geo.repository.GeoRepository
@@ -24,7 +24,6 @@ import com.example.multimodulepractice.main.impl.R
 import com.example.multimodulepractice.main.impl.data.interactors.MapInteractor
 import com.main.common.data.local.map.MapLandmark
 import com.example.multimodulepractice.main.impl.databinding.ClusteredViewBinding
-import com.main.common.domain.AttractionRepository
 import com.example.multimodulepractice.main.impl.ui.map.MapUiState.MapState
 import com.example.multimodulepractice.main.impl.utils.cityTextStyle
 import com.example.multimodulepractice.main.impl.utils.landmarkTextStyle
@@ -71,7 +70,6 @@ class MapViewModel @Inject constructor(
     private val geoRepository: GeoRepository,
     @AppContext
     private val context: Context,
-    private val attractionRepository: AttractionRepository,
     private val filtersRepository: FiltersRepository,
     private val citiesRepository: CitiesRepository
 ) : ViewModel() {
@@ -313,7 +311,9 @@ class MapViewModel @Inject constructor(
         when (action) {
 
             is MapActions.OnPlaceMarkTapped -> {
-                attractionRepository.getLandmark(action.landmarkId)
+                viewModelScope.launch {
+                    _uiEvent.send(MapUiEvent.OnAttractionOpen(action.landmarkId))
+                }
             }
 
             MapActions.OnFiltersOpen -> {

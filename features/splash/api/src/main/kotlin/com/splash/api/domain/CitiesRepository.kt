@@ -1,7 +1,7 @@
 package com.splash.api.domain
 
-import com.example.multimodulepractice.common.models.local.City
-import com.example.multimodulepractice.common.models.local.GeoPoint
+import com.example.multimodulepractice.common.data.models.local.City
+import com.example.multimodulepractice.common.data.models.local.GeoPoint
 import kotlinx.coroutines.flow.Flow
 
 interface CitiesRepository {

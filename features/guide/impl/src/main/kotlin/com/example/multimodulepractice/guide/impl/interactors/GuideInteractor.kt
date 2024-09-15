@@ -1,6 +1,6 @@
 package com.example.multimodulepractice.guide.impl.interactors
 
-import com.example.multimodulepractice.common.models.local.ResponseState
+import com.example.multimodulepractice.common.data.models.local.ResponseState
 import com.example.multimodulepractice.guide.impl.data.GuideApi
 import com.example.multimodulepractice.guide.impl.data.mappers.GuideMapper
 import com.example.multimodulepractice.guide.impl.data.models.GuideRequestDto

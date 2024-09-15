@@ -30,5 +30,4 @@ interface AppComponent : AppProvider {
             @BindsInstance app: Application
         ): AppComponent
     }
-
 }

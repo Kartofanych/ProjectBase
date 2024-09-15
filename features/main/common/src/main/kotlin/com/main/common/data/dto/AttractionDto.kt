@@ -1,6 +1,7 @@
 package com.main.common.data.dto
 
 import androidx.annotation.Keep
+import com.example.multimodulepractice.common.data.models.network.CategoryDto
 import com.google.gson.annotations.SerializedName
 
 @Keep
@@ -22,7 +23,7 @@ data class AttractionDto(
     val shortInfo: String,
 
     @SerializedName("categories")
-    val categories: List<LandmarkCategoryDto>,
+    val categories: List<CategoryDto>,
 
     @SerializedName("date_of_creation")
     val dateCreation: String

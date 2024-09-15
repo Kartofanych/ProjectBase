@@ -102,6 +102,8 @@ dependencies {
     implementation(project(":features:filters:impl"))
     implementation(project(":features:splash:impl"))
     implementation(project(":features:service:impl"))
+    implementation(project(":features:search:impl"))
+    implementation(project(":features:attraction:impl"))
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)

@@ -2,10 +2,10 @@ package com.example.multimodulepractice.main.impl.di
 
 import android.content.Context
 import com.example.multimodulepractice.auth.AuthInfoManager
+import com.example.multimodulepractice.common.data.mappers.CategoryMapper
 import com.example.multimodulepractice.common.di.AppContext
 import com.example.multimodulepractice.geo.repository.GeoRepository
 import com.main.common.data.MainApi
-import com.main.common.domain.AttractionRepository
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
@@ -16,5 +16,5 @@ class MainDependencies @Inject constructor(
     val mainApi: MainApi,
     val scope: CoroutineScope,
     val authInfoManager: AuthInfoManager,
-    val attractionRepository: AttractionRepository
+    val categoryMapper: CategoryMapper
 )

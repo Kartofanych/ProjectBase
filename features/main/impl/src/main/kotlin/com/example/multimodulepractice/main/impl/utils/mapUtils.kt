@@ -1,7 +1,7 @@
 package com.example.multimodulepractice.main.impl.utils
 
 import android.graphics.Color
-import com.example.multimodulepractice.common.models.local.GeoPoint
+import com.example.multimodulepractice.common.data.models.local.GeoPoint
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.TextStyle
 

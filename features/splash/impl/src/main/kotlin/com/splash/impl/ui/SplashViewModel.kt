@@ -2,7 +2,7 @@ package com.splash.impl.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.multimodulepractice.common.models.local.ResponseState
+import com.example.multimodulepractice.common.data.models.local.ResponseState
 import com.filters.api.data.FiltersRepository
 import com.splash.api.domain.CitiesRepository
 import com.splash.impl.di.SplashScope

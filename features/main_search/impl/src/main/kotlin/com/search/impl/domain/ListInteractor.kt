@@ -1,7 +1,7 @@
 package com.search.impl.domain
 
-import com.example.multimodulepractice.common.models.local.GeoPoint.Companion.toDto
-import com.example.multimodulepractice.common.models.local.ResponseState
+import com.example.multimodulepractice.common.data.models.local.GeoPoint.Companion.toDto
+import com.example.multimodulepractice.common.data.models.local.ResponseState
 import com.example.multimodulepractice.geo.repository.GeoRepository
 import com.main.common.data.MainApi
 import com.main.common.data.dto.GeoRequest

@@ -1,6 +1,6 @@
 package com.example.multimodulepractice.login.impl.data.interactors
 
-import com.example.multimodulepractice.common.models.local.ResponseState
+import com.example.multimodulepractice.common.data.models.local.ResponseState
 import com.example.multimodulepractice.login.impl.data.AuthApi
 import com.example.multimodulepractice.login.impl.data.YandexAuthInfo
 import kotlinx.coroutines.Dispatchers

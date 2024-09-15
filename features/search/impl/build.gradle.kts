@@ -16,6 +16,8 @@ android {
 
 dependencies {
     api(project(":features:search:api"))
+    api(project(":features:splash:api"))
+    implementation(project(":features:geo"))
     implementation(project(":common"))
     implementation(libs.core.ktx)
 

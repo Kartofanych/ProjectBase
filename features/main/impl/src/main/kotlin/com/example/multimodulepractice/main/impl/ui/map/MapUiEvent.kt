@@ -4,4 +4,5 @@ sealed interface MapUiEvent {
 
     object OnFiltersOpen : MapUiEvent
 
+    class OnAttractionOpen(val id: String) : MapUiEvent
 }

@@ -1,6 +1,6 @@
 package com.splash.impl.domain
 
-import com.example.multimodulepractice.common.models.local.ResponseState
+import com.example.multimodulepractice.common.data.models.local.ResponseState
 import com.example.multimodulepractice.splash.impl.BuildConfig
 import com.splash.impl.data.LaunchApi
 import com.splash.impl.data.mappers.LaunchMapper

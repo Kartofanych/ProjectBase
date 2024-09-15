@@ -53,6 +53,7 @@ class SearchEntryImpl @Inject constructor(
             SearchEventHandler(
                 uiEvent = viewModel.uiEvent
             )
+
             SearchScreen(
                 viewModel.uiStateFlow.collectAsStateWithLifecycle().value,
                 viewModel::onAction

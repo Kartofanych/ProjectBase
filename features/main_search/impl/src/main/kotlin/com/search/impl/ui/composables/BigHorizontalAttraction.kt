@@ -33,7 +33,7 @@ import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.regularTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.main.common.data.local.Attraction
-import com.main.common.ui.Chip
+import com.example.multimodulepractice.common.composables.Chip
 import com.search.impl.ui.ListAction
 
 @OptIn(ExperimentalLayoutApi::class)

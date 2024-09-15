@@ -1,16 +1,16 @@
 package com.search.impl.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.main.common.di.MainScope
-import com.example.multimodulepractice.common.models.local.ResponseState
-import com.main.common.domain.AttractionRepository
+import com.example.multimodulepractice.common.data.models.local.ResponseState
 import com.main.common.domain.RecommendedAttractionsRepository
 import com.search.impl.domain.ListInteractor
 import dagger.Reusable
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,7 +19,6 @@ import javax.inject.Inject
 @Reusable
 class ListViewModel @Inject constructor(
     private val listInteractor: ListInteractor,
-    private val attractionRepository: AttractionRepository,
     private val recommendedAttractionsRepository: RecommendedAttractionsRepository
 ) : ViewModel() {
 
@@ -27,8 +26,10 @@ class ListViewModel @Inject constructor(
     val uiStateFlow: StateFlow<ListUiState>
         get() = _uiStateFlow
 
+    private val _uiEvent = Channel<ListEvent>()
+    val uiEvent = _uiEvent.receiveAsFlow()
+
     init {
-        Log.d("121212", "init")
         getRecommendations()
     }
 
@@ -55,7 +56,15 @@ class ListViewModel @Inject constructor(
     fun onListAction(action: ListAction) {
         when (action) {
             is ListAction.OpenAttraction -> {
-                attractionRepository.getLandmark(action.id)
+                viewModelScope.launch {
+                    _uiEvent.send(ListEvent.OpenAttraction(action.id))
+                }
+            }
+
+            ListAction.OpenSearch -> {
+                viewModelScope.launch {
+                    _uiEvent.send(ListEvent.OpenSearch)
+                }
             }
         }
     }

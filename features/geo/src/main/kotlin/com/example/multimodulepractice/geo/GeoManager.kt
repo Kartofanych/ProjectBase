@@ -7,7 +7,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import com.example.multimodulepractice.common.di.AppContext
 import com.example.multimodulepractice.common.di.AppScope
-import com.example.multimodulepractice.common.models.local.GeoPoint
+import com.example.multimodulepractice.common.data.models.local.GeoPoint
 import com.example.multimodulepractice.geo.repository.GeoRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

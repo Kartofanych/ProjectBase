@@ -4,12 +4,12 @@ import com.main.common.data.local.Attraction
 import com.search.impl.data.models.ListResponse
 import com.main.common.data.dto.AttractionDto
 import com.main.common.data.dto.RecommendationsResponseDto
-import com.main.common.domain.LandmarkMapper
+import com.example.multimodulepractice.common.data.mappers.CategoryMapper
 import java.text.DecimalFormat
 import javax.inject.Inject
 
 class ListMapper @Inject constructor(
-    private val landmarkMapper: LandmarkMapper
+    private val categoryMapper: CategoryMapper
 ) {
 
     fun mapResponse(dto: RecommendationsResponseDto): ListResponse {
@@ -29,7 +29,7 @@ class ListMapper @Inject constructor(
             distance = "$distance км от вас",
             icon = dto.icon,
             shortInfo = dto.shortInfo,
-            categories = dto.categories.map { landmarkMapper.mapCategory(it) },
+            categories = dto.categories.map { categoryMapper.mapCategory(it) },
             dateCreation = dto.dateCreation
         )
     }

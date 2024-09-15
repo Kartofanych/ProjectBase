@@ -1,0 +1,18 @@
+package com.example.multimodulepractice.common.data.models.local
+
+class ActivityEntity(
+    val id: String,
+    val icon: String,
+    val tag: String,
+    val type: ActivityType,
+    val title: String,
+    val subtitle: String,
+    val description: String,
+    val starCount: Int,
+    val rating: Float
+) {
+    enum class ActivityType {
+        LANDMARK,
+        SERVICE
+    }
+}

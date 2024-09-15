@@ -2,7 +2,7 @@ package com.example.multimodulepractice.main.impl.data.mappers
 
 import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.toColorInt
-import com.main.common.domain.ColorMapper
+import com.example.multimodulepractice.common.domain.ColorMapper
 import javax.inject.Inject
 
 class ColorMapperImpl @Inject constructor() : ColorMapper {
