@@ -1,4 +1,4 @@
-package com.filters.api.data.models
+package com.example.multimodulepractice.common.data.models.local
 
 enum class FilterDistance(val km: Double) {
     M500(0.5),

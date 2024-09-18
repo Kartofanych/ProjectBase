@@ -3,6 +3,7 @@ package com.search.impl.ui
 import com.example.multimodulepractice.common.data.models.local.ActivityEntity
 
 data class SearchUiState(
+    val searchString: String,
     val state: SearchScreenState
 ) {
 
@@ -25,6 +26,7 @@ data class SearchUiState(
 
     companion object {
         fun empty(cities: List<String>) = SearchUiState(
+            searchString = "",
             state = SearchScreenState.ZeroSearch(cities)
         )
     }

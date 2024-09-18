@@ -8,14 +8,19 @@ import com.search.impl.domain.SearchInteractor
 import com.search.impl.ui.SearchUiState.SearchResultsState
 import com.search.impl.ui.SearchUiState.SearchScreenState
 import com.splash.api.domain.CitiesRepository
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(FlowPreview::class)
 class SearchViewModel @Inject constructor(
     private val citiesRepository: CitiesRepository,
     private val searchInteractor: SearchInteractor,
@@ -30,26 +35,29 @@ class SearchViewModel @Inject constructor(
     val uiStateFlow: StateFlow<SearchUiState>
         get() = _uiStateFlow
 
-    private var searchText = ""
-        set(value) {
-            currentList.clear()
-            field = value
-        }
+    private val queryFlow = MutableStateFlow("")
+
     private var cursor = ""
     private val currentList = mutableListOf<ActivityEntity>()
+    private var searchJob: Job? = null
 
-    private fun searchRequest() {
-        _uiStateFlow.update {
-            it.copy(
-                state = SearchScreenState.SearchResults(
-                    list = currentList,
-                    state = SearchResultsState.Loading
+    init {
+        collectSearch()
+    }
+
+    private fun searchRequest(query: String) {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            _uiStateFlow.update {
+                it.copy(
+                    state = SearchScreenState.SearchResults(
+                        list = currentList,
+                        state = SearchResultsState.Loading
+                    )
                 )
-            )
-        }
+            }
 
-        viewModelScope.launch {
-            when (val result = searchInteractor.search(searchText, cursor)) {
+            when (val result = searchInteractor.search(query, cursor)) {
                 is ResponseState.Error -> {
                     _uiStateFlow.update {
                         it.copy(
@@ -67,7 +75,7 @@ class SearchViewModel @Inject constructor(
                     _uiStateFlow.update {
                         it.copy(
                             state = SearchScreenState.SearchResults(
-                                state = SearchResultsState.Loading,
+                                state = SearchResultsState.Results,
                                 list = currentList
                             )
                         )
@@ -75,34 +83,85 @@ class SearchViewModel @Inject constructor(
                 }
             }
         }
+    }
 
+    private fun collectSearch() {
+        viewModelScope.launch {
+            queryFlow.debounce(300L)
+                .collectLatest { query ->
+                    searchJob?.cancel()
+                    if (query.isBlank()) {
+                        return@collectLatest
+                    }
+                    searchRequest(query)
+                }
+        }
     }
 
     fun onAction(action: SearchAction) {
         when (action) {
             is SearchAction.ChangeSearchText -> {
-                searchText = action.search
-                if (action.search.isBlank()) {
+                if (action.search == _uiStateFlow.value.searchString) return
+                currentList.clear()
+                cursor = ""
+                if (action.search.isNotBlank()) {
                     _uiStateFlow.update {
                         it.copy(
-                            state = SearchScreenState.ZeroSearch(
-                                popularCities = citiesRepository.cities().map { city -> city.name }
+                            searchString = action.search,
+                            state = SearchScreenState.SearchResults(
+                                state = SearchResultsState.Loading,
+                                list = emptyList()
                             )
                         )
                     }
                 } else {
-                    searchRequest()
+                    _uiStateFlow.update {
+                        it.copy(
+                            searchString = action.search,
+                            state = SearchScreenState.ZeroSearch(
+                                popularCities = citiesRepository.cities()
+                                    .map { city -> city.name }
+                            )
+                        )
+                    }
                 }
+                queryFlow.update { action.search }
             }
 
             is SearchAction.ActivityClicked -> {
                 when (action.entity.type) {
                     ActivityEntity.ActivityType.LANDMARK -> {
-
+                        viewModelScope.launch {
+                            _uiEvent.send(SearchEvent.OnOpenAttraction(action.entity.id))
+                        }
                     }
 
                     ActivityEntity.ActivityType.SERVICE -> {
+                        viewModelScope.launch {
+                            _uiEvent.send(SearchEvent.OnOpenService(action.entity.id))
+                        }
+                    }
+                }
+            }
 
+            SearchAction.BackPressed -> {
+                when (_uiStateFlow.value.state) {
+                    is SearchScreenState.SearchResults -> {
+                        _uiStateFlow.update {
+                            it.copy(
+                                searchString = "",
+                                state = SearchScreenState.ZeroSearch(
+                                    popularCities = citiesRepository.cities()
+                                        .map { city -> city.name }
+                                )
+                            )
+                        }
+                    }
+
+                    is SearchScreenState.ZeroSearch -> {
+                        viewModelScope.launch {
+                            _uiEvent.send(SearchEvent.OnBackPressed)
+                        }
                     }
                 }
             }

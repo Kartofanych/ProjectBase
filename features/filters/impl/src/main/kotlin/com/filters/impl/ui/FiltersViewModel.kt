@@ -4,8 +4,8 @@ import androidx.compose.runtime.MutableFloatState
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.multimodulepractice.common.data.models.local.FilterDistance
 import com.filters.api.data.FiltersRepository
-import com.filters.api.data.models.FilterDistance
 import com.filters.api.data.models.Filters
 import com.filters.impl.di.FiltersScope
 import kotlinx.coroutines.channels.Channel

@@ -4,6 +4,7 @@ import com.example.multimodulepractice.common.data.models.network.GeoPointDto
 import com.google.gson.annotations.SerializedName
 
 class SearchRequest(
+
     @SerializedName("query")
     val query: String,
 
@@ -13,6 +14,6 @@ class SearchRequest(
     @SerializedName("cursor")
     val cursor: String,
 
-    //TODO
-    //@SerializedName("filters")
+    @SerializedName("filters")
+    val filters: SearchFiltersDto
 )

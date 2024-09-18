@@ -10,8 +10,8 @@ class SearchMapper @Inject constructor() {
 
     fun map(dto: SearchResponseDto): SearchResponse {
         return SearchResponse(
-            dto.cursor,
-            dto.items.map { mapActivity(it) }
+            cursor = dto.cursor,
+            items = dto.items.map { mapActivity(it) }
         )
     }
 

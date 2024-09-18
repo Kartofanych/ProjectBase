@@ -1,6 +1,6 @@
 package com.example.multimodulepractice.common.data.models.local
 
-class ActivityEntity(
+data class ActivityEntity(
     val id: String,
     val icon: String,
     val tag: String,

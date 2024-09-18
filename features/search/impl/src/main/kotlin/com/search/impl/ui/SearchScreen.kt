@@ -28,6 +28,8 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,11 +37,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -57,7 +64,6 @@ import com.search.impl.ui.SearchUiState.SearchScreenState
 
 @Composable
 fun SearchScreen(uiState: SearchUiState, onAction: (SearchAction) -> Unit) {
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -65,7 +71,7 @@ fun SearchScreen(uiState: SearchUiState, onAction: (SearchAction) -> Unit) {
             .safeDrawingPadding()
     ) {
 
-        SearchField(onAction)
+        SearchField(uiState, onAction)
 
         Box(modifier = Modifier.fillMaxSize()) {
             // android bug https://youtrack.jetbrains.com/issue/KT-48215
@@ -111,6 +117,7 @@ fun SearchActivity(entity: ActivityEntity, onAction: (SearchAction) -> Unit) {
             .clickable {
                 onAction(SearchAction.ActivityClicked(entity))
             }
+            .padding(horizontal = 18.dp)
     ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
@@ -118,6 +125,7 @@ fun SearchActivity(entity: ActivityEntity, onAction: (SearchAction) -> Unit) {
                 .scale(Scale.FILL)
                 .build(),
             contentDescription = null,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(108.dp)
                 .clip(RoundedCornerShape(16.dp))
@@ -267,7 +275,6 @@ fun SearchResult(searchResults: SearchScreenState.SearchResults, onAction: (Sear
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 18.dp)
             ) {
                 items(
                     items = searchResults.list,
@@ -284,9 +291,11 @@ fun SearchResult(searchResults: SearchScreenState.SearchResults, onAction: (Sear
 
 
 @Composable
-fun SearchField(onAction: (SearchAction) -> Unit) {
-    var value by remember { mutableStateOf("") }
-
+fun SearchField(uiState: SearchUiState, onAction: (SearchAction) -> Unit) {
+    var textField by remember {
+        mutableStateOf(TextFieldValue(text = uiState.searchString))
+    }
+    val focusRequester = remember { FocusRequester() }
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -296,12 +305,15 @@ fun SearchField(onAction: (SearchAction) -> Unit) {
         contentAlignment = Alignment.CenterStart
     ) {
         BasicTextField(
-            value = value,
+            value = textField,
             onValueChange = {
-                onAction(SearchAction.ChangeSearchText(it))
-                value = it
+                textField = it
+                onAction(SearchAction.ChangeSearchText(it.text))
             },
+            singleLine = true,
+            cursorBrush = SolidColor(Color.White),
             modifier = Modifier
+                .focusRequester(focusRequester)
                 .width(308.dp)
                 .height(44.dp)
                 .background(Color(0x1A675151), RoundedCornerShape(12.dp))
@@ -314,12 +326,12 @@ fun SearchField(onAction: (SearchAction) -> Unit) {
                         .width(250.dp)
                         .align(Alignment.CenterStart),
                     text = when {
-                        value.isBlank() -> "Например, Кремль"
-                        else -> value
+                        uiState.searchString.isBlank() -> "Например, Кремль"
+                        else -> uiState.searchString
                     },
                     style = regularTextStyle.copy(
                         color = when {
-                            value.isBlank() -> Color(0xFF838383)
+                            uiState.searchString.isBlank() -> Color(0xFF838383)
                             else -> Color.Black
                         },
                         fontSize = 15.sp
@@ -331,7 +343,7 @@ fun SearchField(onAction: (SearchAction) -> Unit) {
                     enter = expandIn {
                         IntSize(18, 18)
                     },
-                    visible = value.isNotBlank(),
+                    visible = uiState.searchString.isNotBlank(),
                     modifier = Modifier.align(Alignment.CenterEnd)
                 ) {
                     Icon(
@@ -339,7 +351,6 @@ fun SearchField(onAction: (SearchAction) -> Unit) {
                             .size(18.dp)
                             .clickable {
                                 onAction(SearchAction.ChangeSearchText(""))
-                                value = ""
                             },
                         painter = painterResource(id = R.drawable.ic_close),
                         contentDescription = null
@@ -356,31 +367,15 @@ fun SearchField(onAction: (SearchAction) -> Unit) {
             contentDescription = null
         )
     }
-}
 
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
 
-@Composable
-@Preview
-fun fu() {
-    SearchScreen(
-        SearchUiState(
-            state = SearchScreenState.SearchResults(
-                state = SearchResultsState.Results,
-                list = listOf(
-                    ActivityEntity(
-                        id = "123",
-                        icon = "",
-                        "Архитектура",
-                        type = ActivityEntity.ActivityType.SERVICE,
-                        "Университет Иннополис",
-                        "г. Иннополис ~ 1 км от вас",
-                        "Университет Иннополис занимается образованием, исследованиями и разработками в област...",
-                        starCount = 5,
-                        4.5f
-                    )
-                )
-            )
-        ),
-        {}
-    )
+    DisposableEffect(Unit) {
+        textField = textField.copy(
+            selection = TextRange(textField.text.length)
+        )
+        onDispose { }
+    }
 }

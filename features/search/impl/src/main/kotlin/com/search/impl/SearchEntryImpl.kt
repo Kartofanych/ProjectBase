@@ -1,5 +1,6 @@
 package com.search.impl
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.ui.Modifier
@@ -11,6 +12,7 @@ import com.example.multimodulepractice.common.navigation.injectedViewModel
 import com.search.api.SearchEntry
 import com.search.impl.di.DaggerSearchComponent
 import com.search.impl.di.SearchDependencies
+import com.search.impl.ui.SearchAction
 import com.search.impl.ui.SearchEventHandler
 import com.search.impl.ui.SearchScreen
 import javax.inject.Inject
@@ -34,11 +36,8 @@ class SearchEntryImpl @Inject constructor(
                     it
                 }
             },
-            exitTransition = {
-                slideOutHorizontally {
-                    it
-                }
-            },
+            popEnterTransition = null,
+            exitTransition = null,
             popExitTransition = {
                 slideOutHorizontally {
                     it
@@ -51,13 +50,22 @@ class SearchEntryImpl @Inject constructor(
             }
 
             SearchEventHandler(
-                uiEvent = viewModel.uiEvent
+                uiEvent = viewModel.uiEvent,
+                navigateToAttraction = { id -> navController.navigate("$SCREEN_ATTRACTION_ROUTE/$id") },
+                navigateToService = { id -> navController.navigate("$SCREEN_SERVICE_ROUTE/$id") },
+                navigateBack = { navController.popBackStack() }
             )
 
             SearchScreen(
                 viewModel.uiStateFlow.collectAsStateWithLifecycle().value,
                 viewModel::onAction
             )
+            BackHandler { viewModel.onAction(SearchAction.BackPressed) }
         }
+    }
+
+    private companion object {
+        const val SCREEN_SERVICE_ROUTE = "service"
+        const val SCREEN_ATTRACTION_ROUTE = "attraction"
     }
 }
