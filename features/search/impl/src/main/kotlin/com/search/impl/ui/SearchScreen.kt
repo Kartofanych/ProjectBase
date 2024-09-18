@@ -1,5 +1,6 @@
 package com.search.impl.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
@@ -15,7 +16,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -26,6 +26,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -64,46 +65,48 @@ import com.search.impl.ui.SearchUiState.SearchScreenState
 
 @Composable
 fun SearchScreen(uiState: SearchUiState, onAction: (SearchAction) -> Unit) {
-    Column(
+    Scaffold(
         modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-            .safeDrawingPadding()
+            .fillMaxSize(),
+        containerColor = Color.White
     ) {
+        Column(
+            modifier = Modifier.padding(top = it.calculateTopPadding())
+        ) {
 
-        SearchField(uiState, onAction)
+            SearchField(uiState, onAction)
 
-        Box(modifier = Modifier.fillMaxSize()) {
-            // android bug https://youtrack.jetbrains.com/issue/KT-48215
-            androidx.compose.animation.AnimatedVisibility(
-                enter = slideInHorizontally {
-                    -it
-                },
-                exit = slideOutHorizontally {
-                    -it
-                },
-                visible = uiState.state is SearchScreenState.ZeroSearch
-            ) {
-                if (uiState.state is SearchScreenState.ZeroSearch) {
-                    ZeroSearch(zeroState = uiState.state)
+            Box(modifier = Modifier.fillMaxSize()) {
+                // android bug https://youtrack.jetbrains.com/issue/KT-48215
+                androidx.compose.animation.AnimatedVisibility(
+                    enter = slideInHorizontally {
+                        -it
+                    },
+                    exit = slideOutHorizontally {
+                        -it
+                    },
+                    visible = uiState.state is SearchScreenState.ZeroSearch
+                ) {
+                    if (uiState.state is SearchScreenState.ZeroSearch) {
+                        ZeroSearch(zeroState = uiState.state)
+                    }
                 }
-            }
 
-            androidx.compose.animation.AnimatedVisibility(
-                enter = slideInHorizontally {
-                    it
-                },
-                exit = slideOutHorizontally {
-                    it
-                },
-                visible = uiState.state is SearchScreenState.SearchResults
-            ) {
-                if (uiState.state is SearchScreenState.SearchResults) {
-                    SearchResult(uiState.state, onAction)
+                androidx.compose.animation.AnimatedVisibility(
+                    enter = slideInHorizontally {
+                        it
+                    },
+                    exit = slideOutHorizontally {
+                        it
+                    },
+                    visible = uiState.state is SearchScreenState.SearchResults
+                ) {
+                    if (uiState.state is SearchScreenState.SearchResults) {
+                        SearchResult(uiState.state, onAction)
+                    }
                 }
             }
         }
-
     }
 }
 
@@ -350,6 +353,7 @@ fun SearchField(uiState: SearchUiState, onAction: (SearchAction) -> Unit) {
                         modifier = Modifier
                             .size(18.dp)
                             .clickable {
+                                textField = textField.copy(text = "")
                                 onAction(SearchAction.ChangeSearchText(""))
                             },
                         painter = painterResource(id = R.drawable.ic_close),
@@ -377,5 +381,10 @@ fun SearchField(uiState: SearchUiState, onAction: (SearchAction) -> Unit) {
             selection = TextRange(textField.text.length)
         )
         onDispose { }
+    }
+
+    BackHandler {
+        textField = textField.copy(text = "")
+        onAction(SearchAction.BackPressed)
     }
 }

@@ -21,7 +21,7 @@ class SearchMapper @Inject constructor() {
             icon = dto.icon,
             tag = dto.tag,
             type = when (dto.type) {
-                ActivityDto.ActivityTypeDto.LANDMARK -> ActivityEntity.ActivityType.LANDMARK
+                ActivityDto.ActivityTypeDto.ATTRACTION -> ActivityEntity.ActivityType.LANDMARK
                 ActivityDto.ActivityTypeDto.SERVICE -> ActivityEntity.ActivityType.SERVICE
             },
             description = dto.description,
