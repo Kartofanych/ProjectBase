@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.archivesName
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.io.FileInputStream
 import java.io.InputStreamReader
@@ -19,8 +20,7 @@ android {
         applicationId = ProjectConfig.applicationId
         versionCode = ProjectConfig.versionCode
         versionName = ProjectConfig.versionName
-
-        setProperty("archivesBaseName", "Multimodule-$versionName")
+        archivesName = "Multimodule-$versionName"
         manifestPlaceholders["YANDEX_CLIENT_ID"] = getLocalProperty("CLIENT_ID")
         vectorDrawables {
             useSupportLibrary = true
@@ -74,6 +74,10 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kapt {
+        useBuildCache = false
     }
 }
 

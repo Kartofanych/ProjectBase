@@ -33,7 +33,7 @@ import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.regularTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.main.common.data.local.Attraction
-import com.example.multimodulepractice.common.composables.Chip
+import com.example.multimodulepractice.common.ChipCard
 import com.search.impl.ui.ListAction
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -79,7 +79,7 @@ fun BigHorizontalAttraction(
             verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             for (category in attraction.categories) {
-                Chip(text = category.name, color = category.color)
+                ChipCard(text = category.name, activeColor = category.color)
             }
         }
 

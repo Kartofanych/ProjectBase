@@ -5,7 +5,6 @@ import com.example.multimodulepractice.di.modules.NetworkModule.Companion.YANDEX
 import com.example.multimodulepractice.guide.impl.data.GuideApi
 import com.example.multimodulepractice.login.impl.data.AuthApi
 import com.main.common.data.MainApi
-import com.search.impl.data.SearchApi
 import com.service.impl.data.ServiceApi
 import com.splash.impl.data.LaunchApi
 import dagger.Module
@@ -39,11 +38,6 @@ class ApiModule {
     @Provides
     fun provideServiceApi(retrofit: Retrofit): ServiceApi {
         return retrofit.create(ServiceApi::class.java)
-    }
-
-    @Provides
-    fun provideSearchApi(retrofit: Retrofit): SearchApi {
-        return retrofit.create(SearchApi::class.java)
     }
 
     @Provides

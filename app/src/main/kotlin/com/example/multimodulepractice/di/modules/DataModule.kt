@@ -18,7 +18,7 @@ import dagger.Reusable
         AppConfigModule::class,
         AuthProviderModule::class,
         GeoProviderModule::class,
-        MainDataModule::class
+        MainDataModule::class,
     ]
 )
 interface DataModule {
