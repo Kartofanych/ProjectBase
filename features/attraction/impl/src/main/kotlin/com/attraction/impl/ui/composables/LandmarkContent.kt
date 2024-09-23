@@ -47,7 +47,7 @@ import com.attraction.impl.data.models.local.Attraction
 import com.attraction.impl.data.models.local.Service
 import com.attraction.impl.ui.AttractionAction
 import com.example.multimodulepractice.attraction.impl.R
-import com.example.multimodulepractice.common.composables.Chip
+import com.example.multimodulepractice.common.ChipCard
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.regularTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
@@ -120,9 +120,9 @@ fun LandmarkContent(
                             verticalArrangement = Arrangement.spacedBy(6.dp)
                         ) {
                             for (category in landmark.categories) {
-                                Chip(
+                                ChipCard(
                                     text = category.name,
-                                    color = category.color
+                                    activeColor = category.color
                                 )
                             }
                         }

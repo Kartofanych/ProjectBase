@@ -21,7 +21,7 @@ import dagger.Module
         SplashNavigationModule::class,
         ServiceNavigationModule::class,
         SearchNavigationModule::class,
-        AttractionNavigationModule::class
+        AttractionNavigationModule::class,
     ]
 )
 interface NavigationModule

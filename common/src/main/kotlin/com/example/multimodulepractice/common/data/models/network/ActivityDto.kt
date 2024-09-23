@@ -28,8 +28,8 @@ class ActivityDto(
     val rating: Float
 ) {
     enum class ActivityTypeDto {
-        @SerializedName("landmark")
-        LANDMARK,
+        @SerializedName("attraction")
+        ATTRACTION,
 
         @SerializedName("service")
         SERVICE

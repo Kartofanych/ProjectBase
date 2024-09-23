@@ -124,12 +124,6 @@ private fun SliderItem(distanceFloatState: MutableFloatState, onAction: (Filters
 
 }
 
-val s = Color(0xFFB71C1C)
-val s1 = Color(0xFFEF9A9A)
-val s2 = Color(0xFFFFEBEE)
-val s3 = Color(0xFFEF9A9A)
-val s4 = Color(0xFFB71C1C)
-
 @Composable
 private fun customColors(): SliderColors = SliderDefaults.colors(
     activeTickColor = Color(0xFF74A3FF),
