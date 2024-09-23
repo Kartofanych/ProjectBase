@@ -39,7 +39,7 @@ class SearchViewModel @Inject constructor(
 
     private val queryFlow = MutableStateFlow("")
 
-    private var cursor = ""
+    private var cursor: String? = ""
     private val currentList = mutableListOf<ActivityEntity>()
     private var searchJob: Job? = null
 
@@ -73,41 +73,44 @@ class SearchViewModel @Inject constructor(
         query: String,
         filters: SearchFilters = searchFilterRepository.zeroFilters
     ) {
-        searchJob?.cancel()
-        searchJob = viewModelScope.launch {
-            _uiStateFlow.update {
-                it.copy(
-                    state = SearchScreenState.SearchResults(
-                        list = currentList,
-                        state = SearchResultsState.Loading
+        cursor?.let { currentCursor ->
+            searchJob?.cancel()
+            searchJob = viewModelScope.launch {
+                _uiStateFlow.update {
+                    it.copy(
+                        state = SearchScreenState.SearchResults(
+                            list = currentList,
+                            state = SearchResultsState.Loading
+                        )
                     )
-                )
-            }
-
-            when (val result = searchInteractor.search(query, filters, cursor)) {
-                is ResponseState.Error -> {
-                    _uiStateFlow.update {
-                        it.copy(
-                            state = SearchScreenState.SearchResults(
-                                state = SearchResultsState.Results,
-                                list = currentList
-                            )
-                        )
-                    }
                 }
 
-                is ResponseState.Success -> {
-                    currentList.addAll(result.data.items)
-                    cursor = result.data.cursor
-                    _uiStateFlow.update {
-                        it.copy(
-                            state = SearchScreenState.SearchResults(
-                                state = SearchResultsState.Results,
-                                list = currentList
+                when (val result = searchInteractor.search(query, filters, currentCursor)) {
+                    is ResponseState.Error -> {
+                        _uiStateFlow.update {
+                            it.copy(
+                                state = SearchScreenState.SearchResults(
+                                    state = SearchResultsState.Results,
+                                    list = currentList
+                                )
                             )
-                        )
+                        }
+                    }
+
+                    is ResponseState.Success -> {
+                        currentList.addAll(result.data.items)
+                        cursor = result.data.cursor
+                        _uiStateFlow.update {
+                            it.copy(
+                                state = SearchScreenState.SearchResults(
+                                    state = SearchResultsState.Results,
+                                    list = currentList
+                                )
+                            )
+                        }
                     }
                 }
+                searchJob = null
             }
         }
     }
@@ -173,6 +176,7 @@ class SearchViewModel @Inject constructor(
             SearchAction.BackPressed -> {
                 when (_uiStateFlow.value.state) {
                     is SearchScreenState.SearchResults -> {
+                        searchJob?.cancel()
                         searchFilterRepository.updateFilters(searchFilterRepository.zeroFilters)
                         _uiStateFlow.update {
                             it.copy(
@@ -196,6 +200,15 @@ class SearchViewModel @Inject constructor(
             SearchAction.OpenFilters -> {
                 viewModelScope.launch {
                     _uiEvent.send(SearchEvent.OnOpenFilters)
+                }
+            }
+
+            is SearchAction.OnScrollAction -> {
+                if (action.firstVisibleItem + 8 >= currentList.size && searchJob == null && cursor != null) {
+                    searchRequest(
+                        _uiStateFlow.value.searchString,
+                        searchFilterRepository.filters.value
+                    )
                 }
             }
         }

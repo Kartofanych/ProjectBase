@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 class SearchResponseDto(
 
     @SerializedName("cursor")
-    val cursor: String,
+    val cursor: String? = null,
 
     @SerializedName("result")
     val items: List<ActivityDto>

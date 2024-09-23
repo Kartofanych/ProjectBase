@@ -10,4 +10,6 @@ sealed interface SearchAction {
     class ChangeSearchText(val search: String) : SearchAction
 
     class ActivityClicked(val entity: ActivityEntity) : SearchAction
+
+    class OnScrollAction(val firstVisibleItem: Int) : SearchAction
 }

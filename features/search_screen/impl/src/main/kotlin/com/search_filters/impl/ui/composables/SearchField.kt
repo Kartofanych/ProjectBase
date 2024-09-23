@@ -53,7 +53,7 @@ fun SearchField(uiState: SearchUiState, onAction: (SearchAction) -> Unit) {
             .fillMaxWidth()
             .height(68.dp)
             .background(Color.White)
-            .padding(horizontal = 18.dp),
+            .padding(start = 18.dp, end = 8.dp),
         contentAlignment = Alignment.CenterStart
     ) {
         BasicTextField(
@@ -115,11 +115,12 @@ fun SearchField(uiState: SearchUiState, onAction: (SearchAction) -> Unit) {
         Icon(
             modifier = Modifier
                 .align(Alignment.CenterEnd)
-                .size(30.dp)
+                .size(50.dp)
                 .clip(CircleShape)
                 .clickable {
                     onAction(SearchAction.OpenFilters)
-                },
+                }
+                .padding(10.dp),
             painter = painterResource(id = R.drawable.ic_filters),
             tint = Color(0xFF74A3FF),
             contentDescription = null
