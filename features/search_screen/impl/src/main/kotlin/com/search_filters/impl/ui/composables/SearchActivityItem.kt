@@ -102,43 +102,43 @@ fun SearchActivity(entity: ActivityEntity, onAction: (SearchAction) -> Unit) {
 
             Spacer(modifier = Modifier.height(3.dp))
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = entity.rating.toString(),
-                    style = semiboldTextStyle.copy(
-                        color = Color(0xFF74A3FF),
-                        fontSize = 12.sp
-                    )
-                )
-
-                Spacer(modifier = Modifier.width(6.dp))
-
+            if (entity.rating != 0f) {
                 Row(
-                    modifier = Modifier
-                        .wrapContentWidth()
-                        .background(color = Color(0xFF74A3FF), shape = CircleShape)
-                        .padding(horizontal = 7.dp, vertical = 3.dp)
-                        .height(15.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-
-                    for (i in 0 until entity.starCount) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_star),
-                            contentDescription = null,
-                            modifier = Modifier.size(12.dp),
-                            tint = Color.White
+                    Text(
+                        text = entity.rating.toString(),
+                        style = semiboldTextStyle.copy(
+                            color = Color(0xFF74A3FF),
+                            fontSize = 12.sp
                         )
-                        if (i != entity.starCount - 1) {
-                            Spacer(modifier = Modifier.width(2.dp))
+                    )
+
+                    Spacer(modifier = Modifier.width(6.dp))
+
+                    Row(
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .background(color = Color(0xFF74A3FF), shape = CircleShape)
+                            .padding(horizontal = 7.dp, vertical = 3.dp)
+                            .height(15.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        for (i in 0 until entity.starCount) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_star),
+                                contentDescription = null,
+                                modifier = Modifier.size(12.dp),
+                                tint = Color.White
+                            )
+                            if (i != entity.starCount - 1) {
+                                Spacer(modifier = Modifier.width(2.dp))
+                            }
                         }
                     }
                 }
             }
-
-            Spacer(modifier = Modifier.height(3.dp))
 
             Text(
                 text = entity.description,
