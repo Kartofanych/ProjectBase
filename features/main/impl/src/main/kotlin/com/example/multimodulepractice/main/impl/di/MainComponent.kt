@@ -1,9 +1,9 @@
 package com.example.multimodulepractice.main.impl.di
 
-import com.main.common.di.MainScope
 import com.example.multimodulepractice.common.navigation.Destinations
 import com.example.multimodulepractice.main.impl.data.repositories.RecommendedAttractionsRepositoryImpl
-import com.search.impl.di.ListDependencies
+import com.example.multimodulepractice.main.impl.ui.MainViewModel
+import com.main.common.di.MainScope
 import dagger.Component
 
 @MainScope
@@ -17,7 +17,7 @@ interface MainComponent {
 
     val destinations: Destinations
 
-    val listDependencies: ListDependencies
+    val viewModel: MainViewModel
 
     @Component.Factory
     interface Factory {

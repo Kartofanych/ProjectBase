@@ -2,7 +2,8 @@ package com.example.multimodulepractice.main.impl.ui.map
 
 data class MapUiState(
     val state: MapState,
-    val isFiltersDefault: Boolean
+    val isFiltersDefault: Boolean,
+    val isMapOpen: Boolean
 ) {
 
     sealed interface MapState {
@@ -14,7 +15,8 @@ data class MapUiState(
     companion object {
         fun EMPTY(): MapUiState = MapUiState(
             state = MapState.Content,
-            isFiltersDefault = true
+            isFiltersDefault = true,
+            isMapOpen = false
         )
     }
 }
