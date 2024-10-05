@@ -1,5 +1,6 @@
 package com.example.multimodulepractice.main.impl.ui.map
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
@@ -94,6 +95,16 @@ fun MapScreen(
                 Spacer(modifier = Modifier.height(16.dp))
                 MyLocationButton(onMapAction)
             }
+        }
+
+        AnimatedVisibility(
+            visible = !uiState.isMapOpen
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = Color.White)
+            )
         }
     }
 }

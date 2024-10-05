@@ -9,7 +9,6 @@ import com.example.multimodulepractice.guide.impl.di.GuideDependencies
 import com.example.multimodulepractice.main.impl.di.MainDependencies
 import com.example.multimodulepractice.main.impl.ui.map.MapViewModel
 import com.filters.impl.di.FiltersDependencies
-import com.search.impl.di.SearchDependencies
 import com.travelling.api.AppConfig
 
 interface AppProvider {
@@ -29,8 +28,6 @@ interface AppProvider {
     val appConfig: AppConfig
 
     val filtersDependencies: FiltersDependencies
-
-    val searchDependencies: SearchDependencies
 
     val attractionDependencies: AttractionDependencies
 }

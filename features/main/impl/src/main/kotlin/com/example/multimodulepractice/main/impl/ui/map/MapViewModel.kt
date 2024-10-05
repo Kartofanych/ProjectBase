@@ -12,18 +12,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import coil.ImageLoader
 import coil.request.ImageRequest
-import com.example.multimodulepractice.common.di.AppContext
-import com.example.multimodulepractice.common.di.AppScope
 import com.example.multimodulepractice.common.data.models.local.City
 import com.example.multimodulepractice.common.data.models.local.GeoPoint
 import com.example.multimodulepractice.common.data.models.local.ResponseState
+import com.example.multimodulepractice.common.di.AppContext
+import com.example.multimodulepractice.common.di.AppScope
 import com.example.multimodulepractice.common.utils.calculateDistance
 import com.example.multimodulepractice.common.utils.runWithMinTime
 import com.example.multimodulepractice.geo.repository.GeoRepository
 import com.example.multimodulepractice.main.impl.R
 import com.example.multimodulepractice.main.impl.data.interactors.MapInteractor
-import com.main.common.data.local.map.MapLandmark
 import com.example.multimodulepractice.main.impl.databinding.ClusteredViewBinding
+import com.example.multimodulepractice.main.impl.domain.MapScreenRepository
 import com.example.multimodulepractice.main.impl.ui.map.MapUiState.MapState
 import com.example.multimodulepractice.main.impl.utils.cityTextStyle
 import com.example.multimodulepractice.main.impl.utils.landmarkTextStyle
@@ -31,6 +31,7 @@ import com.example.multimodulepractice.main.impl.utils.toGeoPoint
 import com.example.multimodulepractice.main.impl.utils.toMapKitPoint
 import com.filters.api.data.FiltersRepository
 import com.filters.api.data.models.Filters
+import com.main.common.data.local.map.MapLandmark
 import com.splash.api.domain.CitiesRepository
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
@@ -71,7 +72,8 @@ class MapViewModel @Inject constructor(
     @AppContext
     private val context: Context,
     private val filtersRepository: FiltersRepository,
-    private val citiesRepository: CitiesRepository
+    private val citiesRepository: CitiesRepository,
+    private val mapScreenRepository: MapScreenRepository,
 ) : ViewModel() {
 
     @SuppressLint("StaticFieldLeak")
@@ -118,20 +120,6 @@ class MapViewModel @Inject constructor(
         invalidateObjectsByZoom(cameraPosition.zoom)
     }
 
-    private fun invalidateObjectsByZoom(zoom: Float) {
-        when {
-            zoom > 12f -> {
-                objectsCollection.setVisible(true, Animation(Animation.Type.LINEAR, 500f), null)
-                citiesCollection.setVisible(false, Animation(Animation.Type.LINEAR, 500f), null)
-            }
-
-            else -> {
-                objectsCollection.setVisible(false, Animation(Animation.Type.LINEAR, 500f), null)
-                citiesCollection.setVisible(true, Animation(Animation.Type.LINEAR, 500f), null)
-            }
-        }
-    }
-
     private var mapRequestJob: MapInfoJob = MapInfoJob()
 
     private val _uiEvent = Channel<MapUiEvent>()
@@ -150,6 +138,17 @@ class MapViewModel @Inject constructor(
         subscribeToGeo()
         subscribeToFilters()
         map.mapWindow.map.addCameraListener(cameraListener)
+        subscribeToMapScreen()
+    }
+
+    private fun subscribeToMapScreen() {
+        viewModelScope.launch {
+            mapScreenRepository.isMapOpen.collectLatest { isOpen ->
+                _uiStateFlow.update {
+                    it.copy(isMapOpen = isOpen)
+                }
+            }
+        }
     }
 
     private fun subscribeToCities() {
@@ -184,6 +183,20 @@ class MapViewModel @Inject constructor(
         viewModelScope.launch {
             geoRepository.geoInfoFlow().collectLatest { geoInfo ->
                 updateUserLocation(geoPoint = geoInfo.currentPoint)
+            }
+        }
+    }
+
+    private fun invalidateObjectsByZoom(zoom: Float) {
+        when {
+            zoom > 12f -> {
+                objectsCollection.setVisible(true, Animation(Animation.Type.LINEAR, 500f), null)
+                citiesCollection.setVisible(false, Animation(Animation.Type.LINEAR, 500f), null)
+            }
+
+            else -> {
+                objectsCollection.setVisible(false, Animation(Animation.Type.LINEAR, 500f), null)
+                citiesCollection.setVisible(true, Animation(Animation.Type.LINEAR, 500f), null)
             }
         }
     }

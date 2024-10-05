@@ -9,7 +9,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,36 +19,37 @@ import androidx.compose.ui.unit.dp
 import com.example.multimodulepractice.common.theme.tabTextStyle
 import com.example.multimodulepractice.main.impl.R
 import com.example.multimodulepractice.main.impl.data.models.MainTab
+import com.example.multimodulepractice.main.impl.ui.MainAction
+import com.example.multimodulepractice.main.impl.ui.MainUiState
 
 private const val MAP_TITLE = "Карты"
 private const val LIST_TITLE = "Поиск"
 private const val PROFILE_TITLE = "Профиль"
 
-
 @Composable
 fun Tab(
     modifier: Modifier,
     tabValue: MainTab,
-    currentTab: MutableState<MainTab>,
-    onTap: () -> Unit
+    uiState: MainUiState,
+    onAction: (MainAction) -> Unit
 ) {
-    val color by animateColorAsState(targetValue = if (currentTab.value == tabValue) Color.Black else Color.Gray)
+    val color by animateColorAsState(targetValue = if (uiState.currentTab == tabValue) Color.Black else Color.Gray)
     val imageId = when (tabValue) {
         MainTab.MAP -> R.drawable.ic_map
         MainTab.LIST -> R.drawable.ic_list
-        MainTab.PROFILE -> R.drawable.ic_profile
+        MainTab.FAVOURITES -> R.drawable.ic_profile
     }
     val title = when (tabValue) {
         MainTab.MAP -> MAP_TITLE
         MainTab.LIST -> LIST_TITLE
-        MainTab.PROFILE -> PROFILE_TITLE
+        MainTab.FAVOURITES -> PROFILE_TITLE
     }
     Box(
         modifier = modifier
             .fillMaxHeight()
             .clip(RoundedCornerShape(size = 10.dp))
             .clickable {
-                onTap()
+                onAction(MainAction.OpenTab(tabValue))
             },
         contentAlignment = Alignment.Center
     ) {
