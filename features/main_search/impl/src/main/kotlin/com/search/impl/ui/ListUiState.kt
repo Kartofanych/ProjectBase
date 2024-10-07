@@ -1,6 +1,7 @@
 package com.search.impl.ui
 
-import com.main.common.data.local.Attraction
+import com.search.impl.data.models.local.ActivityGroup
+import com.search.impl.data.models.local.Attraction
 
 sealed interface ListUiState {
 
@@ -9,8 +10,8 @@ sealed interface ListUiState {
     object Loading : ListUiState
 
     class Content(
-        val popularList: List<Attraction>,
-        val closeList: List<Attraction>
+        val hint: String,
+        val recommendedList: List<Attraction>,
+        val activityGroups: List<ActivityGroup>
     ) : ListUiState
-
 }

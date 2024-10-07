@@ -8,6 +8,7 @@ import com.example.multimodulepractice.geo.repository.GeoRepository
 import com.example.multimodulepractice.main.impl.domain.MapScreenRepository
 import com.main.common.data.MainApi
 import kotlinx.coroutines.CoroutineScope
+import retrofit2.Retrofit
 import javax.inject.Inject
 
 class MainDependencies @Inject constructor(
@@ -18,5 +19,6 @@ class MainDependencies @Inject constructor(
     val scope: CoroutineScope,
     val authInfoManager: AuthInfoManager,
     val categoryMapper: CategoryMapper,
-    val mapScreenRepository: MapScreenRepository
+    val mapScreenRepository: MapScreenRepository,
+    val retrofit: Retrofit
 )
