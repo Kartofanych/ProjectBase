@@ -27,5 +27,7 @@ dependencies {
     implementation(libs.bundles.dagger)
     kapt(libs.bundles.daggerCompiler)
 
+    implementation("dev.chrisbanes.haze:haze:0.7.3")
+
     implementation(libs.bundles.network)
 }

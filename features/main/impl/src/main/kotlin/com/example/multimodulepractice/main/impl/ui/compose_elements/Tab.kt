@@ -22,10 +22,6 @@ import com.example.multimodulepractice.main.impl.data.models.MainTab
 import com.example.multimodulepractice.main.impl.ui.MainAction
 import com.example.multimodulepractice.main.impl.ui.MainUiState
 
-private const val MAP_TITLE = "Карты"
-private const val LIST_TITLE = "Поиск"
-private const val PROFILE_TITLE = "Профиль"
-
 @Composable
 fun Tab(
     modifier: Modifier,
@@ -37,13 +33,9 @@ fun Tab(
     val imageId = when (tabValue) {
         MainTab.MAP -> R.drawable.ic_map
         MainTab.LIST -> R.drawable.ic_list
-        MainTab.FAVOURITES -> R.drawable.ic_profile
+        MainTab.FAVOURITES -> R.drawable.ic_unliked
     }
-    val title = when (tabValue) {
-        MainTab.MAP -> MAP_TITLE
-        MainTab.LIST -> LIST_TITLE
-        MainTab.FAVOURITES -> PROFILE_TITLE
-    }
+    val title = tabValue.title
     Box(
         modifier = modifier
             .fillMaxHeight()
