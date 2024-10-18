@@ -2,9 +2,8 @@ package com.search.impl.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.main.common.di.MainScope
 import com.example.multimodulepractice.common.data.models.local.ResponseState
-import com.main.common.domain.RecommendedAttractionsRepository
+import com.main.common.di.MainScope
 import com.search.impl.domain.ListInteractor
 import dagger.Reusable
 import kotlinx.coroutines.channels.Channel
@@ -19,7 +18,6 @@ import javax.inject.Inject
 @Reusable
 class ListViewModel @Inject constructor(
     private val listInteractor: ListInteractor,
-    private val recommendedAttractionsRepository: RecommendedAttractionsRepository
 ) : ViewModel() {
 
     private val _uiStateFlow = MutableStateFlow<ListUiState>(ListUiState.Loading)
@@ -43,11 +41,11 @@ class ListViewModel @Inject constructor(
                 is ResponseState.Success -> {
                     _uiStateFlow.update {
                         ListUiState.Content(
-                            result.data.recommendList,
-                            result.data.closeList
+                            result.data.hint,
+                            result.data.attractions,
+                            result.data.activityGroups
                         )
                     }
-                    recommendedAttractionsRepository.updateAttractions(result.data.recommendList)
                 }
             }
         }
@@ -64,6 +62,12 @@ class ListViewModel @Inject constructor(
             ListAction.OpenSearch -> {
                 viewModelScope.launch {
                     _uiEvent.send(ListEvent.OpenSearch)
+                }
+            }
+
+            is ListAction.OpenActivity -> {
+                viewModelScope.launch {
+                    _uiEvent.send(ListEvent.OpenService(action.id))
                 }
             }
         }

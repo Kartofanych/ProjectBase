@@ -1,4 +1,4 @@
-package com.search_filters.impl.ui.composables
+package com.search.impl.ui.composables
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -24,34 +24,32 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Scale
-import com.example.multimodulepractice.common.composables.ActivityType
 import com.example.multimodulepractice.common.composables.ReviewStarsComponent
-import com.example.multimodulepractice.common.data.models.local.ActivityEntity
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.regularTextStyle
-import com.search_filters.impl.ui.SearchAction
+import com.search.impl.data.models.local.Activity
+import com.search.impl.ui.ListAction
 
 @Composable
-fun SearchActivity(entity: ActivityEntity, onAction: (SearchAction) -> Unit) {
+fun ActivityGroupItem(item: Activity, onAction: (ListAction) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 18.dp)
-            .height(108.dp)
+            .height(90.dp)
             .clickable {
-                onAction(SearchAction.ActivityClicked(entity))
+                onAction(ListAction.OpenActivity(item.id))
             }
-            .padding(horizontal = 18.dp)
+            .padding(horizontal = 20.dp)
     ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(entity.icon)
+                .data(item.icon)
                 .scale(Scale.FILL)
                 .build(),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .size(108.dp)
+                .size(90.dp)
                 .clip(RoundedCornerShape(16.dp))
         )
 
@@ -59,41 +57,29 @@ fun SearchActivity(entity: ActivityEntity, onAction: (SearchAction) -> Unit) {
 
         Column(modifier = Modifier.fillMaxSize()) {
 
-            ActivityType(entity.tag, Modifier.padding(horizontal = 5.dp))
-
             Spacer(modifier = Modifier.height(3.dp))
 
             Text(
-                text = entity.title,
+                text = item.title,
                 style = mediumTextStyle.copy(fontSize = 14.sp, color = Color.Black),
-                maxLines = 1,
+                maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
 
-            Spacer(modifier = Modifier.height(3.dp))
+            Spacer(modifier = Modifier.height(5.dp))
 
-            if (entity.rating != 0f) {
+            if (item.rating != 0f) {
                 ReviewStarsComponent(
-                    entity.rating.toString(),
-                    entity.starCount,
-                    Modifier.padding(horizontal = 5.dp)
+                    item.rating.toString(),
+                    item.starsCount,
                 )
-                Spacer(modifier = Modifier.height(3.dp))
+                Spacer(modifier = Modifier.height(5.dp))
             }
 
             Text(
-                text = entity.description,
-                style = mediumTextStyle.copy(fontSize = 10.sp, color = Color.Black),
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
-
-            Spacer(modifier = Modifier.height(3.dp))
-
-            Text(
-                text = entity.subtitle,
-                style = regularTextStyle.copy(fontSize = 10.sp, color = Color(0xFF959595)),
-                maxLines = 2,
+                text = item.subtitle,
+                style = regularTextStyle.copy(fontSize = 10.sp, color = Color.Black),
+                maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
         }

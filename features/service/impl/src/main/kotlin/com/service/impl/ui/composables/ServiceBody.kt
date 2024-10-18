@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
@@ -41,6 +40,7 @@ import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
 import coil.size.Scale
+import com.example.multimodulepractice.common.composables.ReviewStarsComponent
 import com.example.multimodulepractice.common.composables.shimmerBrush
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.regularTextStyle
@@ -139,37 +139,11 @@ fun ServiceBody(service: Service, scrollState: ScrollState) {
             modifier = Modifier.padding(horizontal = 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = service.ratingBlock.rating.toString(),
-                style = semiboldTextStyle.copy(
-                    color = Color(0xFF74A3FF),
-                    fontSize = 16.sp
-                )
+
+            ReviewStarsComponent(
+                service.ratingBlock.rating.toString(),
+                service.ratingBlock.starCount,
             )
-
-            Spacer(modifier = Modifier.width(6.dp))
-
-            Row(
-                modifier = Modifier
-                    .wrapContentWidth()
-                    .background(color = Color(0xFF74A3FF), shape = CircleShape)
-                    .padding(horizontal = 7.dp, vertical = 3.dp)
-                    .height(15.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                for (i in 0 until service.ratingBlock.starCount) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_star),
-                        contentDescription = null,
-                        modifier = Modifier.size(12.dp),
-                        tint = Color.White
-                    )
-                    if (i != service.ratingBlock.starCount - 1) {
-                        Spacer(modifier = Modifier.width(2.dp))
-                    }
-                }
-            }
 
             Spacer(modifier = Modifier.width(6.dp))
 
@@ -182,7 +156,6 @@ fun ServiceBody(service: Service, scrollState: ScrollState) {
                 )
             )
         }
-
 
         Spacer(modifier = Modifier.height(20.dp))
 

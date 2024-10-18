@@ -9,6 +9,7 @@ fun ListEventHandler(
     uiEvent: Flow<ListEvent>,
     navigateToSearch: () -> Unit,
     navigateToAttraction: (String) -> Unit,
+    navigateToService: (String) -> Unit,
 ) {
 
     LaunchedEffect(Unit) {
@@ -16,6 +17,7 @@ fun ListEventHandler(
             when (event) {
                 ListEvent.OpenSearch -> navigateToSearch()
                 is ListEvent.OpenAttraction -> navigateToAttraction(event.id)
+                is ListEvent.OpenService -> navigateToService(event.id)
             }
         }
     }

@@ -4,9 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.multimodulepractice.auth.AuthInfoManager
 import com.example.multimodulepractice.auth.models.AuthInfo
-import com.main.common.di.MainScope
 import com.favourites.impl.ui.FavouritesUiState.ProfileMode
-import com.main.common.domain.RecommendedAttractionsRepository
+import com.main.common.di.MainScope
 import dagger.Reusable
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +20,6 @@ import javax.inject.Inject
 @Reusable
 class FavouritesViewModel @Inject constructor(
     private val authInfoManager: AuthInfoManager,
-    private val recommendedAttractionsRepository: RecommendedAttractionsRepository
 ) : ViewModel() {
 
     private val _uiStateFlow = MutableStateFlow(FavouritesUiState())
@@ -33,18 +31,6 @@ class FavouritesViewModel @Inject constructor(
 
     init {
         collectProfileUpdates()
-        //TODO
-        collectRecommendations()
-    }
-
-    private fun collectRecommendations() {
-        viewModelScope.launch {
-            recommendedAttractionsRepository.recommendedAttractions.collectLatest { list ->
-                _uiStateFlow.update {
-                    it.copy(recommendedList = list)
-                }
-            }
-        }
     }
 
     private fun collectProfileUpdates() {
