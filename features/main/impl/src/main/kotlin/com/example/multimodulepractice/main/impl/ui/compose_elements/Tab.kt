@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -33,7 +34,7 @@ fun Tab(
     val imageId = when (tabValue) {
         MainTab.MAP -> R.drawable.ic_map
         MainTab.LIST -> R.drawable.ic_list
-        MainTab.FAVOURITES -> R.drawable.ic_unliked
+        MainTab.FAVOURITES -> R.drawable.ic_favourites
     }
     val title = tabValue.title
     Box(
@@ -51,7 +52,8 @@ fun Tab(
             Icon(
                 painter = painterResource(id = imageId),
                 contentDescription = null,
-                tint = color
+                tint = color,
+                modifier = Modifier.size(30.dp)
             )
             Text(text = title, style = tabTextStyle.copy(color = color))
         }

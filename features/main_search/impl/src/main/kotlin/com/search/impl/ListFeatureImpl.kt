@@ -19,41 +19,30 @@ class ListFeatureImpl @Inject constructor(
     private val dependencies: ListDependencies,
 ) : SearchFeatureEntry() {
 
-    init {
-        DaggerListComponent.factory().create(dependencies).viewModule
-    }
-
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
         navController: NavController,
         mainNavController: NavController,
         modifier: Modifier
     ) {
+        DaggerListComponent.factory().create(dependencies)
 
         navGraphBuilder.composable(
             route = featureRoute,
             enterTransition = {
-                if (initialState.destination.route == SCREEN_MAP_ROUTE) {
-                    slideInHorizontally {
-                        it
-                    }
-                } else {
-                    slideInHorizontally {
-                        -it
-                    }
+                when (initialState.destination.route) {
+                    SCREEN_MAP_ROUTE -> slideInHorizontally { it }
+                    SCREEN_FAVOURITES_ROUTE -> slideInHorizontally { -it }
+                    else -> null
                 }
             },
             exitTransition = {
-                if (targetState.destination.route == SCREEN_MAP_ROUTE) {
-                    slideOutHorizontally {
-                        it
-                    }
-                } else {
-                    slideOutHorizontally {
-                        -it
-                    }
+                when (targetState.destination.route) {
+                    SCREEN_MAP_ROUTE -> slideOutHorizontally { it }
+                    SCREEN_FAVOURITES_ROUTE -> slideOutHorizontally { -it / 3 }
+                    else -> null
                 }
-            }
+            },
         ) {
 
             val viewModel = injectedViewModel {
@@ -76,6 +65,7 @@ class ListFeatureImpl @Inject constructor(
 
     private companion object {
         const val SCREEN_MAP_ROUTE = "main/map"
+        const val SCREEN_FAVOURITES_ROUTE = "main/favourites"
         const val SCREEN_SEARCH_ROUTE = "search"
         const val SCREEN_ATTRACTION_ROUTE = "attraction"
         const val SCREEN_SERVICE_ROUTE = "service"

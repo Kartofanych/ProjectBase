@@ -2,6 +2,7 @@ package com.example.multimodulepractice.main.impl.di
 
 import com.example.multimodulepractice.common.navigation.Destinations
 import com.example.multimodulepractice.main.impl.ui.MainViewModel
+import com.favourites.impl.ui.FavouritesViewModel
 import com.main.common.di.MainScope
 import com.search.impl.ui.ListViewModel
 import dagger.Component
@@ -18,6 +19,8 @@ interface MainComponent {
     val viewModel: MainViewModel
 
     val listViewModel: ListViewModel
+
+    val favouritesViewModel: FavouritesViewModel
 
     @Component.Factory
     interface Factory {

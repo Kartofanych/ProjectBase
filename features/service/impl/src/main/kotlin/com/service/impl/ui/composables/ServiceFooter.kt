@@ -19,10 +19,11 @@ import androidx.compose.ui.unit.sp
 import com.example.multimodulepractice.common.composables.TopShadow
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.service.impl.data.models.local.Service
+import com.service.impl.ui.ServiceAction
 
 
 @Composable
-fun ServiceFooter(modifier: Modifier, service: Service) {
+fun ServiceFooter(modifier: Modifier, service: Service, onAction: (ServiceAction) -> Unit) {
     Column(
         modifier = modifier
             .height(80.dp)
@@ -60,7 +61,7 @@ fun ServiceFooter(modifier: Modifier, service: Service) {
                     )
                     .clip(CircleShape)
                     .clickable {
-
+                        onAction(ServiceAction.OnCall)
                     }
                     .padding(
                         horizontal = 22.dp,

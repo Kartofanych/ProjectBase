@@ -59,7 +59,7 @@ fun SearchActivity(entity: ActivityEntity, onAction: (SearchAction) -> Unit) {
 
         Column(modifier = Modifier.fillMaxSize()) {
 
-            ActivityType(entity.tag, Modifier.padding(horizontal = 5.dp))
+            ActivityType(entity.tag)
 
             Spacer(modifier = Modifier.height(3.dp))
 
@@ -75,8 +75,7 @@ fun SearchActivity(entity: ActivityEntity, onAction: (SearchAction) -> Unit) {
             if (entity.rating != 0f) {
                 ReviewStarsComponent(
                     entity.rating.toString(),
-                    entity.starCount,
-                    Modifier.padding(horizontal = 5.dp)
+                    entity.starCount
                 )
                 Spacer(modifier = Modifier.height(3.dp))
             }

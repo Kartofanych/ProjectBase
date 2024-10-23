@@ -9,5 +9,6 @@ data class Attraction(
     val address: String,
     val images: List<String>,
     val categories: List<AttractionCategory>,
-    val serviceGroups: List<ServiceGroup>
+    val serviceGroups: List<ServiceGroup>,
+    val isLiked: Boolean,
 )

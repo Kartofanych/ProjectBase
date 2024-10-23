@@ -26,7 +26,10 @@ class ServiceResponseDto(
     val images: List<String>,
 
     @SerializedName("organization")
-    val organization: ServiceOrganizationDto
+    val organization: ServiceOrganizationDto,
+
+    @SerializedName("contacts")
+    val contacts: List<ContactDto>,
 ) {
     class RatingBlockDto(
         @SerializedName("rating")
@@ -44,5 +47,19 @@ class ServiceResponseDto(
         val icon: String,
         @SerializedName("rating")
         val rating: Float
+    )
+
+    class ContactDto(
+        @SerializedName("deeplink")
+        val deeplink: String,
+
+        @SerializedName("icon")
+        val icon: String,
+
+        @SerializedName("title")
+        val title: String,
+
+        @SerializedName("color")
+        val color: String,
     )
 }

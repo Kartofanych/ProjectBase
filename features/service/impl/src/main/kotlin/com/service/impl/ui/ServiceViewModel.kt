@@ -55,6 +55,10 @@ class ServiceViewModel @Inject constructor(
             ServiceAction.OnReload -> {
                 getService()
             }
+
+            ServiceAction.OnCall -> {
+                //TODO
+            }
         }
     }
 }

@@ -10,19 +10,13 @@ import androidx.navigation.compose.composable
 import com.favourites.api.FavouritesFeatureEntry
 import com.favourites.impl.di.DaggerFavouritesComponent
 import com.favourites.impl.di.FavouritesDependencies
-import com.favourites.impl.ui.FavouritesViewModel
 import com.favourites.impl.ui.ProfileScreen
 import com.favourites.impl.ui.ProfileScreenEventHandler
 import javax.inject.Inject
 
 class FavouritesFeatureImpl @Inject constructor(
-    dependencies: FavouritesDependencies,
-    private val favouritesViewModel: FavouritesViewModel
+    private val dependencies: FavouritesDependencies
 ) : FavouritesFeatureEntry() {
-
-    init {
-        DaggerFavouritesComponent.factory().create(dependencies)
-    }
 
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
@@ -30,34 +24,42 @@ class FavouritesFeatureImpl @Inject constructor(
         mainNavController: NavController,
         modifier: Modifier
     ) {
+        DaggerFavouritesComponent.factory().create(dependencies)
 
         navGraphBuilder.composable(
             route = SCREEN_FAVOURITES_ROUTE,
             enterTransition = {
-                slideInHorizontally {
-                    it
+                when (initialState.destination.route) {
+                    SCREEN_LIST_ROUTE -> slideInHorizontally { it }
+                    SCREEN_MAP_ROUTE -> slideInHorizontally { it }
+                    else -> null
                 }
             },
             exitTransition = {
-                slideOutHorizontally {
-                    it
+                when (targetState.destination.route) {
+                    SCREEN_LIST_ROUTE -> slideOutHorizontally { it / 3 }
+                    SCREEN_MAP_ROUTE -> slideOutHorizontally { it }
+                    else -> null
                 }
             }
         ) {
+            dependencies.favouritesViewModel.onAttach()
             ProfileScreenEventHandler(
                 navigateToLogin = { mainNavController.navigate(SCREEN_LOGIN_ROUTE) },
                 navigateToAttraction = { id -> mainNavController.navigate("$SCREEN_ATTRACTION_ROUTE/$id") },
-                uiEvent = favouritesViewModel.uiEvent
+                uiEvent = dependencies.favouritesViewModel.uiEvent
             )
 
             ProfileScreen(
-                favouritesViewModel.uiStateFlow.collectAsStateWithLifecycle().value,
-                favouritesViewModel::onProfileAction
+                dependencies.favouritesViewModel.uiStateFlow.collectAsStateWithLifecycle().value,
+                dependencies.favouritesViewModel::onAction
             )
         }
     }
 
     private companion object {
+        const val SCREEN_LIST_ROUTE = "main/search"
+        const val SCREEN_MAP_ROUTE = "main/map"
         const val SCREEN_FAVOURITES_ROUTE = "main/favourites"
         const val SCREEN_LOGIN_ROUTE = "login"
         const val SCREEN_ATTRACTION_ROUTE = "attraction"

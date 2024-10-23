@@ -89,7 +89,7 @@ fun LandmarkContent(
             ) {
 
                 item {
-                    ImageSlider(landmark.images)
+                    ImageSlider(landmark, onAction)
 
                     Spacer(modifier = Modifier.height(10.dp))
                 }

@@ -9,6 +9,7 @@ fun AttractionEventHandler(
     uiEvent: Flow<AttractionEvent>,
     openGuide: (String) -> Unit,
     openService: (String) -> Unit,
+    back: () -> Unit
 ) {
 
     LaunchedEffect(Unit) {
@@ -16,6 +17,7 @@ fun AttractionEventHandler(
             when (event) {
                 is AttractionEvent.OpenGuide -> openGuide(event.attractionId)
                 is AttractionEvent.OpenService -> openService(event.serviceId)
+                AttractionEvent.OnBackPressed -> back()
             }
         }
     }

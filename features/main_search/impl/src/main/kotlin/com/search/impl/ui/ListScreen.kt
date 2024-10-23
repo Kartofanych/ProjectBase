@@ -27,8 +27,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.multimodulepractice.common.composables.DefaultError
 import com.example.multimodulepractice.common.composables.DefaultLoading
-import com.example.multimodulepractice.common.theme.mediumTextStyle
+import com.example.multimodulepractice.common.theme.regularTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.example.multimodulepractice.main_search.impl.R
 import com.search.impl.ui.composables.ActivityGroupItem
@@ -39,7 +40,6 @@ fun ListScreen(uiState: ListUiState, onAction: (ListAction) -> Unit) {
     val context = LocalContext.current
     Scaffold {
         it
-
         when (uiState) {
             is ListUiState.Content -> {
                 LazyColumn(
@@ -61,7 +61,7 @@ fun ListScreen(uiState: ListUiState, onAction: (ListAction) -> Unit) {
                                 .padding(horizontal = 20.dp)
                                 .fillMaxWidth()
                                 .height(52.dp)
-                                .background(color = Color.White, RoundedCornerShape(18.dp))
+                                .background(color = Color(0x1A675151), RoundedCornerShape(18.dp))
                                 .clip(RoundedCornerShape(18.dp))
                                 .clickable {
                                     onAction(ListAction.OpenSearch)
@@ -79,7 +79,7 @@ fun ListScreen(uiState: ListUiState, onAction: (ListAction) -> Unit) {
 
                             Text(
                                 text = uiState.hint,
-                                style = mediumTextStyle.copy(
+                                style = regularTextStyle.copy(
                                     color = Color(0xFF838383),
                                     fontSize = 17.sp
                                 ),
@@ -151,9 +151,12 @@ fun ListScreen(uiState: ListUiState, onAction: (ListAction) -> Unit) {
                 }
             }
 
-            else -> {
-                DefaultLoading(modifier = Modifier.fillMaxSize())
-            }
+            ListUiState.Loading -> DefaultLoading(modifier = Modifier.fillMaxSize())
+
+            ListUiState.Error -> DefaultError(
+                modifier = Modifier.fillMaxSize(),
+                onReload = { onAction(ListAction.ReloadList) }
+            )
         }
     }
 }

@@ -7,4 +7,6 @@ sealed interface ListAction {
     class OpenActivity(val id: String) : ListAction
 
     object OpenSearch : ListAction
+
+    object ReloadList : ListAction
 }

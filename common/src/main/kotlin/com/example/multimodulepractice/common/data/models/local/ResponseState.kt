@@ -7,5 +7,7 @@ sealed interface ResponseState<T> {
         class Default<T>: Error<T>
 
         class OldVersion<T>: Error<T>
+
+        class Unauthorized<T> : Error<T>
     }
 }

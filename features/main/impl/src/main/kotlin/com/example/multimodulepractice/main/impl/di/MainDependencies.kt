@@ -6,6 +6,8 @@ import com.example.multimodulepractice.common.data.mappers.CategoryMapper
 import com.example.multimodulepractice.common.di.AppContext
 import com.example.multimodulepractice.geo.repository.GeoRepository
 import com.example.multimodulepractice.main.impl.domain.MapScreenRepository
+import com.favourites.api.domain.FavoritesRepository
+import com.favourites.api.domain.LikeInteractor
 import com.main.common.data.MainApi
 import kotlinx.coroutines.CoroutineScope
 import retrofit2.Retrofit
@@ -20,5 +22,7 @@ class MainDependencies @Inject constructor(
     val authInfoManager: AuthInfoManager,
     val categoryMapper: CategoryMapper,
     val mapScreenRepository: MapScreenRepository,
-    val retrofit: Retrofit
+    val retrofit: Retrofit,
+    val likeInteractor: LikeInteractor,
+    val favoritesRepository: FavoritesRepository,
 )

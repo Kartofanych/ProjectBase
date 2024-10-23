@@ -3,6 +3,8 @@ package com.example.multimodulepractice.main.impl.ui.map
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -77,7 +79,7 @@ fun MapScreen(
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator(
-                    color = Color(0xFF47D88D),
+                    color = Color(0xFF74A3FF),
                     strokeWidth = 3.dp,
                     modifier = Modifier.size(28.dp),
                     strokeCap = StrokeCap.Round
@@ -98,7 +100,9 @@ fun MapScreen(
         }
 
         AnimatedVisibility(
-            visible = !uiState.isMapOpen
+            visible = !uiState.isMapOpen,
+            enter = fadeIn(),
+            exit = fadeOut()
         ) {
             Box(
                 modifier = Modifier

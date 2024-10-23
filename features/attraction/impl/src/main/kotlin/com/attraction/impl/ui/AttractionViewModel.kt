@@ -4,9 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.attraction.impl.domain.AttractionInteractor
 import com.example.multimodulepractice.common.data.models.local.ResponseState
+import com.favourites.api.domain.FavoritesRepository
+import com.favourites.api.domain.LikeInteractor
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -14,7 +19,9 @@ import javax.inject.Inject
 
 class AttractionViewModel @Inject constructor(
     private val attractionId: String,
-    private val attractionInteractor: AttractionInteractor
+    private val attractionInteractor: AttractionInteractor,
+    private val likeInteractor: LikeInteractor,
+    private val favoritesRepository: FavoritesRepository,
 ) : ViewModel() {
 
     private val _uiEvent = Channel<AttractionEvent>()
@@ -24,8 +31,31 @@ class AttractionViewModel @Inject constructor(
     val uiStateFlow: StateFlow<AttractionUiState>
         get() = _uiStateFlow
 
+    private val likeEvent = MutableSharedFlow<Boolean>()
+    private var likeJob: Job? = null
+
     init {
         loadAttraction()
+        collectLikeEvents()
+    }
+
+    private fun collectLikeEvents() {
+        likeJob?.cancel()
+        likeJob = viewModelScope.launch {
+            likeEvent.collectLatest { isLiked ->
+                when (likeInteractor.changeFavorite(attractionId, isLiked)) {
+                    is ResponseState.Error -> _uiStateFlow.update { state ->
+                        if (state is AttractionUiState.Content) {
+                            state.copy(state.landmark.copy(isLiked = !isLiked))
+                        } else state
+                    }
+
+                    is ResponseState.Success -> {
+                        favoritesRepository.requestUpdate()
+                    }
+                }
+            }
+        }
     }
 
     private fun loadAttraction() {
@@ -60,6 +90,31 @@ class AttractionViewModel @Inject constructor(
             }
 
             AttractionAction.RecallAttraction -> loadAttraction()
+
+            is AttractionAction.OnLikeChanged -> {
+                changeFavorites()
+            }
+
+            AttractionAction.OnBackPressed -> {
+                viewModelScope.launch {
+                    _uiEvent.send(AttractionEvent.OnBackPressed)
+                }
+            }
+        }
+    }
+
+    private fun changeFavorites() {
+        _uiStateFlow.update { state ->
+            when (state) {
+                is AttractionUiState.Content -> {
+                    val isLiked = !state.landmark.isLiked
+                    state.copy(state.landmark.copy(isLiked = isLiked)).also {
+                        viewModelScope.launch { likeEvent.emit(isLiked) }
+                    }
+                }
+
+                else -> state
+            }
         }
     }
 }

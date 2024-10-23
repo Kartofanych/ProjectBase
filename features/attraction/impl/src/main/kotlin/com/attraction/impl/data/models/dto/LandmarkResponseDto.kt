@@ -13,6 +13,9 @@ data class LandmarkResponseDto(
     @SerializedName("name")
     val name: String,
 
+    @SerializedName("is_liked")
+    val isLiked: Boolean,
+
     @SerializedName("short_info")
     val info: String,
 

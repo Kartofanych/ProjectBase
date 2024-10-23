@@ -32,6 +32,7 @@ class ListViewModel @Inject constructor(
     }
 
     private fun getRecommendations() {
+        _uiStateFlow.update { ListUiState.Loading }
         viewModelScope.launch {
             when (val result = listInteractor.getRecommendations()) {
                 is ResponseState.Error -> {
@@ -70,6 +71,8 @@ class ListViewModel @Inject constructor(
                     _uiEvent.send(ListEvent.OpenService(action.id))
                 }
             }
+
+            ListAction.ReloadList -> getRecommendations()
         }
     }
 }

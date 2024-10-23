@@ -21,7 +21,8 @@ class AttractionMapper @Inject constructor(
             address = response.address,
             categories = response.categories.map { categoryMapper.mapCategory(it) },
             images = response.images.map { it.url },
-            serviceGroups = response.serviceGroups.map { mapServiceGroup(it) }
+            serviceGroups = response.serviceGroups.map { mapServiceGroup(it) },
+            isLiked = response.isLiked,
         )
     }
 
