@@ -8,11 +8,11 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.attraction.api.AttractionEntry
-import com.example.multimodulepractice.common.navigation.injectedViewModel
 import com.attraction.impl.di.AttractionDependencies
 import com.attraction.impl.di.DaggerAttractionComponent
 import com.attraction.impl.ui.AttractionEventHandler
 import com.attraction.impl.ui.AttractionScreen
+import com.example.multimodulepractice.common.navigation.injectedViewModel
 import javax.inject.Inject
 
 class AttractionEntryImpl @Inject constructor(
@@ -55,7 +55,8 @@ class AttractionEntryImpl @Inject constructor(
             AttractionEventHandler(
                 uiEvent = viewModel.uiEvent,
                 openGuide = { id -> navController.navigate("$GUIDE_ROUTE/$id") },
-                openService = { id -> navController.navigate("$SERVICE_ROUTE/$id") }
+                openService = { id -> navController.navigate("$SERVICE_ROUTE/$id") },
+                back = { navController.popBackStack() }
             )
             AttractionScreen(
                 viewModel.uiStateFlow.collectAsStateWithLifecycle().value,

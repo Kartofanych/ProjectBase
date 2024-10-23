@@ -1,7 +1,7 @@
 package com.example.multimodulepractice.main.impl
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -41,21 +41,27 @@ class MainFeatureImpl @Inject constructor(
         modifier: Modifier
     ) {
 
-        val mapEntry = component.destinations.find<MapFeatureEntry>()
-        val searchEntry = component.destinations.find<SearchFeatureEntry>()
-        val favouritesEntry = component.destinations.find<FavouritesFeatureEntry>()
-
         navGraphBuilder.composable(
             route = featureRoute,
-            exitTransition = {
-                slideOutHorizontally {
-                    -it
+            enterTransition = {
+                when (initialState.destination.route) {
+                    SCREEN_LOGIN_ROUTE -> slideInHorizontally { it }
+                    else -> null
                 }
             },
-            enterTransition = {
-                EnterTransition.None
+            exitTransition = {
+                when (targetState.destination.route) {
+                    SCREEN_LOGIN_ROUTE -> slideOutHorizontally { it / 3 }
+                    else -> null
+                }
             }
         ) {
+
+            val mapEntry = component.destinations.find<MapFeatureEntry>()
+            val searchEntry = component.destinations.find<SearchFeatureEntry>()
+            val favouritesEntry = component.destinations.find<FavouritesFeatureEntry>()
+
+
             val insideNavController = rememberNavController()
             val viewModel = injectedViewModel {
                 component.viewModel
@@ -111,5 +117,6 @@ class MainFeatureImpl @Inject constructor(
         const val SCREEN_MAP_ROUTE = "main/map"
         const val SCREEN_SEARCH_ROUTE = "main/search"
         const val SCREEN_FAVOURITES_ROUTE = "main/favourites"
+        const val SCREEN_LOGIN_ROUTE = "login"
     }
 }

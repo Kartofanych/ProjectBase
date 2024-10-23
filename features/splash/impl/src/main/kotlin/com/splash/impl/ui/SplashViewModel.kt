@@ -42,7 +42,7 @@ class SplashViewModel @Inject constructor(
                     _uiStateFlow.update { SplashUiState.OldVersion }
                 }
 
-                is ResponseState.Error.Default -> {
+                is ResponseState.Error -> {
                     delay(3000L)
                     launch()
                 }

@@ -28,6 +28,10 @@ fun ServiceContent(service: Service, onAction: (ServiceAction) -> Unit) {
 
         ServiceBody(service = service, scrollState = scrollState)
 
-        ServiceFooter(service = service, modifier = Modifier.align(Alignment.BottomCenter))
+        ServiceFooter(
+            service = service,
+            modifier = Modifier.align(Alignment.BottomCenter),
+            onAction = onAction
+        )
     }
 }

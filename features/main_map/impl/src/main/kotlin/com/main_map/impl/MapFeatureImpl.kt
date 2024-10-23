@@ -19,7 +19,9 @@ class MapFeatureImpl @Inject constructor() : MapFeatureEntry() {
     ) {
 
         navGraphBuilder.composable(
-            route = featureRoute
+            route = featureRoute,
+            exitTransition = null,
+            enterTransition = null,
         ) {
             Box(modifier = Modifier.fillMaxSize())
         }

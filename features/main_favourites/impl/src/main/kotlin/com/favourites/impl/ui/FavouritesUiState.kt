@@ -1,11 +1,16 @@
 package com.favourites.impl.ui
 
-import com.main.common.data.local.Attraction
+import com.favourites.impl.data.models.local.FavoriteAttraction
 
-data class FavouritesUiState(
-    val recommendedList: List<Attraction> = emptyList(),
-    val mode: ProfileMode = ProfileMode.GuestProfile
-) {
+sealed interface FavouritesUiState {
+
+    object Loading : FavouritesUiState
+
+    object Error : FavouritesUiState
+
+    object Unauthorized : FavouritesUiState
+
+    data class Authorized(val items: List<FavoriteAttraction>) : FavouritesUiState
 
     sealed interface ProfileMode {
 

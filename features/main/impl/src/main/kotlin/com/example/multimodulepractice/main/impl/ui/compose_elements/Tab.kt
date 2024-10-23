@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -22,10 +23,6 @@ import com.example.multimodulepractice.main.impl.data.models.MainTab
 import com.example.multimodulepractice.main.impl.ui.MainAction
 import com.example.multimodulepractice.main.impl.ui.MainUiState
 
-private const val MAP_TITLE = "Карты"
-private const val LIST_TITLE = "Поиск"
-private const val PROFILE_TITLE = "Профиль"
-
 @Composable
 fun Tab(
     modifier: Modifier,
@@ -37,13 +34,9 @@ fun Tab(
     val imageId = when (tabValue) {
         MainTab.MAP -> R.drawable.ic_map
         MainTab.LIST -> R.drawable.ic_list
-        MainTab.FAVOURITES -> R.drawable.ic_profile
+        MainTab.FAVOURITES -> R.drawable.ic_favourites
     }
-    val title = when (tabValue) {
-        MainTab.MAP -> MAP_TITLE
-        MainTab.LIST -> LIST_TITLE
-        MainTab.FAVOURITES -> PROFILE_TITLE
-    }
+    val title = tabValue.title
     Box(
         modifier = modifier
             .fillMaxHeight()
@@ -59,7 +52,8 @@ fun Tab(
             Icon(
                 painter = painterResource(id = imageId),
                 contentDescription = null,
-                tint = color
+                tint = color,
+                modifier = Modifier.size(30.dp)
             )
             Text(text = title, style = tabTextStyle.copy(color = color))
         }

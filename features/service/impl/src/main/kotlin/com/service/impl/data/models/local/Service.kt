@@ -1,5 +1,7 @@
 package com.service.impl.data.models.local
 
+import androidx.compose.ui.graphics.Color
+
 data class Service(
     val id: String,
     val title: String,
@@ -8,7 +10,8 @@ data class Service(
     val price: String,
     val description: String,
     val images: List<String>,
-    val organization: ServiceOrganization
+    val organization: ServiceOrganization,
+    val contacts: List<Contact>,
 ) {
     data class RatingBlock(
         val rating: Float,
@@ -21,5 +24,12 @@ data class Service(
         val name: String,
         val icon: String,
         val rating: Float
+    )
+
+    data class Contact(
+        val deeplink: String,
+        val icon: String,
+        val title: String,
+        val color: Color,
     )
 }

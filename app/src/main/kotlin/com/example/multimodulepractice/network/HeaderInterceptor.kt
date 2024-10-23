@@ -20,9 +20,10 @@ class HeaderInterceptor @Inject constructor(
 
         val requestBuilder = request.newBuilder()
 
+        //TODO
         (authInfoManager.authInfo() as? AuthInfo.User)?.token?.let {
             requestBuilder.addHeader("Authorization", "Bearer $it")
-        }
+        } ?: requestBuilder.addHeader("Authorization", "Bearer 123")
 
         return chain.proceed(requestBuilder.build())
     }

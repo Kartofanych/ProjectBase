@@ -1,14 +1,19 @@
 package com.service.impl.data.mappers
 
+import com.example.multimodulepractice.common.domain.ColorMapper
 import com.service.impl.data.models.local.Service
+import com.service.impl.data.models.local.Service.Contact
 import com.service.impl.data.models.local.Service.RatingBlock
 import com.service.impl.data.models.local.Service.ServiceOrganization
 import com.service.impl.data.models.network.ServiceResponseDto
+import com.service.impl.data.models.network.ServiceResponseDto.ContactDto
 import com.service.impl.data.models.network.ServiceResponseDto.RatingBlockDto
 import com.service.impl.data.models.network.ServiceResponseDto.ServiceOrganizationDto
 import javax.inject.Inject
 
-class ServiceMapper @Inject constructor() {
+class ServiceMapper @Inject constructor(
+    private val colorMapper: ColorMapper
+) {
 
     fun map(dto: ServiceResponseDto): Service {
         return Service(
@@ -19,7 +24,8 @@ class ServiceMapper @Inject constructor() {
             images = dto.images,
             organization = mapOrganization(dto.organization),
             price = dto.price,
-            ratingBlock = mapRatingBlock(dto.ratingBlock)
+            ratingBlock = mapRatingBlock(dto.ratingBlock),
+            contacts = dto.contacts.map { mapContact(it) }
         )
     }
 
@@ -44,6 +50,15 @@ class ServiceMapper @Inject constructor() {
             icon = dto.icon,
             name = dto.name,
             rating = dto.rating
+        )
+    }
+
+    private fun mapContact(dto: ContactDto): Contact {
+        return Contact(
+            deeplink = dto.deeplink,
+            title = dto.title,
+            color = colorMapper.mapColor(dto.color),
+            icon = dto.icon
         )
     }
 }
