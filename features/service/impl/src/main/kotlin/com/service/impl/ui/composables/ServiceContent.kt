@@ -54,7 +54,6 @@ fun ServiceContent(service: Service, onAction: (ServiceAction) -> Unit) {
             ServiceFooter(
                 service = service,
                 modifier = Modifier.align(Alignment.BottomCenter),
-                onAction = onAction,
                 openBottomSheet = { bottomSheetVisibility.value = true }
             )
         }
