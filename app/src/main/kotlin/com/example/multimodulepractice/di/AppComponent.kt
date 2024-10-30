@@ -5,7 +5,6 @@ import com.example.multimodulepractice.AppProvider
 import com.example.multimodulepractice.di.modules.ApiModule
 import com.example.multimodulepractice.di.modules.AppModule
 import com.example.multimodulepractice.di.modules.DataModule
-import com.example.multimodulepractice.di.modules.NavigationModule
 import com.example.multimodulepractice.di.modules.NetworkModule
 import dagger.BindsInstance
 import dagger.Component
@@ -18,7 +17,6 @@ import javax.inject.Singleton
         AppModule::class,
         ApiModule::class,
         NetworkModule::class,
-        NavigationModule::class,
         DataModule::class
     ]
 )

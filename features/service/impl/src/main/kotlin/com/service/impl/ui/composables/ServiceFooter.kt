@@ -19,11 +19,14 @@ import androidx.compose.ui.unit.sp
 import com.example.multimodulepractice.common.composables.TopShadow
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.service.impl.data.models.local.Service
-import com.service.impl.ui.ServiceAction
 
 
 @Composable
-fun ServiceFooter(modifier: Modifier, service: Service, onAction: (ServiceAction) -> Unit) {
+fun ServiceFooter(
+    modifier: Modifier,
+    service: Service,
+    openBottomSheet: () -> Unit
+) {
     Column(
         modifier = modifier
             .height(80.dp)
@@ -51,28 +54,28 @@ fun ServiceFooter(modifier: Modifier, service: Service, onAction: (ServiceAction
                 style = mediumTextStyle.copy(fontSize = 18.sp, color = Color(0xFF74A3FF))
             )
 
-            Box(
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .padding(horizontal = 12.dp)
-                    .background(
-                        color = Color(0xFF74A3FF),
-                        shape = CircleShape
+            if (service.contacts.isNotEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(horizontal = 12.dp)
+                        .background(
+                            color = Color(0xFF74A3FF),
+                            shape = CircleShape
+                        )
+                        .clip(CircleShape)
+                        .clickable(onClick = openBottomSheet)
+                        .padding(
+                            horizontal = 22.dp,
+                            vertical = 8.dp
+                        )
+                ) {
+                    Text(
+                        text = "Связаться с нами",
+                        modifier = Modifier.align(Alignment.Center),
+                        style = mediumTextStyle.copy(fontSize = 12.sp, color = Color.White)
                     )
-                    .clip(CircleShape)
-                    .clickable {
-                        onAction(ServiceAction.OnCall)
-                    }
-                    .padding(
-                        horizontal = 22.dp,
-                        vertical = 8.dp
-                    )
-            ) {
-                Text(
-                    text = "Связаться с нами",
-                    modifier = Modifier.align(Alignment.Center),
-                    style = mediumTextStyle.copy(fontSize = 12.sp, color = Color.White)
-                )
+                }
             }
         }
     }

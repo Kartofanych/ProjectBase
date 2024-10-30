@@ -29,7 +29,7 @@ class ServiceResponseDto(
     val organization: ServiceOrganizationDto,
 
     @SerializedName("contacts")
-    val contacts: List<ContactDto>,
+    val contacts: List<ContactDto>?,
 ) {
     class RatingBlockDto(
         @SerializedName("rating")
@@ -58,8 +58,5 @@ class ServiceResponseDto(
 
         @SerializedName("title")
         val title: String,
-
-        @SerializedName("color")
-        val color: String,
     )
 }
