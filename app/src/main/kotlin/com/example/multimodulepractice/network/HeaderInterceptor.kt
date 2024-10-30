@@ -22,8 +22,8 @@ class HeaderInterceptor @Inject constructor(
 
         //TODO
         (authInfoManager.authInfo() as? AuthInfo.User)?.token?.let {
-            requestBuilder.addHeader("TravelingAuth", "Bearer $it")
-        }
+            requestBuilder.addHeader("traveling-auth", it)
+        } ?: requestBuilder.addHeader("traveling-auth", "123")
 
         return chain.proceed(requestBuilder.build())
     }

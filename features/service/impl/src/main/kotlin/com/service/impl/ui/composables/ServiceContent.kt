@@ -32,7 +32,6 @@ import com.service.impl.ui.ServiceAction
 fun ServiceContent(service: Service, onAction: (ServiceAction) -> Unit) {
 
     val scrollState = rememberScrollState()
-    hey
     val bottomSheetVisibility = remember { mutableStateOf(false) }
 
     Scaffold {
