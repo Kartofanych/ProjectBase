@@ -1,8 +1,11 @@
 package com.service.impl.ui
 
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.multimodulepractice.common.data.models.local.ResponseState
+import com.example.multimodulepractice.common.domain.DeeplinkHandler
 import com.example.multimodulepractice.common.utils.runWithMinTime
 import com.service.impl.di.ServiceScope
 import com.service.impl.domain.ServiceInteractor
@@ -18,7 +21,8 @@ import javax.inject.Inject
 @ServiceScope
 class ServiceViewModel @Inject constructor(
     private val serviceInteractor: ServiceInteractor,
-    private val serviceId: String
+    private val serviceId: String,
+    private val deeplinkHandler: DeeplinkHandler,
 ) : ViewModel() {
 
     private val _uiEvent = Channel<ServiceUiEvent>()
@@ -52,12 +56,14 @@ class ServiceViewModel @Inject constructor(
                 }
             }
 
-            ServiceAction.OnReload -> {
-                getService()
-            }
+            ServiceAction.OnReload -> getService()
 
-            ServiceAction.OnCall -> {
-                //TODO
+            is ServiceAction.Deeplink -> {
+                val intent = Intent(Intent.ACTION_VIEW).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    data = Uri.parse(action.deeplink)
+                }
+                deeplinkHandler.handleIntent(intent)
             }
         }
     }

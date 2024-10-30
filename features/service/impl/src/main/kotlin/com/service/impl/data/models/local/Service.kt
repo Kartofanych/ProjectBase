@@ -1,7 +1,5 @@
 package com.service.impl.data.models.local
 
-import androidx.compose.ui.graphics.Color
-
 data class Service(
     val id: String,
     val title: String,
@@ -30,6 +28,5 @@ data class Service(
         val deeplink: String,
         val icon: String,
         val title: String,
-        val color: Color,
     )
 }

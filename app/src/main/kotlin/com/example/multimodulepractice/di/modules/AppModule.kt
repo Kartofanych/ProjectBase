@@ -21,5 +21,4 @@ class AppModule {
     fun provideScope(): CoroutineScope {
         return CoroutineScope(SupervisorJob())
     }
-
 }

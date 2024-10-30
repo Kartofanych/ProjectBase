@@ -38,12 +38,13 @@ import com.example.multimodulepractice.common.navigation.injectedViewModel
 import com.example.multimodulepractice.common.navigation.register
 import com.example.multimodulepractice.common.theme.MultimodulePracticeTheme
 import com.example.multimodulepractice.common.theme.mediumTextStyle
+import com.example.multimodulepractice.di.ActivityComponent
 import com.example.multimodulepractice.guide.GuideEntry
 import com.example.multimodulepractice.login.LoginFeatureEntry
-import com.filters.api.FiltersEntry
 import com.example.multimodulepractice.main.MainFeatureEntry
 import com.example.multimodulepractice.main.impl.ui.map.MapScreen
 import com.example.multimodulepractice.main.impl.ui.map.MapScreenEventHandler
+import com.filters.api.FiltersEntry
 import com.search.api.SearchEntry
 import com.service.api.ServiceEntry
 import com.splash.api.SplashEntry
@@ -54,6 +55,8 @@ import kotlin.system.exitProcess
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appProvider: AppProvider
+
+    private lateinit var mainActivityComponent: ActivityComponent
 
     private var locationPermissions = arrayOf(
         Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -72,10 +75,11 @@ class MainActivity : AppCompatActivity() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         appProvider = (this.applicationContext as App).appProvider
+        mainActivityComponent = appProvider.activityComponentFactory.create(this)
 
         setContent {
             MultimodulePracticeTheme {
@@ -97,7 +101,7 @@ class MainActivity : AppCompatActivity() {
     @Composable
     private fun NavigatorScaffold() {
         val navController = rememberNavController()
-        val destinations = LocalAppProvider.current.destinations
+        val destinations = mainActivityComponent.destinations
 
         val mainFeature = destinations.find<MainFeatureEntry>()
         val loginFeature = destinations.find<LoginFeatureEntry>()

@@ -1,6 +1,5 @@
 package com.service.impl.data.mappers
 
-import com.example.multimodulepractice.common.domain.ColorMapper
 import com.service.impl.data.models.local.Service
 import com.service.impl.data.models.local.Service.Contact
 import com.service.impl.data.models.local.Service.RatingBlock
@@ -11,9 +10,7 @@ import com.service.impl.data.models.network.ServiceResponseDto.RatingBlockDto
 import com.service.impl.data.models.network.ServiceResponseDto.ServiceOrganizationDto
 import javax.inject.Inject
 
-class ServiceMapper @Inject constructor(
-    private val colorMapper: ColorMapper
-) {
+class ServiceMapper @Inject constructor() {
 
     fun map(dto: ServiceResponseDto): Service {
         return Service(
@@ -25,7 +22,7 @@ class ServiceMapper @Inject constructor(
             organization = mapOrganization(dto.organization),
             price = dto.price,
             ratingBlock = mapRatingBlock(dto.ratingBlock),
-            contacts = dto.contacts.map { mapContact(it) }
+            contacts = dto.contacts?.map { mapContact(it) } ?: emptyList()
         )
     }
 
@@ -57,7 +54,6 @@ class ServiceMapper @Inject constructor(
         return Contact(
             deeplink = dto.deeplink,
             title = dto.title,
-            color = colorMapper.mapColor(dto.color),
             icon = dto.icon
         )
     }

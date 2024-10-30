@@ -33,7 +33,11 @@ import com.service.impl.data.models.local.Service
 import com.service.impl.ui.ServiceAction
 
 @Composable
-fun ServiceToolbar(service: Service, scrollState: ScrollState, onAction: (ServiceAction) -> Unit) {
+fun ServiceToolbar(
+    service: Service,
+    scrollState: ScrollState,
+    onAction: (ServiceAction) -> Unit
+) {
 
     val context = LocalContext.current
     val scrollMoment = context.screenWidthPx() / 1.8f + context.dpToPx(50f)
