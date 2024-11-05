@@ -6,8 +6,13 @@ sealed interface ResponseState<T> {
     sealed interface Error<T>: ResponseState<T> {
         class Default<T>: Error<T>
 
+        // 426
         class OldVersion<T>: Error<T>
 
+        // 403
         class Unauthorized<T> : Error<T>
+
+        // 498
+        class BadCode<T> : Error<T>
     }
 }

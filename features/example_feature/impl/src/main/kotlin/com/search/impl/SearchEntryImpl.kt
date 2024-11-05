@@ -47,7 +47,7 @@ class SearchEntryImpl @Inject constructor(
         ) {
 
             val viewModel = injectedViewModel {
-                DaggerSearchComponent.factory().create(searchDependencies).viewModel
+                //DaggerSearchComponent.factory().create(searchDependencies).viewModel
             }
 
             SearchEventHandler(

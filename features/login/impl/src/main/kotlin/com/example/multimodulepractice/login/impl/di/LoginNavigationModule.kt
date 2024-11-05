@@ -16,5 +16,4 @@ interface LoginNavigationModule {
     @IntoMap
     @FeatureEntryKey(LoginFeatureEntry::class)
     fun loginFeature(loginFeatureImpl: LoginFeatureImpl): FeatureEntry
-
 }

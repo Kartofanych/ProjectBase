@@ -6,7 +6,7 @@ sealed interface AuthInfo {
     data class User(
         val token: String,
         val name: String,
-        val gmail: String,
+        val mail: String,
         val image: String
     ) : AuthInfo
 }

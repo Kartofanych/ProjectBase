@@ -1,3 +1,3 @@
 package com.search.impl.di
 
-class SearchDependencies
+class SearchDependencies @Inject constructor()

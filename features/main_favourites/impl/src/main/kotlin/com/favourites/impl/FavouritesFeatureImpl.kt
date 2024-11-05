@@ -2,6 +2,7 @@ package com.favourites.impl
 
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -24,7 +25,6 @@ class FavouritesFeatureImpl @Inject constructor(
         mainNavController: NavController,
         modifier: Modifier
     ) {
-        DaggerFavouritesComponent.factory().create(dependencies)
 
         navGraphBuilder.composable(
             route = SCREEN_FAVOURITES_ROUTE,
@@ -43,7 +43,10 @@ class FavouritesFeatureImpl @Inject constructor(
                 }
             }
         ) {
-            dependencies.favouritesViewModel.onAttach()
+            DaggerFavouritesComponent.factory().create(dependencies)
+            LaunchedEffect(Unit) {
+                dependencies.favouritesViewModel.onAttach()
+            }
             ProfileScreenEventHandler(
                 navigateToLogin = { mainNavController.navigate(SCREEN_LOGIN_ROUTE) },
                 navigateToAttraction = { id -> mainNavController.navigate("$SCREEN_ATTRACTION_ROUTE/$id") },
