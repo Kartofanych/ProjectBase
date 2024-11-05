@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.multimodulepractice.auth.AuthInfoManager
 import com.example.multimodulepractice.auth.models.AuthInfo
 import com.example.multimodulepractice.common.data.models.local.ResponseState
-import com.example.multimodulepractice.common.utils.runWithMinTime
 import com.favourites.api.domain.FavoritesRepository
 import com.favourites.api.domain.LikeInteractor
 import com.favourites.impl.data.interactors.FavouritesInteractor
@@ -89,7 +88,7 @@ class FavouritesViewModel @Inject constructor(
     }
 
     private suspend fun changeFavorite(id: String, isLiked: Boolean, index: Int) {
-        when (runWithMinTime({ likeInteractor.changeFavorite(id, isLiked) })) {
+        when (likeInteractor.changeFavorite(id, isLiked)) {
             is ResponseState.Error -> {
                 _uiStateFlow.update {
                     if (it is FavouritesUiState.Authorized) {
@@ -138,11 +137,7 @@ class FavouritesViewModel @Inject constructor(
                 }
             }
 
-            FavouritesAction.OnOpenProfile -> {
-                viewModelScope.launch {
-                    _uiEvent.send(FavouritesUiEvent.LogOut)
-                }
-            }
+            FavouritesAction.OnOpenProfile -> Unit
 
             is FavouritesAction.OnLikeChanged -> {
                 (uiStateFlow.value as? FavouritesUiState.Authorized)?.apply {

@@ -59,10 +59,8 @@ class SplashViewModel @Inject constructor(
     fun onSplashAction(action: SplashAction) {
         when (action) {
             SplashAction.Update -> {
-                _uiStateFlow.update {
-                    // В будущем будет диплинк на обновление в маркете
-                    SplashUiState.Loading
-                }
+                //TODO deeplink to market
+                _uiStateFlow.update { SplashUiState.Loading }
             }
         }
     }

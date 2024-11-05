@@ -23,7 +23,6 @@ interface NetworkModule {
 
     companion object {
 
-        const val YANDEX_RETROFIT = "YandexRetrofit"
         private const val HEADER_INTERCEPTOR = "Header"
         private const val LOGGING_INTERCEPTOR = "Logging"
 
@@ -31,11 +30,10 @@ interface NetworkModule {
             "https://bbalve6v55k081m4pfn9.containers.yandexcloud.net/"
         private const val PRODUCTION_BASE_URL =
             "https://bban3krd1de8vtafs5p3.containers.yandexcloud.net/"
-        private const val YANDEX_API_BASE_URL = "https://login.yandex.ru/"
 
         @Provides
         @AppScope
-        fun provideRetrofit(appConfig: AppConfig, client: OkHttpClient): Retrofit {
+        fun provideBaseRetrofit(appConfig: AppConfig, client: OkHttpClient): Retrofit {
             val url = when {
                 appConfig.isProduction() -> PRODUCTION_BASE_URL
                 else -> TESTING_BASE_URL
@@ -44,17 +42,6 @@ interface NetworkModule {
             return Retrofit.Builder()
                 .client(client)
                 .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-        }
-
-        @Provides
-        @AppScope
-        @Named(YANDEX_RETROFIT)
-        fun provideEmptyRetrofit(): Retrofit {
-            return Retrofit.Builder()
-                .baseUrl(YANDEX_API_BASE_URL)
-                .client(OkHttpClient.Builder().retryOnConnectionFailure(true).build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }

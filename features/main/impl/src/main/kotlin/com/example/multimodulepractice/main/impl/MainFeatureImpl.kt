@@ -61,7 +61,6 @@ class MainFeatureImpl @Inject constructor(
             val searchEntry = component.destinations.find<SearchFeatureEntry>()
             val favouritesEntry = component.destinations.find<FavouritesFeatureEntry>()
 
-
             val insideNavController = rememberNavController()
             val viewModel = injectedViewModel {
                 component.viewModel

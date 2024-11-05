@@ -30,16 +30,17 @@ class SplashEntryImpl @Inject constructor(
         mainNavController: NavController,
         modifier: Modifier
     ) {
-        val startDestination = when (splashDependencies.authInfoManager.authInfo()) {
-            AuthInfo.Guest -> "login"
-            is AuthInfo.User -> "main"
-        }
 
         navGraphBuilder.composable(
             route = featureRoute
         ) {
             val viewModel = injectedViewModel {
                 component.viewModel
+            }
+
+            val startDestination = when (splashDependencies.authInfoManager.authInfo()) {
+                AuthInfo.Guest -> LOGIN_ROUTE
+                is AuthInfo.User -> MAIN_ROUTE
             }
 
             SplashScreenEventHandler(
@@ -52,5 +53,10 @@ class SplashEntryImpl @Inject constructor(
                 viewModel::onSplashAction
             )
         }
+    }
+
+    private companion object {
+        const val LOGIN_ROUTE = "login"
+        const val MAIN_ROUTE = "main"
     }
 }

@@ -14,7 +14,9 @@ fun MarkDownText(modifier: Modifier, text: String) {
     val astNode = parser.parse(
         text.trimIndent()
     )
-    BasicRichText(modifier = modifier) {
+    BasicRichText(
+        modifier = modifier
+    ) {
         BasicMarkdown(astNode)
     }
 }

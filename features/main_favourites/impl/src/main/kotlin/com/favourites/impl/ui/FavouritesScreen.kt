@@ -17,7 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.composables.DefaultButton
+import com.example.multimodulepractice.common.composables.DefaultError
 import com.example.multimodulepractice.common.composables.DefaultLoading
 import com.example.multimodulepractice.common.composables.NetworkImage
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
@@ -42,14 +42,14 @@ fun ProfileScreen(uiState: FavouritesUiState, onAction: (FavouritesAction) -> Un
 
             FavouritesUiState.Error -> {
                 Box(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
                 ) {
-                    DefaultButton(
-                        modifier = Modifier.align(Alignment.Center),
-                        onClick = { onAction(FavouritesAction.OnReload) },
-                    ) {
-                        Text("reload")
-                    }
+                    DefaultError(
+                        onReload = {
+                            onAction(FavouritesAction.OnReload)
+                        }
+                    )
                 }
             }
 
@@ -80,9 +80,9 @@ fun FavoritesToolbar(uiState: FavouritesUiState, onAction: (FavouritesAction) ->
                 .size(45.dp)
                 .clip(CircleShape)
                 .clickable {
-                    onAction(FavouritesAction.OnOpenProfile)
+                    onAction(FavouritesAction.OnLogOut)
                 },
-            url = "some",
+            url = "https://i.ytimg.com/vi/D4bZ7fL2Qs4/maxresdefault.jpg",
         )
     }
 }

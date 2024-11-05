@@ -20,7 +20,7 @@ android {
         applicationId = ProjectConfig.applicationId
         versionCode = ProjectConfig.versionCode
         versionName = ProjectConfig.versionName
-        archivesName = "Multimodule-$versionName"
+        archivesName = "TimeToTravel-$versionName"
         manifestPlaceholders["YANDEX_CLIENT_ID"] = getLocalProperty("CLIENT_ID")
         vectorDrawables {
             useSupportLibrary = true

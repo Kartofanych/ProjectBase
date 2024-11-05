@@ -1,12 +1,12 @@
 package com.example.multimodulepractice.auth.impl.auth_info.mappers
 
-import com.example.multimodulepractice.auth.models.AuthInfo
 import com.example.multimodulepractice.auth.impl.auth_info.models.AuthInfoDto
+import com.example.multimodulepractice.auth.models.AuthInfo
 
 fun AuthInfo.toDto(): AuthInfoDto {
     return when (this) {
         AuthInfo.Guest -> AuthInfoDto.Guest
-        is AuthInfo.User -> AuthInfoDto.User(token, name, gmail, image)
+        is AuthInfo.User -> AuthInfoDto.User(token, name, mail, image)
     }
 }
 

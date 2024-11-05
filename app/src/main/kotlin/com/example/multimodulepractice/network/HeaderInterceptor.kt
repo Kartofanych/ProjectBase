@@ -20,10 +20,9 @@ class HeaderInterceptor @Inject constructor(
 
         val requestBuilder = request.newBuilder()
 
-        //TODO
         (authInfoManager.authInfo() as? AuthInfo.User)?.token?.let {
             requestBuilder.addHeader("traveling-auth", it)
-        } ?: requestBuilder.addHeader("traveling-auth", "123")
+        }
 
         return chain.proceed(requestBuilder.build())
     }
