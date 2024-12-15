@@ -60,6 +60,7 @@ class AttractionEntryImpl @Inject constructor(
             )
             AttractionScreen(
                 viewModel.uiStateFlow.collectAsStateWithLifecycle().value,
+                viewModel.reviewModalStateFlow.collectAsStateWithLifecycle().value,
                 viewModel::onAction
             )
         }

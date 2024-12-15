@@ -1,8 +1,10 @@
 package com.attraction.impl.domain
 
+import android.util.Log
 import com.attraction.impl.data.AttractionApi
 import com.attraction.impl.data.mappers.AttractionMapper
 import com.attraction.impl.data.models.dto.LandmarkRequest
+import com.attraction.impl.data.models.dto.SendReviewRequest
 import com.attraction.impl.data.models.local.Attraction
 import com.example.multimodulepractice.common.data.models.local.ResponseState
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +20,21 @@ class AttractionInteractor @Inject constructor(
         return withContext(Dispatchers.IO) {
             try {
                 val response = api.getLandmark(LandmarkRequest(id = id))
-                return@withContext ResponseState.Success(data = attractionMapper.mapResponse(response))
+                return@withContext ResponseState.Success(
+                    data = attractionMapper.mapResponse(response)
+                )
+            } catch (exception: Exception) {
+                Log.d("121212", exception.toString())
+                return@withContext ResponseState.Error.Default()
+            }
+        }
+    }
+
+    suspend fun sendReview(id: String, text: String, stars: Int): ResponseState<Unit> {
+        return withContext(Dispatchers.IO) {
+            try {
+                api.addReview(SendReviewRequest(id = id, text = text, stars = stars))
+                return@withContext ResponseState.Success(Unit)
             } catch (exception: Exception) {
                 return@withContext ResponseState.Error.Default()
             }

@@ -1,5 +1,6 @@
 package com.favourites.impl.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -21,7 +22,9 @@ import com.example.multimodulepractice.common.composables.DefaultError
 import com.example.multimodulepractice.common.composables.DefaultLoading
 import com.example.multimodulepractice.common.composables.NetworkImage
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
+import com.favourites.impl.ui.FavouritesUiState.FavouritesState
 import com.favourites.impl.ui.composables.FavoritesContent
+import com.favourites.impl.ui.composables.ProfileModal
 import com.favourites.impl.ui.composables.UnauthorizedContent
 
 @Composable
@@ -32,15 +35,15 @@ fun ProfileScreen(uiState: FavouritesUiState, onAction: (FavouritesAction) -> Un
             .fillMaxSize(),
         containerColor = Color.White
     ) {
-        when (uiState) {
-            is FavouritesUiState.Authorized ->
+        when (uiState.state) {
+            is FavouritesState.Authorized ->
                 FavoritesContent(
                     uiState,
                     onAction,
                     it.calculateTopPadding()
                 )
 
-            FavouritesUiState.Error -> {
+            FavouritesState.Error -> {
                 Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
@@ -53,9 +56,13 @@ fun ProfileScreen(uiState: FavouritesUiState, onAction: (FavouritesAction) -> Un
                 }
             }
 
-            FavouritesUiState.Loading -> DefaultLoading(modifier = Modifier.fillMaxSize())
+            FavouritesState.Loading -> DefaultLoading(modifier = Modifier.fillMaxSize())
 
-            FavouritesUiState.Unauthorized -> UnauthorizedContent(uiState, onAction)
+            FavouritesState.Unauthorized -> UnauthorizedContent(uiState, onAction)
+        }
+
+        if (uiState.isModalVisible && uiState.state is FavouritesState.Authorized) {
+            ProfileModal(uiState.state, onAction, it.calculateBottomPadding())
         }
     }
 }
@@ -74,15 +81,21 @@ fun FavoritesToolbar(uiState: FavouritesUiState, onAction: (FavouritesAction) ->
             modifier = Modifier.align(Alignment.CenterStart)
         )
 
-        NetworkImage(
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .size(45.dp)
-                .clip(CircleShape)
-                .clickable {
-                    onAction(FavouritesAction.OnLogOut)
-                },
-            url = "https://i.ytimg.com/vi/D4bZ7fL2Qs4/maxresdefault.jpg",
-        )
+        AnimatedVisibility(
+            visible = uiState.state is FavouritesState.Authorized,
+            modifier = Modifier.align(Alignment.CenterEnd)
+        ) {
+            if (uiState.state is FavouritesState.Authorized) {
+                NetworkImage(
+                    modifier = Modifier
+                        .size(45.dp)
+                        .clip(CircleShape)
+                        .clickable {
+                            onAction(FavouritesAction.ChangeProfileModalVisibility(true))
+                        },
+                    url = uiState.state.user.image,
+                )
+            }
+        }
     }
 }

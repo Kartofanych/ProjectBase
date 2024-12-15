@@ -31,6 +31,10 @@ class AttractionViewModel @Inject constructor(
     val uiStateFlow: StateFlow<AttractionUiState>
         get() = _uiStateFlow
 
+    private val _reviewModalStateFlow = MutableStateFlow<ReviewModalState>(ReviewModalState.Hidden)
+    val reviewModalStateFlow: StateFlow<ReviewModalState>
+        get() = _reviewModalStateFlow
+
     private val likeEvent = MutableSharedFlow<Boolean>()
     private var likeJob: Job? = null
 
@@ -100,21 +104,66 @@ class AttractionViewModel @Inject constructor(
                     _uiEvent.send(AttractionEvent.OnBackPressed)
                 }
             }
+
+            AttractionAction.OpenOnMap -> {}
+
+            AttractionAction.ChangeScheduleVisibility -> {
+                _uiStateFlow.update { state ->
+                    (state as? AttractionUiState.Content)?.let {
+                        state.copy(
+                            landmark = it.landmark.copy(
+                                schedule = it.landmark.schedule.copy(
+                                    isVisible = !it.landmark.schedule.isVisible
+                                )
+                            )
+                        )
+                    } ?: state
+                }
+            }
+
+            is AttractionAction.ChangeReviewModalVisibility -> {
+                _reviewModalStateFlow.update { _ ->
+                    when (action.visible) {
+                        true -> ReviewModalState.Default(5)
+                        false -> ReviewModalState.Hidden
+                    }
+                }
+            }
+
+            is AttractionAction.SendReview -> {
+                sendReview(text = action.text, stars = _reviewModalStateFlow.value.starsCount)
+            }
+
+            is AttractionAction.ChangeReviewStars -> {
+                _reviewModalStateFlow.update { ReviewModalState.Default(action.starsCount) }
+            }
+        }
+    }
+
+    private fun sendReview(text: String, stars: Int) {
+        _reviewModalStateFlow.update { _ -> ReviewModalState.Loading }
+        viewModelScope.launch {
+            when (attractionInteractor.sendReview(id = attractionId, text = text, stars = stars)) {
+                is ResponseState.Error -> {
+                    _reviewModalStateFlow.update { ReviewModalState.Error }
+                }
+
+                is ResponseState.Success -> {
+                    _reviewModalStateFlow.update { ReviewModalState.Hidden }
+                    loadAttraction()
+                }
+            }
         }
     }
 
     private fun changeFavorites() {
         _uiStateFlow.update { state ->
-            when (state) {
-                is AttractionUiState.Content -> {
-                    val isLiked = !state.landmark.isLiked
-                    state.copy(state.landmark.copy(isLiked = isLiked)).also {
-                        viewModelScope.launch { likeEvent.emit(isLiked) }
-                    }
+            (state as? AttractionUiState.Content)?.let {
+                val isLiked = !state.landmark.isLiked
+                state.copy(state.landmark.copy(isLiked = isLiked)).also {
+                    viewModelScope.launch { likeEvent.emit(isLiked) }
                 }
-
-                else -> state
-            }
+            } ?: state
         }
     }
 }

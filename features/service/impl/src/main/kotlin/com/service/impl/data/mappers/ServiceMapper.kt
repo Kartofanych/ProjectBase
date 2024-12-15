@@ -1,8 +1,8 @@
 package com.service.impl.data.mappers
 
+import com.example.multimodulepractice.common.data.models.local.RatingBlock
 import com.service.impl.data.models.local.Service
 import com.service.impl.data.models.local.Service.Contact
-import com.service.impl.data.models.local.Service.RatingBlock
 import com.service.impl.data.models.local.Service.ServiceOrganization
 import com.service.impl.data.models.network.ServiceResponseDto
 import com.service.impl.data.models.network.ServiceResponseDto.ContactDto

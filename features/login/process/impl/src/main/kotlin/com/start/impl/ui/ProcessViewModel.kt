@@ -116,9 +116,9 @@ class ProcessViewModel @Inject constructor(
                     authInfoManager.updateAuthInfo(
                         AuthInfo.User(
                             token = result.data.token,
-                            image = "https://i.ytimg.com/vi/D4bZ7fL2Qs4/maxresdefault.jpg",
+                            image = result.data.icon,
                             mail = _uiStateFlow.value.currentText,
-                            name = "Default name"
+                            name = result.data.name,
                         )
                     )
                     _uiEvent.send(ProcessEvent.OpenMain)

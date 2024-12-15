@@ -6,5 +6,11 @@ import com.google.gson.annotations.SerializedName
 @Keep
 class ValidationResponseDto(
     @SerializedName("token")
-    val token: String
+    val token: String,
+
+    @SerializedName("name")
+    val name: String,
+
+    @SerializedName("icon")
+    val icon: String,
 )

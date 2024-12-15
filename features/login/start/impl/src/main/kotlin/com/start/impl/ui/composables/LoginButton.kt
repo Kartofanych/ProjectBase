@@ -1,7 +1,6 @@
 package com.start.impl.ui.composables
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,6 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.multimodulepractice.common.composables.touchAction
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.start.impl.ui.StartAction
 
@@ -23,11 +23,11 @@ fun LoginButton(onAction: (StartAction) -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .height(42.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .background(Color(0xFF74A3FF))
-            .clickable {
+            .touchAction {
                 onAction(StartAction.OnLogin)
             }
+            .clip(RoundedCornerShape(16.dp))
+            .background(Color(0xFF74A3FF))
     ) {
         Text(
             text = "Войти",

@@ -1,12 +1,10 @@
-package com.search.impl.ui.composables
+package com.attraction.impl.ui.composables
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,42 +13,36 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import coil.size.Scale
+import com.attraction.impl.data.models.local.Service
+import com.attraction.impl.ui.AttractionAction
+import com.example.multimodulepractice.common.composables.NetworkImage
 import com.example.multimodulepractice.common.composables.ReviewStarsComponent
 import com.example.multimodulepractice.common.composables.touchAction
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.regularTextStyle
-import com.search.impl.data.models.local.Activity
-import com.search.impl.ui.ListAction
 
 @Composable
-fun ActivityGroupItem(item: Activity, onAction: (ListAction) -> Unit) {
+fun ServiceItem(item: Service, onAction: (AttractionAction) -> Unit) {
+
     Row(
         modifier = Modifier
-            .fillMaxWidth()
+            .width(278.dp)
             .height(90.dp)
-            .touchAction {
-                onAction(ListAction.OpenActivity(item.id))
-            }
-            .padding(horizontal = 20.dp)
+            .touchAction(
+                onClick = {
+                    onAction(AttractionAction.OpenService(serviceId = item.id))
+                }
+            )
     ) {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(item.icon)
-                .scale(Scale.FILL)
-                .build(),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
+
+        NetworkImage(
+            url = item.icon,
             modifier = Modifier
                 .size(90.dp)
-                .clip(RoundedCornerShape(16.dp))
+                .clip(RoundedCornerShape(16.dp)),
         )
 
         Spacer(modifier = Modifier.width(16.dp))
@@ -78,7 +70,16 @@ fun ActivityGroupItem(item: Activity, onAction: (ListAction) -> Unit) {
 
             Text(
                 text = item.subtitle,
-                style = regularTextStyle.copy(fontSize = 10.sp, color = Color.Black),
+                style = mediumTextStyle.copy(fontSize = 10.sp, color = Color.Black),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+
+            Spacer(modifier = Modifier.height(5.dp))
+
+            Text(
+                text = item.distance,
+                style = regularTextStyle.copy(fontSize = 10.sp, color = Color(0xFF959595)),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )

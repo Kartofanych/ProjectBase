@@ -26,66 +26,69 @@ import com.favourites.impl.ui.FavouritesUiState
 
 @Composable
 fun FavoritesContent(
-    uiState: FavouritesUiState.Authorized,
+    uiState: FavouritesUiState,
     onAction: (FavouritesAction) -> Unit,
     topPadding: Dp
 ) {
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
+    val state = uiState.state
+    if (state is FavouritesUiState.FavouritesState.Authorized) {
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ) {
 
-        if (uiState.items.isNotEmpty()) {
+            if (state.items.isNotEmpty()) {
 
-            LazyVerticalGrid(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp),
-                columns = GridCells.Fixed(2),
-                verticalArrangement = Arrangement.spacedBy(20.dp),
-                horizontalArrangement = Arrangement.spacedBy(18.dp)
-            ) {
-                item {
-                    Spacer(
-                        modifier = Modifier.height(topPadding)
-                    )
-                }
-
-                item(
-                    span = {
-                        GridItemSpan(2)
+                LazyVerticalGrid(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp),
+                    columns = GridCells.Fixed(2),
+                    verticalArrangement = Arrangement.spacedBy(20.dp),
+                    horizontalArrangement = Arrangement.spacedBy(18.dp)
+                ) {
+                    item {
+                        Spacer(
+                            modifier = Modifier.height(topPadding)
+                        )
                     }
+
+                    item(
+                        span = {
+                            GridItemSpan(2)
+                        }
+                    ) {
+                        FavoritesToolbar(uiState, onAction)
+                    }
+
+                    items(
+                        items = state.items,
+                        key = {
+                            it.id
+                        }
+                    ) {
+                        FavouriteItem(it, onAction)
+                    }
+
+                    item {
+                        Spacer(
+                            modifier = Modifier.height(40.dp)
+                        )
+                    }
+                }
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .safeContentPadding()
                 ) {
                     FavoritesToolbar(uiState, onAction)
-                }
 
-                items(
-                    items = uiState.items,
-                    key = {
-                        it.id
-                    }
-                ) {
-                    FavouriteItem(it, onAction)
-                }
-
-                item {
-                    Spacer(
-                        modifier = Modifier.height(40.dp)
+                    Text(
+                        text = "Пока что тут\nпусто",
+                        style = regularTextStyle.copy(fontSize = 20.sp),
+                        modifier = Modifier.align(Alignment.Center),
+                        textAlign = TextAlign.Center
                     )
                 }
-            }
-        } else {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .safeContentPadding()
-            ) {
-                FavoritesToolbar(uiState, onAction)
-
-                Text(
-                    text = "Пока что тут\nпусто",
-                    style = regularTextStyle.copy(fontSize = 20.sp),
-                    modifier = Modifier.align(Alignment.Center),
-                    textAlign = TextAlign.Center
-                )
             }
         }
     }

@@ -34,3 +34,20 @@ fun calculateDistance(geoPoint1: GeoPoint, geoPoint2: GeoPoint): Double {
     val c = 2 * atan2(sqrt(a), sqrt(1 - a))
     return r * c
 }
+
+fun withWordEnding(
+    number: Int,
+    nominative: String,
+    genitiveSingular: String,
+    genitivePlural: String
+): String {
+    val absNumber = number % 100
+    val lastDigit = absNumber % 10
+
+    return when {
+        absNumber in 11..14 -> genitivePlural
+        lastDigit == 1 -> nominative
+        lastDigit in 2..4 -> genitiveSingular
+        else -> genitivePlural
+    }
+}

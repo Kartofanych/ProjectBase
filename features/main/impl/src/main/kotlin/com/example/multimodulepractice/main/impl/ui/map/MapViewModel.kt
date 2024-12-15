@@ -53,6 +53,7 @@ import com.yandex.runtime.image.ImageProvider
 import com.yandex.runtime.ui_view.ViewProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -220,6 +221,7 @@ class MapViewModel @Inject constructor(
 
                         is ResponseState.Error -> {
                             mapRequestJob = MapInfoJob()
+                            delay(3000)
                             mapInfo(point, camera.zoom)
                         }
                     }
@@ -277,6 +279,15 @@ class MapViewModel @Inject constructor(
         return citiesCollection.addPlacemark().apply {
             geometry = city.geoPoint.toMapKitPoint()
             setText(city.name, cityTextStyle)
+
+            MapObjectTapListener { _, _ ->
+                onMapAction(MapActions.OnCityTapped(city.geoPoint))
+                true
+            }.also {
+                tapListeners.add(it)
+                addTapListener(it)
+            }
+
             viewModelScope.launch(Dispatchers.IO) {
                 val loader = ImageLoader(context)
                 val request = ImageRequest.Builder(context)
@@ -306,7 +317,7 @@ class MapViewModel @Inject constructor(
 
             try {
                 clusteredCollection.remove(placeMark)
-            } catch (e: Exception) {
+            } catch (_: Exception) {
             }
 
             if (calculateDistance(
@@ -327,6 +338,10 @@ class MapViewModel @Inject constructor(
                 viewModelScope.launch {
                     _uiEvent.send(MapUiEvent.OnAttractionOpen(action.landmarkId))
                 }
+            }
+
+            is MapActions.OnCityTapped -> {
+                moveToLocation(action.geoPoint, true, 13f)
             }
 
             MapActions.OnFiltersOpen -> {
@@ -363,9 +378,8 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    private fun moveToLocation(geoPoint: GeoPoint, isAnimated: Boolean) {
+    private fun moveToLocation(geoPoint: GeoPoint, isAnimated: Boolean, zoomValue: Float = 14.5f) {
         val location = geoPoint.toMapKitPoint()
-        val zoomValue = 16.5f
         when {
             !isAnimated -> map.mapWindow.map.move(CameraPosition(location, zoomValue, 0.0f, 0.0f))
             else -> map.mapWindow.map.move(
@@ -379,10 +393,10 @@ class MapViewModel @Inject constructor(
     private fun drawBoundary(points: List<GeoPoint>) {
         boundary?.let(objectsCollection::remove)
         val outerBoundaryCoordinates = listOf(
-            Point(89.0, -170.0),
-            Point(89.0, 170.0),
-            Point(-89.0, 170.0),
-            Point(-89.0, -170.0)
+            Point(89.0, -179.0),
+            Point(89.0, 179.0),
+            Point(-89.0, 179.0),
+            Point(-89.0, -179.0)
         )
 
         boundaryPolygonList.add(LinearRing(points.map { it.toMapKitPoint() }))

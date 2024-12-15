@@ -6,7 +6,6 @@ data class Service(
     val subtitle: String,
     val icon: String,
     val rating: Float,
-    val price: String,
-    val organizationId: String,
-    val isIconOrganization: Boolean
+    val starsCount: Int,
+    val distance: String,
 )

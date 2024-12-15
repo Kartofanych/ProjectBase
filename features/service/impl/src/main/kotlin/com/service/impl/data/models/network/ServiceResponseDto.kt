@@ -1,7 +1,9 @@
 package com.service.impl.data.models.network
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 class ServiceResponseDto(
 
     @SerializedName("uid")
@@ -31,6 +33,7 @@ class ServiceResponseDto(
     @SerializedName("contacts")
     val contacts: List<ContactDto>?,
 ) {
+    @Keep
     class RatingBlockDto(
         @SerializedName("rating")
         val rating: Float,
@@ -38,6 +41,7 @@ class ServiceResponseDto(
         val reviewCount: Int
     )
 
+    @Keep
     class ServiceOrganizationDto(
         @SerializedName("uid")
         val id: String,
@@ -49,6 +53,7 @@ class ServiceResponseDto(
         val rating: Float
     )
 
+    @Keep
     class ContactDto(
         @SerializedName("deeplink")
         val deeplink: String,

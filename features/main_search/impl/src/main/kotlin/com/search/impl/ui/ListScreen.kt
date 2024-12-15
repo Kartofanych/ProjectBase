@@ -1,7 +1,6 @@
 package com.search.impl.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.multimodulepractice.common.composables.DefaultError
 import com.example.multimodulepractice.common.composables.DefaultLoading
+import com.example.multimodulepractice.common.composables.touchAction
 import com.example.multimodulepractice.common.theme.regularTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.example.multimodulepractice.main_search.impl.R
@@ -61,11 +61,11 @@ fun ListScreen(uiState: ListUiState, onAction: (ListAction) -> Unit) {
                                 .padding(horizontal = 20.dp)
                                 .fillMaxWidth()
                                 .height(52.dp)
-                                .background(color = Color(0x1A675151), RoundedCornerShape(18.dp))
-                                .clip(RoundedCornerShape(18.dp))
-                                .clickable {
+                                .touchAction {
                                     onAction(ListAction.OpenSearch)
                                 }
+                                .background(color = Color(0x1A675151), RoundedCornerShape(18.dp))
+                                .clip(RoundedCornerShape(18.dp))
                                 .padding(horizontal = 10.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
