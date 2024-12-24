@@ -110,6 +110,7 @@ dependencies {
     implementation(project(":features:search:impl"))
     implementation(project(":features:attraction:impl"))
     implementation(project(":features:main_favourites:impl"))
+    implementation(project(":features:promo:impl"))
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)

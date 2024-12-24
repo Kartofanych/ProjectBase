@@ -4,5 +4,7 @@ sealed interface FavouritesUiEvent {
 
     object LogOut : FavouritesUiEvent
 
+    object OpenPromo : FavouritesUiEvent
+
     class OpenAttraction(val id: String) : FavouritesUiEvent
 }

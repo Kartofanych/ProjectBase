@@ -1,6 +1,5 @@
 package com.search.impl.ui.composables
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,6 +24,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Scale
 import com.example.multimodulepractice.common.composables.ReviewStarsComponent
+import com.example.multimodulepractice.common.composables.touchAction
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.regularTextStyle
 import com.search.impl.data.models.local.Activity
@@ -36,7 +36,7 @@ fun ActivityGroupItem(item: Activity, onAction: (ListAction) -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .height(90.dp)
-            .clickable {
+            .touchAction {
                 onAction(ListAction.OpenActivity(item.id))
             }
             .padding(horizontal = 20.dp)

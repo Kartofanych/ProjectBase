@@ -1,5 +1,7 @@
 package com.service.impl.data.models.local
 
+import com.example.multimodulepractice.common.data.models.local.RatingBlock
+
 data class Service(
     val id: String,
     val title: String,
@@ -11,11 +13,6 @@ data class Service(
     val organization: ServiceOrganization,
     val contacts: List<Contact>,
 ) {
-    data class RatingBlock(
-        val rating: Float,
-        val reviewCount: String,
-        val starCount: Int
-    )
 
     data class ServiceOrganization(
         val id: String,

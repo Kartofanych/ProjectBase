@@ -2,24 +2,34 @@ package com.favourites.impl.ui
 
 import com.favourites.impl.data.models.local.FavoriteAttraction
 
-sealed interface FavouritesUiState {
+data class FavouritesUiState(
+    val state: FavouritesState,
+    val isModalVisible: Boolean
+) {
 
-    object Loading : FavouritesUiState
+    sealed interface FavouritesState {
+        object Loading : FavouritesState
 
-    object Error : FavouritesUiState
+        object Error : FavouritesState
 
-    object Unauthorized : FavouritesUiState
+        object Unauthorized : FavouritesState
 
-    data class Authorized(val items: List<FavoriteAttraction>) : FavouritesUiState
+        data class Authorized(val items: List<FavoriteAttraction>, val user: UserProfile) :
+            FavouritesState
+    }
 
-    sealed interface ProfileMode {
+    data class UserProfile(
+        val name: String,
+        val image: String,
+        val promoCount: Int,
+    )
 
-        object GuestProfile : ProfileMode
-
-        data class UserProfile(
-            val name: String,
-            val email: String,
-            val image: String
-        ) : ProfileMode
+    companion object {
+        fun empty(): FavouritesUiState {
+            return FavouritesUiState(
+                state = FavouritesState.Loading,
+                isModalVisible = false,
+            )
+        }
     }
 }

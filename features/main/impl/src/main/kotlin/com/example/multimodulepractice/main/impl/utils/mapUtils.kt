@@ -16,8 +16,8 @@ fun Point.toGeoPoint(): GeoPoint {
 fun landmarkTextStyle(textColor: Int) = TextStyle(
     8f,
     textColor,
-    1f,
-    null,
+    3f,
+    Color.parseColor("#FFFFFF"),
     TextStyle.Placement.BOTTOM,
     4f,
     true,
@@ -27,8 +27,8 @@ fun landmarkTextStyle(textColor: Int) = TextStyle(
 val cityTextStyle = TextStyle(
     9f,
     Color.parseColor("#000000"),
-    1f,
-    null,
+    3f,
+    Color.parseColor("#FFFFFF"),
     TextStyle.Placement.BOTTOM,
     4f,
     true,

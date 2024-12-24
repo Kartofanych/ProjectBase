@@ -12,7 +12,7 @@ class FavoritesMapper @Inject constructor() {
 
     fun map(dto: FavoritesResponseDto): FavoritesResponse {
         return FavoritesResponse(
-            //profileInfo = mapProfileInfo(dto.profile),
+            profileInfo = mapProfileInfo(dto.profile),
             attractions = dto.attractions.mapIndexed { index, item -> mapAttraction(index, item) }
         )
     }
@@ -20,7 +20,7 @@ class FavoritesMapper @Inject constructor() {
     private fun mapProfileInfo(dto: ProfileInfoDto): ProfileInfo {
         return ProfileInfo(
             icon = dto.icon,
-            mail = dto.mail,
+            promoCount = dto.promoCodesCount,
             name = dto.name
         )
     }

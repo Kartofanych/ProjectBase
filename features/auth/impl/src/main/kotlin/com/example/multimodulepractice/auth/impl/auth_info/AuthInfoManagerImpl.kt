@@ -36,6 +36,9 @@ class AuthInfoManagerImpl @Inject constructor(
     override fun authInfoFlow(): Flow<AuthInfo> =
         dataStore.data.map(AuthInfoDto::toModel)
 
+    override suspend fun isAuthorized(): Boolean {
+        return dataStore.data.first().toModel() is AuthInfo.User
+    }
 }
 
 val Context.dataStore by dataStore("auth-info.json", AuthInfoSerializer())

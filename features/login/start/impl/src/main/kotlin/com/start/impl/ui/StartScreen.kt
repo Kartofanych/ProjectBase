@@ -30,8 +30,7 @@ fun StartScreen(uiState: StartUiState, onAction: (StartAction) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
-            .padding(28.dp),
+            .background(Color.White),
     ) {
 
         Column(
@@ -49,12 +48,12 @@ fun StartScreen(uiState: StartUiState, onAction: (StartAction) -> Unit) {
             Box(modifier = Modifier.height(50.dp))
 
             Text(
-                text = "Путешествуйте\nс нами",
+                text = "Путешествуйте\nс нами!",
                 textAlign = TextAlign.Center,
                 style = semiboldTextStyle.copy(fontSize = 24.sp, color = Color.Black)
             )
 
-            Box(modifier = Modifier.height(65.dp))
+            Box(modifier = Modifier.height(50.dp))
 
             LoginButton(onAction)
 

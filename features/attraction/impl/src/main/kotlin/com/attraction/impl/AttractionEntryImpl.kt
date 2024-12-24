@@ -1,5 +1,7 @@
 package com.attraction.impl
 
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.ui.Modifier
@@ -19,7 +21,6 @@ class AttractionEntryImpl @Inject constructor(
     private val attractionDependencies: AttractionDependencies
 ) : AttractionEntry() {
 
-
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
         navController: NavController,
@@ -35,13 +36,9 @@ class AttractionEntryImpl @Inject constructor(
                     it
                 }
             },
-            popEnterTransition = null,
-            exitTransition = null,
-            popExitTransition = {
-                slideOutVertically {
-                    it
-                }
-            }
+            popEnterTransition = { fadeIn() },
+            exitTransition = { fadeOut() },
+            popExitTransition = { slideOutVertically { it } }
         ) {
             val attractionId = it.arguments?.getString(ARG_ATTRACTION_ID)!!
 
@@ -54,19 +51,23 @@ class AttractionEntryImpl @Inject constructor(
 
             AttractionEventHandler(
                 uiEvent = viewModel.uiEvent,
-                openGuide = { id -> navController.navigate("$GUIDE_ROUTE/$id") },
-                openService = { id -> navController.navigate("$SERVICE_ROUTE/$id") },
-                back = { navController.popBackStack() }
+                openGuide = { id -> navController.navigate(GUIDE_PREFIX + id) },
+                back = { navController.popBackStack() },
+                navigateToAttraction = { id -> mainNavController.navigate(ATTRACTION_PREFIX + id) },
+                navigateToService = { id -> mainNavController.navigate(SERVICE_PREFIX + id) },
             )
+
             AttractionScreen(
                 viewModel.uiStateFlow.collectAsStateWithLifecycle().value,
+                viewModel.reviewModalStateFlow.collectAsStateWithLifecycle().value,
                 viewModel::onAction
             )
         }
     }
 
     private companion object {
-        const val GUIDE_ROUTE = "guide"
-        const val SERVICE_ROUTE = "service"
+        const val GUIDE_PREFIX = "guide/"
+        const val ATTRACTION_PREFIX = "attraction/"
+        const val SERVICE_PREFIX = "service/"
     }
 }

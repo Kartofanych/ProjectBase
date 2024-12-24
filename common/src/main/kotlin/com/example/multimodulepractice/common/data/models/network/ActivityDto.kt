@@ -1,7 +1,9 @@
 package com.example.multimodulepractice.common.data.models.network
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 class ActivityDto(
     @SerializedName("uid")
     val id: String,
@@ -27,6 +29,7 @@ class ActivityDto(
     @SerializedName("rating")
     val rating: Float
 ) {
+    @Keep
     enum class ActivityTypeDto {
         @SerializedName("attraction")
         ATTRACTION,

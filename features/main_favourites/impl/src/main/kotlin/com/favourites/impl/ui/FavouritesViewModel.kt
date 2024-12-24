@@ -8,6 +8,7 @@ import com.example.multimodulepractice.common.data.models.local.ResponseState
 import com.favourites.api.domain.FavoritesRepository
 import com.favourites.api.domain.LikeInteractor
 import com.favourites.impl.data.interactors.FavouritesInteractor
+import com.favourites.impl.ui.FavouritesUiState.FavouritesState
 import com.main.common.di.MainScope
 import dagger.Reusable
 import kotlinx.coroutines.Job
@@ -31,7 +32,7 @@ class FavouritesViewModel @Inject constructor(
     private val favoritesRepository: FavoritesRepository,
 ) : ViewModel() {
 
-    private val _uiStateFlow = MutableStateFlow<FavouritesUiState>(FavouritesUiState.Loading)
+    private val _uiStateFlow = MutableStateFlow(FavouritesUiState.empty())
     val uiStateFlow: StateFlow<FavouritesUiState>
         get() = _uiStateFlow
 
@@ -68,20 +69,33 @@ class FavouritesViewModel @Inject constructor(
     }
 
     private fun getFavourites() {
-        _uiStateFlow.update { FavouritesUiState.Loading }
+        _uiStateFlow.update { it.copy(state = FavouritesState.Loading) }
         favouritesJob?.cancel()
         favouritesJob = viewModelScope.launch {
             when (val result = interactor.favorite()) {
                 is ResponseState.Error.Unauthorized -> {
-                    _uiStateFlow.update { FavouritesUiState.Unauthorized }
+                    _uiStateFlow.update { it.copy(state = FavouritesState.Unauthorized) }
                 }
 
                 is ResponseState.Error -> {
-                    _uiStateFlow.update { FavouritesUiState.Error }
+                    _uiStateFlow.update { it.copy(state = FavouritesState.Error) }
                 }
 
                 is ResponseState.Success -> {
-                    _uiStateFlow.update { FavouritesUiState.Authorized(result.data.attractions) }
+                    with(result.data) {
+                        _uiStateFlow.update {
+                            it.copy(
+                                state = FavouritesState.Authorized(
+                                    attractions,
+                                    FavouritesUiState.UserProfile(
+                                        name = profileInfo.name,
+                                        image = profileInfo.icon,
+                                        promoCount = profileInfo.promoCount,
+                                    )
+                                )
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -90,14 +104,14 @@ class FavouritesViewModel @Inject constructor(
     private suspend fun changeFavorite(id: String, isLiked: Boolean, index: Int) {
         when (likeInteractor.changeFavorite(id, isLiked)) {
             is ResponseState.Error -> {
-                _uiStateFlow.update {
-                    if (it is FavouritesUiState.Authorized) {
-                        val list = it.items.toMutableList()
+                _uiStateFlow.update { uiState ->
+                    if (uiState.state is FavouritesState.Authorized) {
+                        val list = uiState.state.items.toMutableList()
                         val newItem = list[index].copy(isLiked = isLiked)
                         list[index] = newItem
-                        it.copy(list)
+                        uiState.copy(state = uiState.state.copy(items = list))
                     } else {
-                        it
+                        uiState
                     }
                 }
             }
@@ -137,14 +151,18 @@ class FavouritesViewModel @Inject constructor(
                 }
             }
 
-            FavouritesAction.OnOpenProfile -> Unit
+            is FavouritesAction.ChangeProfileModalVisibility -> {
+                _uiStateFlow.update {
+                    it.copy(isModalVisible = action.isVisible)
+                }
+            }
 
             is FavouritesAction.OnLikeChanged -> {
-                (uiStateFlow.value as? FavouritesUiState.Authorized)?.apply {
+                (_uiStateFlow.value.state as? FavouritesState.Authorized)?.apply {
                     val list = items.toMutableList()
                     val newItem = list[action.index].copy(isLiked = !list[action.index].isLiked)
                     list[action.index] = newItem
-                    _uiStateFlow.update { copy(items = list) }
+                    _uiStateFlow.update { it.copy(state = copy(items = list)) }
                     viewModelScope.launch {
                         likeEvent.emit(LikeEvent(newItem.id, newItem.isLiked, action.index))
                     }
@@ -152,6 +170,11 @@ class FavouritesViewModel @Inject constructor(
             }
 
             FavouritesAction.OnReload -> getFavourites()
+
+            FavouritesAction.OpenPromo -> {
+                _uiStateFlow.update { it.copy(isModalVisible = false) }
+                viewModelScope.launch { _uiEvent.send(FavouritesUiEvent.OpenPromo) }
+            }
         }
     }
 

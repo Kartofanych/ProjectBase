@@ -1,7 +1,6 @@
 package com.example.multimodulepractice.common.composables
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.shape.CircleShape
@@ -22,9 +21,9 @@ fun DefaultButton(
 ) {
     Box(
         modifier = modifier
+            .touchAction(onClick)
             .background(color = backgroundColor, shape = shape)
-            .clip(shape)
-            .clickable(onClick = onClick),
+            .clip(shape),
         contentAlignment = Alignment.Center,
         content = content
     )

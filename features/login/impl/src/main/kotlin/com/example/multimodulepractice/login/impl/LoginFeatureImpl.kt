@@ -33,9 +33,7 @@ class LoginFeatureImpl @Inject constructor(
     ) {
         navGraphBuilder.composable(featureRoute) {
             val insideNavController = rememberNavController()
-            val viewModel = injectedViewModel {
-                component.viewModel
-            }
+            val viewModel = injectedViewModel { component.viewModel }
 
             val startEntry = component.destinations.find<StartEntry>()
             val processEntry = component.destinations.find<ProcessEntry>()

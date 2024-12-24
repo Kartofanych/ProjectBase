@@ -6,9 +6,11 @@ sealed interface FavouritesAction {
 
     object OnLogOut : FavouritesAction
 
-    object OnOpenProfile : FavouritesAction
+    class ChangeProfileModalVisibility(val isVisible: Boolean) : FavouritesAction
 
     object OnReload : FavouritesAction
+
+    object OpenPromo : FavouritesAction
 
     class OnOpenAttraction(val attractionId: String) : FavouritesAction
 

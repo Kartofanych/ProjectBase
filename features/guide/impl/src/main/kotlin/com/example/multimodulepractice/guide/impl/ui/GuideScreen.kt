@@ -39,13 +39,12 @@ fun GuideScreen(uiState: GuideUiState, onAction: (GuideAction) -> Unit) {
                 verticalAlignment = Alignment.Top,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentHeight()
                     .background(Color.White)
             ) { page ->
                 Box(modifier = Modifier.fillMaxSize()) {
                     LazyColumn(
                         modifier = Modifier
-                            .wrapContentHeight()
+                            .fillMaxSize()
                             .background(Color.Black)
                     ) {
                         item {

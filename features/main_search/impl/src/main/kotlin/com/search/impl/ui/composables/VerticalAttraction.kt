@@ -2,7 +2,6 @@ package com.search.impl.ui.composables
 
 import android.content.Context
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,6 +24,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.multimodulepractice.common.composables.ActivityType
 import com.example.multimodulepractice.common.composables.ReviewStarsComponent
+import com.example.multimodulepractice.common.composables.touchAction
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.search.impl.data.models.local.Attraction
 import com.search.impl.ui.ListAction
@@ -39,11 +39,11 @@ fun RecommendedAttractionView(
         modifier = Modifier
             .wrapContentHeight()
             .width(200.dp)
-            .background(color = Color.White, shape = RoundedCornerShape(20.dp))
-            .clip(RoundedCornerShape(16.dp))
-            .clickable {
+            .touchAction {
                 onListAction(ListAction.OpenAttraction(attraction.id))
             }
+            .background(color = Color.White, shape = RoundedCornerShape(20.dp))
+            .clip(RoundedCornerShape(16.dp))
             .padding(bottom = 10.dp)
     ) {
         AsyncImage(

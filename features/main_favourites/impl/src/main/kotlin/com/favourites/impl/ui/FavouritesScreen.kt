@@ -1,12 +1,15 @@
 package com.favourites.impl.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -20,8 +23,12 @@ import androidx.compose.ui.unit.sp
 import com.example.multimodulepractice.common.composables.DefaultError
 import com.example.multimodulepractice.common.composables.DefaultLoading
 import com.example.multimodulepractice.common.composables.NetworkImage
+import com.example.multimodulepractice.common.composables.touchAction
+import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
+import com.favourites.impl.ui.FavouritesUiState.FavouritesState
 import com.favourites.impl.ui.composables.FavoritesContent
+import com.favourites.impl.ui.composables.ProfileModal
 import com.favourites.impl.ui.composables.UnauthorizedContent
 
 @Composable
@@ -32,30 +39,28 @@ fun ProfileScreen(uiState: FavouritesUiState, onAction: (FavouritesAction) -> Un
             .fillMaxSize(),
         containerColor = Color.White
     ) {
-        when (uiState) {
-            is FavouritesUiState.Authorized ->
+        when (uiState.state) {
+            is FavouritesState.Authorized ->
                 FavoritesContent(
                     uiState,
                     onAction,
                     it.calculateTopPadding()
                 )
 
-            FavouritesUiState.Error -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    DefaultError(
-                        onReload = {
-                            onAction(FavouritesAction.OnReload)
-                        }
-                    )
+            FavouritesState.Error -> DefaultError(
+                modifier = Modifier.fillMaxSize(),
+                onReload = {
+                    onAction(FavouritesAction.OnReload)
                 }
-            }
+            )
 
-            FavouritesUiState.Loading -> DefaultLoading(modifier = Modifier.fillMaxSize())
+            FavouritesState.Loading -> DefaultLoading(modifier = Modifier.fillMaxSize())
 
-            FavouritesUiState.Unauthorized -> UnauthorizedContent(uiState, onAction)
+            FavouritesState.Unauthorized -> UnauthorizedContent(uiState, onAction)
+        }
+
+        if (uiState.isModalVisible && uiState.state is FavouritesState.Authorized) {
+            ProfileModal(uiState.state, onAction, it.calculateBottomPadding())
         }
     }
 }
@@ -74,15 +79,45 @@ fun FavoritesToolbar(uiState: FavouritesUiState, onAction: (FavouritesAction) ->
             modifier = Modifier.align(Alignment.CenterStart)
         )
 
-        NetworkImage(
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .size(45.dp)
-                .clip(CircleShape)
-                .clickable {
-                    onAction(FavouritesAction.OnLogOut)
-                },
-            url = "https://i.ytimg.com/vi/D4bZ7fL2Qs4/maxresdefault.jpg",
-        )
+        AnimatedVisibility(
+            visible = uiState.state is FavouritesState.Authorized,
+            modifier = Modifier.align(Alignment.CenterEnd)
+        ) {
+            if (uiState.state is FavouritesState.Authorized) {
+                Box(
+                    modifier = Modifier
+                        .height(47.dp)
+                        .wrapContentWidth()
+                        .touchAction {
+                            onAction(FavouritesAction.ChangeProfileModalVisibility(true))
+                        }
+                ) {
+                    NetworkImage(
+                        modifier = Modifier
+                            .align(Alignment.BottomStart)
+                            .size(45.dp)
+                            .clip(CircleShape),
+                        url = uiState.state.user.image,
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .height(17.dp)
+                            .widthIn(min = 17.dp)
+                            .background(color = Color(0xFF74A3FF), shape = CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = uiState.state.user.promoCount.toString(),
+                            style = mediumTextStyle.copy(color = Color.White, fontSize = 11.sp),
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .padding(horizontal = 4.dp)
+                        )
+                    }
+                }
+            }
+        }
     }
 }
