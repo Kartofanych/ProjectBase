@@ -7,17 +7,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun DefaultSeparator(
-    height: Dp = 1.dp,
-    color: Color = Color(0x29000000)
+    modifier: Modifier = Modifier,
+    color: Color = Color(0x29000000),
 ) {
     Box(
-        Modifier
-            .height(height)
+        modifier
+            .height(1.dp)
             .fillMaxWidth()
             .background(color = color)
     )

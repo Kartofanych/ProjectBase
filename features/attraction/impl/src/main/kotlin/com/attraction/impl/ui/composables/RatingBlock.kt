@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -82,12 +83,12 @@ fun RatingBlock(block: Attraction.ReviewBlock, onAction: (AttractionAction) -> U
                                     when (item.toFloat()) {
                                         0f -> 0.dp
                                         else -> maxOf(
-                                            80 * (item.toFloat() / block.reviewsNumber.toFloat()),
+                                            80f * (item.toFloat() / block.reviewsNumber.toFloat()),
                                             3f
                                         ).dp
                                     }
                                 )
-                                .height(8.dp)
+                                .fillMaxHeight()
                                 .background(
                                     color = Color(0xFF74A3FF),
                                     shape = CircleShape

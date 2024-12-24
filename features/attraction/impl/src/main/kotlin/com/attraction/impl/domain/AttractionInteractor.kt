@@ -1,6 +1,5 @@
 package com.attraction.impl.domain
 
-import android.util.Log
 import com.attraction.impl.data.AttractionApi
 import com.attraction.impl.data.mappers.AttractionMapper
 import com.attraction.impl.data.models.dto.LandmarkRequest
@@ -24,7 +23,6 @@ class AttractionInteractor @Inject constructor(
                     data = attractionMapper.mapResponse(response)
                 )
             } catch (exception: Exception) {
-                Log.d("121212", exception.toString())
                 return@withContext ResponseState.Error.Default()
             }
         }

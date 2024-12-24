@@ -42,7 +42,7 @@ fun AttractionContent(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 InformationBlock(
-                    block = attraction.infoBlock,
+                    attraction = attraction,
                     onAction = onAction
                 )
 
@@ -50,8 +50,8 @@ fun AttractionContent(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                if (attraction.servicesBlock.isNotEmpty()) {
-                    for (block in attraction.servicesBlock) {
+                if (attraction.closeObjectsBlock.isNotEmpty()) {
+                    for (block in attraction.closeObjectsBlock) {
                         ServicesBlock(block, onAction)
 
                         Spacer(modifier = Modifier.height(32.dp))
@@ -62,7 +62,7 @@ fun AttractionContent(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                ReviewBlock(attraction.reviewsBlock, onAction)
+                ReviewBlock(attraction, onAction)
 
                 DefaultSeparator()
             }

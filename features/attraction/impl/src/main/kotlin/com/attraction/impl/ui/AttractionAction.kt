@@ -1,5 +1,7 @@
 package com.attraction.impl.ui
 
+import com.example.multimodulepractice.common.data.models.network.ObjectType
+
 sealed interface AttractionAction {
 
     object RecallAttraction : AttractionAction
@@ -14,7 +16,7 @@ sealed interface AttractionAction {
 
     object ChangeScheduleVisibility : AttractionAction
 
-    class OpenService(val serviceId: String) : AttractionAction
+    class OpenObject(val id: String, val type: ObjectType) : AttractionAction
 
     class SendReview(val text: String) : AttractionAction
 

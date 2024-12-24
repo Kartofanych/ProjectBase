@@ -87,9 +87,9 @@ class AttractionViewModel @Inject constructor(
                 }
             }
 
-            is AttractionAction.OpenService -> {
+            is AttractionAction.OpenObject -> {
                 viewModelScope.launch {
-                    _uiEvent.send(AttractionEvent.OpenService(action.serviceId))
+                    _uiEvent.send(AttractionEvent.OpenObject(id = action.id, type = action.type))
                 }
             }
 

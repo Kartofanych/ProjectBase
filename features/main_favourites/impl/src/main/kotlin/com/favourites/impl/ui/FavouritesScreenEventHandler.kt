@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 fun ProfileScreenEventHandler(
     navigateToLogin: () -> Unit,
     navigateToAttraction: (String) -> Unit,
+    navigateToPromo: () -> Unit,
     uiEvent: Flow<FavouritesUiEvent>
 ) {
 
@@ -16,6 +17,7 @@ fun ProfileScreenEventHandler(
             when (event) {
                 FavouritesUiEvent.LogOut -> navigateToLogin()
                 is FavouritesUiEvent.OpenAttraction -> navigateToAttraction(event.id)
+                FavouritesUiEvent.OpenPromo -> navigateToPromo()
             }
         }
     }

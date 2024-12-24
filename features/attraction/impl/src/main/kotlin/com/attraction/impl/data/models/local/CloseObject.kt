@@ -1,6 +1,8 @@
 package com.attraction.impl.data.models.local
 
-data class Service(
+import com.example.multimodulepractice.common.data.models.network.ObjectType
+
+data class CloseObject(
     val id: String,
     val title: String,
     val subtitle: String,
@@ -8,4 +10,5 @@ data class Service(
     val rating: Float,
     val starsCount: Int,
     val distance: String,
+    val type: ObjectType,
 )

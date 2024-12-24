@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.widget.TextView
+import androidx.annotation.Keep
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.ViewModel
@@ -42,6 +43,7 @@ import com.yandex.mapkit.logo.Padding
 import com.yandex.mapkit.map.CameraListener
 import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.map.ClusterListener
+import com.yandex.mapkit.map.ClusterTapListener
 import com.yandex.mapkit.map.ClusterizedPlacemarkCollection
 import com.yandex.mapkit.map.MapObject
 import com.yandex.mapkit.map.MapObjectDragListener
@@ -66,7 +68,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@Keep
 @AppScope
+@SuppressLint("StaticFieldLeak")
 class MapViewModel @Inject constructor(
     private val interactor: MapInteractor,
     private val geoRepository: GeoRepository,
@@ -77,14 +81,14 @@ class MapViewModel @Inject constructor(
     private val mapScreenRepository: MapScreenRepository,
 ) : ViewModel() {
 
-    @SuppressLint("StaticFieldLeak")
     val map = MapView(context)
     private val camera: CameraPosition
         get() = map.mapWindow.map.cameraPosition
 
     private var userMapObject: PlacemarkMapObject? = null
 
-    private val tapListeners = mutableListOf<MapObjectTapListener>()
+    private val mapTapListeners = mutableListOf<MapObjectTapListener>()
+    private val clusterTapListeners = mutableListOf<ClusterTapListener>()
     private val objectsCollection = map.mapWindow.map.mapObjects.addCollection()
     private val citiesCollection = map.mapWindow.map.mapObjects.addCollection()
 
@@ -96,6 +100,16 @@ class MapViewModel @Inject constructor(
 
     private val clusterListener = ClusterListener { cluster ->
         val count = cluster.placemarks.map { it.isVisible }.count()
+        val clusterTapListener = ClusterTapListener {
+            moveToLocation(
+                cluster.appearance.geometry.toGeoPoint(),
+                isAnimated = true,
+                zoomValue = camera.zoom * 1.15f
+            )
+            true
+        }
+        clusterTapListeners.add(clusterTapListener)
+        cluster.addClusterTapListener(clusterTapListener)
         cluster.appearance.setView(
             ViewProvider(
                 ClusteredViewBinding.inflate(LayoutInflater.from(context)).root.also {
@@ -250,7 +264,7 @@ class MapViewModel @Inject constructor(
                 onMapAction(MapActions.OnPlaceMarkTapped(landmark.id))
                 true
             }.also {
-                tapListeners.add(it)
+                mapTapListeners.add(it)
                 addTapListener(it)
             }
 
@@ -284,7 +298,7 @@ class MapViewModel @Inject constructor(
                 onMapAction(MapActions.OnCityTapped(city.geoPoint))
                 true
             }.also {
-                tapListeners.add(it)
+                mapTapListeners.add(it)
                 addTapListener(it)
             }
 

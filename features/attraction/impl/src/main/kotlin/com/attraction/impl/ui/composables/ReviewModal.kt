@@ -67,7 +67,7 @@ fun ReviewModal(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 24.dp)
-                            .padding(bottom = bottomPadding),
+                            .padding(bottom = bottomPadding + 10.dp),
                     ) {
                         Spacer(Modifier.height(18.dp))
 

@@ -10,6 +10,8 @@ sealed interface FavouritesAction {
 
     object OnReload : FavouritesAction
 
+    object OpenPromo : FavouritesAction
+
     class OnOpenAttraction(val attractionId: String) : FavouritesAction
 
     class OnLikeChanged(val index: Int) : FavouritesAction

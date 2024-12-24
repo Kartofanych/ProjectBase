@@ -82,15 +82,15 @@ class FavouritesViewModel @Inject constructor(
                 }
 
                 is ResponseState.Success -> {
-                    (authInfoManager.authInfo() as? AuthInfo.User)?.let { user ->
+                    with(result.data) {
                         _uiStateFlow.update {
                             it.copy(
                                 state = FavouritesState.Authorized(
-                                    result.data.attractions,
+                                    attractions,
                                     FavouritesUiState.UserProfile(
-                                        name = user.name,
-                                        email = user.mail,
-                                        image = user.image,
+                                        name = profileInfo.name,
+                                        image = profileInfo.icon,
+                                        promoCount = profileInfo.promoCount,
                                     )
                                 )
                             )
@@ -170,6 +170,11 @@ class FavouritesViewModel @Inject constructor(
             }
 
             FavouritesAction.OnReload -> getFavourites()
+
+            FavouritesAction.OpenPromo -> {
+                _uiStateFlow.update { it.copy(isModalVisible = false) }
+                viewModelScope.launch { _uiEvent.send(FavouritesUiEvent.OpenPromo) }
+            }
         }
     }
 

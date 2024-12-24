@@ -8,10 +8,11 @@ data class Attraction(
     val images: List<String>,
     val isLiked: Boolean,
     val infoBlock: InfoBlock,
-    val servicesBlock: List<ServicesBlock>,
+    val closeObjectsBlock: List<CloseObjectsBlock>,
     val reviewsBlock: ReviewBlock,
     val similarBlock: SimilarBlock,
     val schedule: Schedule,
+    val isAuthorized: Boolean
 ) {
     class InfoBlock(
         val name: String,
@@ -36,9 +37,9 @@ data class Attraction(
         )
     }
 
-    class ServicesBlock(
+    class CloseObjectsBlock(
         val title: String,
-        val services: List<Service>,
+        val closeObjects: List<CloseObject>,
     )
 
     class ReviewBlock(

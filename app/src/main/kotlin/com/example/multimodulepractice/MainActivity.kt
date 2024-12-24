@@ -45,6 +45,7 @@ import com.example.multimodulepractice.main.MainFeatureEntry
 import com.example.multimodulepractice.main.impl.ui.map.MapScreen
 import com.example.multimodulepractice.main.impl.ui.map.MapScreenEventHandler
 import com.filters.api.FiltersEntry
+import com.promo.api.PromoEntry
 import com.search.api.SearchEntry
 import com.service.api.ServiceEntry
 import com.splash.api.SplashEntry
@@ -112,6 +113,7 @@ class MainActivity : AppCompatActivity() {
         val serviceFeature = destinations.find<ServiceEntry>()
         val searchFeature = destinations.find<SearchEntry>()
         val attractionFeature = destinations.find<AttractionEntry>()
+        val promoFeature = destinations.find<PromoEntry>()
 
         val isDebug = BuildConfig.DEBUG
         val isProduction = appProvider.appConfig.isProduction()
@@ -185,6 +187,12 @@ class MainActivity : AppCompatActivity() {
 
                     register(
                         attractionFeature,
+                        navController = navController,
+                        modifier = Modifier
+                    )
+
+                    register(
+                        promoFeature,
                         navController = navController,
                         modifier = Modifier
                     )

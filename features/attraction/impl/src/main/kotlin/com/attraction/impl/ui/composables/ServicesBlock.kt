@@ -19,7 +19,7 @@ import com.attraction.impl.ui.AttractionAction
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 
 @Composable
-fun ServicesBlock(block: Attraction.ServicesBlock, onAction: (AttractionAction) -> Unit) {
+fun ServicesBlock(block: Attraction.CloseObjectsBlock, onAction: (AttractionAction) -> Unit) {
 
     Column(modifier = Modifier.fillMaxWidth()) {
 
@@ -39,7 +39,7 @@ fun ServicesBlock(block: Attraction.ServicesBlock, onAction: (AttractionAction) 
             }
 
             items(
-                items = block.services,
+                items = block.closeObjects,
                 key = {
                     it.id
                 }

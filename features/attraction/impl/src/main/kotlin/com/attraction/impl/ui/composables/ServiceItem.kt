@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.attraction.impl.data.models.local.Service
+import com.attraction.impl.data.models.local.CloseObject
 import com.attraction.impl.ui.AttractionAction
 import com.example.multimodulepractice.common.composables.NetworkImage
 import com.example.multimodulepractice.common.composables.ReviewStarsComponent
@@ -25,17 +25,15 @@ import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.regularTextStyle
 
 @Composable
-fun ServiceItem(item: Service, onAction: (AttractionAction) -> Unit) {
+fun ServiceItem(item: CloseObject, onAction: (AttractionAction) -> Unit) {
 
     Row(
         modifier = Modifier
             .width(278.dp)
             .height(90.dp)
-            .touchAction(
-                onClick = {
-                    onAction(AttractionAction.OpenService(serviceId = item.id))
-                }
-            )
+            .touchAction {
+                onAction(AttractionAction.OpenObject(id = item.id, type = item.type))
+            }
     ) {
 
         NetworkImage(

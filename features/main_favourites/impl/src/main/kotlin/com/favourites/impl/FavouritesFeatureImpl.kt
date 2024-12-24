@@ -50,6 +50,7 @@ class FavouritesFeatureImpl @Inject constructor(
             ProfileScreenEventHandler(
                 navigateToLogin = { mainNavController.navigate(SCREEN_LOGIN_ROUTE) },
                 navigateToAttraction = { id -> mainNavController.navigate("$SCREEN_ATTRACTION_ROUTE/$id") },
+                navigateToPromo = { mainNavController.navigate(SCREEN_PROMO_ROUTE) },
                 uiEvent = dependencies.favouritesViewModel.uiEvent
             )
 
@@ -64,6 +65,7 @@ class FavouritesFeatureImpl @Inject constructor(
         const val SCREEN_LIST_ROUTE = "main/search"
         const val SCREEN_MAP_ROUTE = "main/map"
         const val SCREEN_FAVOURITES_ROUTE = "main/favourites"
+        const val SCREEN_PROMO_ROUTE = "promo"
         const val SCREEN_LOGIN_ROUTE = "login"
         const val SCREEN_ATTRACTION_ROUTE = "attraction"
     }

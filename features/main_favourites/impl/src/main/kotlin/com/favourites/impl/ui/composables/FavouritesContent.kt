@@ -32,12 +32,9 @@ fun FavoritesContent(
 ) {
     val state = uiState.state
     if (state is FavouritesUiState.FavouritesState.Authorized) {
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
+        Box(modifier = Modifier.fillMaxSize()) {
 
             if (state.items.isNotEmpty()) {
-
                 LazyVerticalGrid(
                     modifier = Modifier
                         .padding(horizontal = 16.dp),
@@ -46,9 +43,7 @@ fun FavoritesContent(
                     horizontalArrangement = Arrangement.spacedBy(18.dp)
                 ) {
                     item {
-                        Spacer(
-                            modifier = Modifier.height(topPadding)
-                        )
+                        Spacer(modifier = Modifier.height(topPadding))
                     }
 
                     item(

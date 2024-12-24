@@ -20,8 +20,8 @@ data class FavouritesUiState(
 
     data class UserProfile(
         val name: String,
-        val email: String,
-        val image: String
+        val image: String,
+        val promoCount: Int,
     )
 
     companion object {

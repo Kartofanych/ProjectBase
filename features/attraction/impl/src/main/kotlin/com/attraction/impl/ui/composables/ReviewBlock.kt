@@ -26,8 +26,8 @@ import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 
 @Composable
-fun ReviewBlock(block: Attraction.ReviewBlock, onAction: (AttractionAction) -> Unit) {
-
+fun ReviewBlock(attraction: Attraction, onAction: (AttractionAction) -> Unit) {
+    val block = attraction.reviewsBlock
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -45,39 +45,41 @@ fun ReviewBlock(block: Attraction.ReviewBlock, onAction: (AttractionAction) -> U
 
         Spacer(Modifier.height(36.dp))
 
-        DefaultButton(
-            onClick = {
-                onAction(AttractionAction.ChangeReviewModalVisibility(true))
-            },
-            backgroundColor = Color(0xFF404040),
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .width(300.dp)
-                .height(40.dp)
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
+        if (attraction.isAuthorized) {
+            DefaultButton(
+                onClick = {
+                    onAction(AttractionAction.ChangeReviewModalVisibility(true))
+                },
+                backgroundColor = Color(0xFF404040),
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .width(300.dp)
+                    .height(40.dp)
             ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_pen),
-                    contentDescription = null,
-                    modifier = Modifier.size(18.dp),
-                    tint = Color.White
-                )
-
-                Spacer(modifier = Modifier.width(12.dp))
-
-                Text(
-                    text = "Напишите отзыв",
-                    style = mediumTextStyle.copy(
-                        fontSize = 14.sp,
-                        color = Color.White
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_pen),
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp),
+                        tint = Color.White
                     )
-                )
-            }
-        }
 
-        Spacer(Modifier.height(36.dp))
+                    Spacer(modifier = Modifier.width(12.dp))
+
+                    Text(
+                        text = "Напишите отзыв",
+                        style = mediumTextStyle.copy(
+                            fontSize = 14.sp,
+                            color = Color.White
+                        )
+                    )
+                }
+            }
+
+            Spacer(Modifier.height(36.dp))
+        }
 
         if (block.reviews.isNotEmpty()) {
 

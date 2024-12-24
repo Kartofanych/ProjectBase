@@ -1,22 +1,25 @@
 package com.attraction.impl.data.mappers
 
 import com.attraction.impl.data.models.dto.LandmarkResponseDto
-import com.attraction.impl.data.models.dto.LandmarkResponseDto.ActivitiesBlockDto
+import com.attraction.impl.data.models.dto.LandmarkResponseDto.CloseObjectsBlockDto
 import com.attraction.impl.data.models.dto.LandmarkResponseDto.ReviewsBlockDto
 import com.attraction.impl.data.models.dto.LandmarkResponseDto.ScheduleDto.DayScheduleDto
 import com.attraction.impl.data.models.dto.LandmarkResponseDto.SimilarItemDto
 import com.attraction.impl.data.models.local.Attraction
 import com.attraction.impl.data.models.local.Attraction.ReviewBlock
-import com.attraction.impl.data.models.local.Service
+import com.attraction.impl.data.models.local.CloseObject
 import com.attraction.impl.data.models.local.SimilarAttraction
+import com.example.multimodulepractice.auth.AuthInfoManager
 import com.example.multimodulepractice.common.data.models.local.RatingBlock
 import com.example.multimodulepractice.common.data.models.local.Review
 import com.example.multimodulepractice.common.utils.withWordEnding
 import javax.inject.Inject
 
-class AttractionMapper @Inject constructor() {
+class AttractionMapper @Inject constructor(
+    private val authInfoManager: AuthInfoManager
+) {
 
-    fun mapResponse(response: LandmarkResponseDto): Attraction {
+    suspend fun mapResponse(response: LandmarkResponseDto): Attraction {
         return Attraction(
             id = response.id,
             images = response.images.map { it.url },
@@ -35,7 +38,7 @@ class AttractionMapper @Inject constructor() {
                     )
                 }
             ),
-            servicesBlock = response.activityBlocks.map(::mapActivityBlock),
+            closeObjectsBlock = response.activityBlocks.map(::mapActivityBlock),
             reviewsBlock = mapReviewsBlock(response.reviews),
             similarBlock = Attraction.SimilarBlock(
                 items = response.similar.map(::mapSimilarAttraction)
@@ -43,7 +46,8 @@ class AttractionMapper @Inject constructor() {
             schedule = Attraction.Schedule(
                 isVisible = false,
                 scheduleDays = response.schedule.days.map(::mapScheduleDay)
-            )
+            ),
+            isAuthorized = authInfoManager.isAuthorized()
         )
     }
 
@@ -81,8 +85,7 @@ class AttractionMapper @Inject constructor() {
                         title = it.author.name,
                         subtitle = it.author.email,
                         date = it.date,
-                        //TODO from backend
-                        icon = "https://www.kino-teatr.ru/art/7352/117986.jpg",
+                        icon = it.author.icon,
                         text = it.text,
                         stars = it.stars,
                     )
@@ -105,19 +108,20 @@ class AttractionMapper @Inject constructor() {
             )
         }
 
-    private fun mapActivityBlock(dto: ActivitiesBlockDto): Attraction.ServicesBlock =
+    private fun mapActivityBlock(dto: CloseObjectsBlockDto): Attraction.CloseObjectsBlock =
         with(dto) {
-            Attraction.ServicesBlock(
+            Attraction.CloseObjectsBlock(
                 title = title,
-                services = items.map { item ->
-                    Service(
+                closeObjects = items.map { item ->
+                    CloseObject(
                         id = item.id,
                         title = item.title,
                         subtitle = item.subtitle,
                         icon = item.icon,
                         distance = item.distance,
                         rating = item.rating,
-                        starsCount = item.rating.toInt()
+                        starsCount = item.rating.toInt(),
+                        type = item.type
                     )
                 }
             )

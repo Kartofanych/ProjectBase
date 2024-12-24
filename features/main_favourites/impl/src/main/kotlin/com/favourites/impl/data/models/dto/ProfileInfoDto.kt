@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName
 
 @Keep
 class ProfileInfoDto(
-    @SerializedName("icon")
+    @SerializedName("image_url")
     val icon: String,
 
     @SerializedName("name")
     val name: String,
 
-    @SerializedName("mail")
-    val mail: String,
+    @SerializedName("promocodes_count")
+    val promoCodesCount: Int,
 )

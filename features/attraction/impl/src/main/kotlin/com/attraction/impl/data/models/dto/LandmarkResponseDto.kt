@@ -2,6 +2,7 @@ package com.attraction.impl.data.models.dto
 
 import androidx.annotation.Keep
 import com.example.multimodulepractice.common.data.models.network.GeoPointDto
+import com.example.multimodulepractice.common.data.models.network.ObjectType
 import com.google.gson.annotations.SerializedName
 
 @Keep
@@ -32,7 +33,7 @@ data class LandmarkResponseDto(
     val isLiked: Boolean,
 
     @SerializedName("theme_blocks")
-    val activityBlocks: List<ActivitiesBlockDto>,
+    val activityBlocks: List<CloseObjectsBlockDto>,
 
     @SerializedName("similar_places")
     val similar: List<SimilarItemDto>
@@ -81,6 +82,9 @@ data class LandmarkResponseDto(
 
         @SerializedName("email")
         val email: String,
+
+        @SerializedName("icon")
+        val icon: String,
     )
 
     @Keep
@@ -129,16 +133,16 @@ data class LandmarkResponseDto(
     }
 
     @Keep
-    data class ActivitiesBlockDto(
+    data class CloseObjectsBlockDto(
 
         @SerializedName("title")
         val title: String,
 
         @SerializedName("items")
-        val items: List<ActivityDto>,
+        val items: List<CloseObjectDto>,
     ) {
         @Keep
-        data class ActivityDto(
+        data class CloseObjectDto(
 
             @SerializedName("uid")
             val id: String,
@@ -157,6 +161,9 @@ data class LandmarkResponseDto(
 
             @SerializedName("distance")
             val distance: String,
+
+            @SerializedName("type")
+            val type: ObjectType,
         )
     }
 

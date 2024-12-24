@@ -120,22 +120,24 @@ fun ImageSlider(
                 )
             }
 
-            Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .touchAction {
-                        onAction(AttractionAction.OnLikeChanged)
-                    }
-                    .background(Color(0x99FFFFFF), RoundedCornerShape(10.dp))
-                    .clip(RoundedCornerShape(10.dp)),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    painter = painterResource(if (attraction.isLiked) R.drawable.ic_liked else R.drawable.ic_unliked),
-                    contentDescription = null,
-                    tint = Color(0xFF2A2A2A),
-                    modifier = Modifier.size(24.dp)
-                )
+            if (attraction.isAuthorized) {
+                Box(
+                    modifier = Modifier
+                        .size(40.dp)
+                        .touchAction {
+                            onAction(AttractionAction.OnLikeChanged)
+                        }
+                        .background(Color(0x99FFFFFF), RoundedCornerShape(10.dp))
+                        .clip(RoundedCornerShape(10.dp)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(if (attraction.isLiked) R.drawable.ic_liked else R.drawable.ic_unliked),
+                        contentDescription = null,
+                        tint = Color(0xFF2A2A2A),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
         }
 

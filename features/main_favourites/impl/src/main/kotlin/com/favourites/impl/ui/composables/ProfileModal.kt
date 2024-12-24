@@ -2,6 +2,7 @@ package com.favourites.impl.ui.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -101,8 +103,7 @@ fun ProfileModal(
                         .height(56.dp)
                         .fillMaxWidth()
                         .touchAction {
-                            //TODO PROMOs
-                            //onAction(FavouritesAction.OnLogOut)
+                            onAction(FavouritesAction.OpenPromo)
                         }
                         .padding(vertical = 16.dp),
                     verticalAlignment = Alignment.CenterVertically
@@ -123,26 +124,24 @@ fun ProfileModal(
                             fontSize = 14.sp,
                             color = Color(0xFF2A2A2A)
                         ),
-                        modifier = Modifier.width(220.dp)
-                    )
-
-                    Text(
-                        text = "1",
-                        style = semiboldTextStyle.copy(
-                            fontSize = 14.sp,
-                            color = Color(0xFF2A2A2A)
-                        ),
                         modifier = Modifier.width(230.dp)
                     )
 
-                    Spacer(Modifier.width(8.dp))
-
-                    Icon(
-                        painter = painterResource(R.drawable.ic_arrow),
-                        contentDescription = null,
-                        modifier = Modifier.size(14.dp),
-                        tint = Color(0xFF2A2A2A)
-                    )
+                    Box(
+                        Modifier
+                            .height(20.dp)
+                            .widthIn(min = 20.dp)
+                            .background(color = Color(0xFF74A3FF), shape = CircleShape)
+                    ) {
+                        Text(
+                            text = uiState.user.promoCount.toString(),
+                            style = semiboldTextStyle.copy(
+                                fontSize = 12.sp,
+                                color = Color.White
+                            ),
+                            modifier = Modifier.align(Alignment.Center).padding(horizontal = 4.dp)
+                        )
+                    }
                 }
 
                 DefaultSeparator()

@@ -30,7 +30,8 @@ import com.example.multimodulepractice.common.theme.regularTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 
 @Composable
-fun InformationBlock(block: Attraction.InfoBlock, onAction: (AttractionAction) -> Unit) {
+fun InformationBlock(attraction: Attraction, onAction: (AttractionAction) -> Unit) {
+    val block = attraction.infoBlock
     Column(
         modifier = Modifier
             .padding(horizontal = 20.dp)
@@ -54,32 +55,37 @@ fun InformationBlock(block: Attraction.InfoBlock, onAction: (AttractionAction) -
 
             Spacer(modifier = Modifier.width(6.dp))
 
+            if (attraction.isAuthorized) {
+                Text(
+                    text = block.ratingBlock.reviewCount,
+                    style = regularTextStyle.copy(
+                        fontSize = 14.sp,
+                        textDecoration = TextDecoration.Underline,
+                        color = Color(0xFF74A3FF)
+                    ),
+                    modifier = Modifier.touchAction {
+                        onAction(AttractionAction.ChangeReviewModalVisibility(true))
+                    }
+                )
+            }
+        }
+
+        if (attraction.isAuthorized) {
+
+            Spacer(modifier = Modifier.height(10.dp))
+
             Text(
-                text = block.ratingBlock.reviewCount,
-                style = regularTextStyle.copy(
-                    fontSize = 14.sp,
+                text = "Написать отзыв",
+                style = semiboldTextStyle.copy(
+                    fontSize = 12.sp,
                     textDecoration = TextDecoration.Underline,
-                    color = Color(0xFF74A3FF)
+                    color = Color(0xFF535353)
                 ),
                 modifier = Modifier.touchAction {
                     onAction(AttractionAction.ChangeReviewModalVisibility(true))
                 }
             )
         }
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Text(
-            text = "Написать отзыв",
-            style = semiboldTextStyle.copy(
-                fontSize = 12.sp,
-                textDecoration = TextDecoration.Underline,
-                color = Color(0xFF535353)
-            ),
-            modifier = Modifier.touchAction {
-                onAction(AttractionAction.ChangeReviewModalVisibility(true))
-            }
-        )
 
         Spacer(modifier = Modifier.height(28.dp))
 
@@ -119,42 +125,44 @@ fun InformationBlock(block: Attraction.InfoBlock, onAction: (AttractionAction) -
             )
         }
 
-        Spacer(modifier = Modifier.height(14.dp))
+        if (false) {
+            Spacer(modifier = Modifier.height(14.dp))
 
-        Row(
-            modifier = Modifier
-                .padding(start = 6.dp, end = 16.dp)
-                .fillMaxWidth()
-                .touchAction {
-                    onAction(AttractionAction.OpenOnMap)
-                },
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+            Row(
+                modifier = Modifier
+                    .padding(start = 6.dp, end = 16.dp)
+                    .fillMaxWidth()
+                    .touchAction {
+                        onAction(AttractionAction.OpenOnMap)
+                    },
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
 
-            Column {
-                Text(
-                    text = "Показать на карте",
-                    style = semiboldTextStyle.copy(
-                        fontSize = 15.sp,
-                        color = Color(0xFF535353)
+                Column {
+                    Text(
+                        text = "Показать на карте",
+                        style = semiboldTextStyle.copy(
+                            fontSize = 15.sp,
+                            color = Color(0xFF535353)
+                        )
                     )
-                )
 
-                Text(
-                    text = block.address,
-                    style = mediumTextStyle.copy(
-                        fontSize = 11.sp,
-                        color = Color(0xFF535353)
+                    Text(
+                        text = block.address,
+                        style = mediumTextStyle.copy(
+                            fontSize = 11.sp,
+                            color = Color(0xFF535353)
+                        )
                     )
+                }
+
+                Icon(
+                    painter = painterResource(R.drawable.ic_geo),
+                    contentDescription = null,
+                    modifier = Modifier.size(14.dp)
                 )
             }
-
-            Icon(
-                painter = painterResource(R.drawable.ic_geo),
-                contentDescription = null,
-                modifier = Modifier.size(14.dp)
-            )
         }
 
         Spacer(modifier = Modifier.height(35.dp))

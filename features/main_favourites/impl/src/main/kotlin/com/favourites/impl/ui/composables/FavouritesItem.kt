@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.multimodulepractice.common.composables.NetworkImage
+import com.example.multimodulepractice.common.composables.touchAction
 import com.example.multimodulepractice.common.theme.boldTextStyle
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
@@ -52,7 +53,7 @@ fun FavouriteItem(item: FavoriteAttraction, onAction: (FavouritesAction) -> Unit
             .width(175.dp)
             .height(225.dp)
             .clip(RoundedCornerShape(16.dp))
-            .clickable {
+            .touchAction {
                 onAction(FavouritesAction.OnOpenAttraction(item.id))
             }
     ) {
