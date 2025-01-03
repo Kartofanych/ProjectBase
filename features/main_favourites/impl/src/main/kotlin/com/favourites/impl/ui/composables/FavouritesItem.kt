@@ -52,10 +52,10 @@ fun FavouriteItem(item: FavoriteAttraction, onAction: (FavouritesAction) -> Unit
         modifier = Modifier
             .width(175.dp)
             .height(225.dp)
-            .clip(RoundedCornerShape(16.dp))
             .touchAction {
                 onAction(FavouritesAction.OnOpenAttraction(item.id))
             }
+            .clip(RoundedCornerShape(16.dp))
     ) {
         NetworkImage(
             url = item.icon,

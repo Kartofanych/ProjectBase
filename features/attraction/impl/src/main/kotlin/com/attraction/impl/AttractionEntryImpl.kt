@@ -14,7 +14,9 @@ import com.attraction.impl.di.AttractionDependencies
 import com.attraction.impl.di.DaggerAttractionComponent
 import com.attraction.impl.ui.AttractionEventHandler
 import com.attraction.impl.ui.AttractionScreen
+import com.example.multimodulepractice.common.data.models.network.ObjectType
 import com.example.multimodulepractice.common.navigation.injectedViewModel
+import com.reviews.api.ReviewsEntry
 import javax.inject.Inject
 
 class AttractionEntryImpl @Inject constructor(
@@ -55,6 +57,14 @@ class AttractionEntryImpl @Inject constructor(
                 back = { navController.popBackStack() },
                 navigateToAttraction = { id -> mainNavController.navigate(ATTRACTION_PREFIX + id) },
                 navigateToService = { id -> mainNavController.navigate(SERVICE_PREFIX + id) },
+                navigateToReviews = { id ->
+                    mainNavController.navigate(
+                        ReviewsEntry.destination(
+                            id,
+                            ObjectType.ATTRACTION.name
+                        )
+                    )
+                }
             )
 
             AttractionScreen(

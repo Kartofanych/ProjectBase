@@ -13,7 +13,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MultimodulePractice"
+rootProject.name = "TimeToTravel"
 include(":app")
 include(":common")
 include(":features:auth:api")
@@ -60,3 +60,5 @@ include(":features:promo:item:api")
 include(":features:promo:item:impl")
 include(":features:promo:list:api")
 include(":features:promo:list:impl")
+include(":features:reviews:api")
+include(":features:reviews:impl")

@@ -16,13 +16,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.example.multimodulepractice.common.composables.ActivityType
+import com.example.multimodulepractice.common.composables.NetworkImage
 import com.example.multimodulepractice.common.composables.ReviewStarsComponent
 import com.example.multimodulepractice.common.composables.touchAction
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
@@ -46,12 +44,8 @@ fun RecommendedAttractionView(
             .clip(RoundedCornerShape(16.dp))
             .padding(bottom = 10.dp)
     ) {
-        AsyncImage(
-            model = ImageRequest.Builder(context)
-                .data(attraction.icon)
-                .build(),
-            contentScale = ContentScale.Crop,
-            contentDescription = null,
+        NetworkImage(
+            url = attraction.icon,
             modifier = Modifier
                 .size(200.dp)
                 .clip(RoundedCornerShape(16.dp))

@@ -37,7 +37,8 @@ class ServiceMapper @Inject constructor() {
                 num10 in 2..4 -> "${dto.reviewCount} отзыва"
                 else -> "${dto.reviewCount} отзывов"
             },
-            starCount = maxOf(1, dto.rating.toInt())
+            starCount = maxOf(1, dto.rating.toInt()),
+            total = dto.reviewCount
         )
     }
 

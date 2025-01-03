@@ -1,4 +1,4 @@
-package com.attraction.impl.ui.composables
+package com.example.multimodulepractice.common.composables
 
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
@@ -22,9 +22,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.composables.NetworkImage
-import com.example.multimodulepractice.common.composables.StarsComponent
-import com.example.multimodulepractice.common.composables.touchAction
 import com.example.multimodulepractice.common.data.models.local.Review
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.regularTextStyle
@@ -32,9 +29,8 @@ import com.example.multimodulepractice.common.theme.regularTextStyle
 @Composable
 fun ReviewItem(review: Review) {
     val isFull = remember { mutableStateOf(review.text.length <= 114) }
-    Column(
-        Modifier.fillMaxWidth()
-    ) {
+    val isEmpty = review.text.isEmpty()
+    Column(Modifier.fillMaxWidth()) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
@@ -73,44 +69,46 @@ fun ReviewItem(review: Review) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .touchAction {
-                    if (review.text.length > 114) {
-                        isFull.value = !isFull.value
+        if (!isEmpty) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .touchAction {
+                        if (review.text.length > 114) {
+                            isFull.value = !isFull.value
+                        }
                     }
-                }
-        ) {
-
-            Text(
-                text = review.text,
-                style = mediumTextStyle.copy(fontSize = 12.sp, color = Color(0xFF545454)),
-                maxLines = if (isFull.value) 10000 else 4,
-                overflow = TextOverflow.Ellipsis,
-            )
-
-            androidx.compose.animation.AnimatedVisibility(
-                visible = !isFull.value,
-                enter = expandVertically(),
-                exit = shrinkVertically()
             ) {
-                Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = "Подробнее",
-                    style = mediumTextStyle.copy(
-                        fontSize = 12.sp,
-                        color = Color.Black,
-                        textDecoration = TextDecoration.Underline
-                    ),
+                    text = review.text,
+                    style = mediumTextStyle.copy(fontSize = 12.sp, color = Color(0xFF545454)),
                     maxLines = if (isFull.value) 10000 else 4,
                     overflow = TextOverflow.Ellipsis,
                 )
-            }
-        }
 
-        Spacer(modifier = Modifier.height(5.dp))
+                androidx.compose.animation.AnimatedVisibility(
+                    visible = !isFull.value,
+                    enter = expandVertically(),
+                    exit = shrinkVertically()
+                ) {
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Text(
+                        text = "Подробнее",
+                        style = mediumTextStyle.copy(
+                            fontSize = 12.sp,
+                            color = Color.Black,
+                            textDecoration = TextDecoration.Underline
+                        ),
+                        maxLines = if (isFull.value) 10000 else 4,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(5.dp))
+        }
 
         Text(
             text = review.date,

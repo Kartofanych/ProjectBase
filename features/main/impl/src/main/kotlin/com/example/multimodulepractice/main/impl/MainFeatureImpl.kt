@@ -3,8 +3,11 @@ package com.example.multimodulepractice.main.impl
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -73,40 +76,44 @@ class MainFeatureImpl @Inject constructor(
                 openFavorites = { insideNavController.navigate(SCREEN_FAVOURITES_ROUTE) },
             )
 
-            NavHost(
-                navController = insideNavController,
-                startDestination = SCREEN_MAP_ROUTE,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = 60.dp)
-            ) {
+            Box(modifier = modifier.fillMaxSize()) {
 
-                register(
-                    featureEntry = mapEntry,
+                NavHost(
                     navController = insideNavController,
-                    mainNavController = navController,
-                    modifier = Modifier.padding(bottom = 60.dp)
-                )
+                    startDestination = SCREEN_MAP_ROUTE,
+                    modifier = Modifier.fillMaxSize()
+                ) {
 
-                register(
-                    featureEntry = searchEntry,
-                    navController = insideNavController,
-                    mainNavController = navController,
-                    modifier = modifier
-                )
+                    register(
+                        featureEntry = mapEntry,
+                        navController = insideNavController,
+                        mainNavController = navController,
+                        modifier = modifier.padding(bottom = 60.dp)
+                    )
 
-                register(
-                    featureEntry = favouritesEntry,
-                    navController = insideNavController,
-                    mainNavController = navController,
-                    modifier = modifier
+                    register(
+                        featureEntry = searchEntry,
+                        navController = insideNavController,
+                        mainNavController = navController,
+                        modifier = modifier.padding(bottom = 60.dp)
+                    )
+
+                    register(
+                        featureEntry = favouritesEntry,
+                        navController = insideNavController,
+                        mainNavController = navController,
+                        modifier = modifier.padding(bottom = 60.dp)
+                    )
+                }
+
+                MainScreen(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .fillMaxWidth(),
+                    uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
+                    onAction = viewModel::onAction
                 )
             }
-
-            MainScreen(
-                uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
-                onAction = viewModel::onAction
-            )
 
             BackHandler(enabled = true, onBack = {})
         }

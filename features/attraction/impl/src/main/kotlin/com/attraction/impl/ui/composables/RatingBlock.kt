@@ -83,7 +83,7 @@ fun RatingBlock(block: Attraction.ReviewBlock, onAction: (AttractionAction) -> U
                                     when (item.toFloat()) {
                                         0f -> 0.dp
                                         else -> maxOf(
-                                            80f * (item.toFloat() / block.reviewsNumber.toFloat()),
+                                            80f * (item.toFloat() / block.ratingBlock.total.toFloat()),
                                             3f
                                         ).dp
                                     }

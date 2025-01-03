@@ -9,6 +9,7 @@ import com.example.multimodulepractice.guide.impl.di.GuideDependencies
 import com.example.multimodulepractice.main.impl.di.MainDependencies
 import com.example.multimodulepractice.main.impl.ui.map.MapViewModel
 import com.filters.impl.di.FiltersDependencies
+import com.reviews.impl.di.ReviewsDependencies
 import com.travelling.api.AppConfig
 
 interface AppProvider {
@@ -30,6 +31,8 @@ interface AppProvider {
     val filtersDependencies: FiltersDependencies
 
     val attractionDependencies: AttractionDependencies
+
+    val reviewsDependencies: ReviewsDependencies
 }
 
 val LocalAppProvider = compositionLocalOf<AppProvider> { error("No app provider found!") }

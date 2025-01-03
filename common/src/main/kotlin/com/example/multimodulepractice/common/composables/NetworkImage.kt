@@ -1,10 +1,15 @@
 package com.example.multimodulepractice.common.composables
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
+import coil.compose.SubcomposeAsyncImage
+import coil.compose.SubcomposeAsyncImageContent
 import coil.decode.BitmapFactoryDecoder
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
@@ -20,7 +25,8 @@ fun NetworkImage(
 ) {
     val decoder =
         if (type == ImageType.SVG) SvgDecoder.Factory() else BitmapFactoryDecoder.Factory()
-    AsyncImage(
+
+    SubcomposeAsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
             .data(url)
             .decoderFactory(decoder)
@@ -30,7 +36,23 @@ fun NetworkImage(
         contentDescription = null,
         contentScale = contentScale,
         modifier = modifier,
-    )
+    ) {
+        val state = painter.state
+        if (state is AsyncImagePainter.State.Loading || state is AsyncImagePainter.State.Error) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        shimmerBrush(
+                            targetValue = 1300f,
+                            showShimmer = true
+                        )
+                    )
+            )
+        } else {
+            SubcomposeAsyncImageContent()
+        }
+    }
 }
 
 enum class ImageType {

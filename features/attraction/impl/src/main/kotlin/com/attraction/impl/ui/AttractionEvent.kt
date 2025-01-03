@@ -9,4 +9,6 @@ sealed interface AttractionEvent {
     class OpenGuide(val attractionId: String) : AttractionEvent
 
     class OpenObject(val id: String, val type: ObjectType) : AttractionEvent
+
+    class OpenReviews(val id: String) : AttractionEvent
 }

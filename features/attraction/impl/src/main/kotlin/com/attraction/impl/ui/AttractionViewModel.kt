@@ -7,12 +7,11 @@ import com.example.multimodulepractice.common.data.models.local.ResponseState
 import com.favourites.api.domain.FavoritesRepository
 import com.favourites.api.domain.LikeInteractor
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,8 +23,8 @@ class AttractionViewModel @Inject constructor(
     private val favoritesRepository: FavoritesRepository,
 ) : ViewModel() {
 
-    private val _uiEvent = Channel<AttractionEvent>()
-    val uiEvent = _uiEvent.receiveAsFlow()
+    private val _uiEvent = MutableSharedFlow<AttractionEvent>(extraBufferCapacity = 1)
+    val uiEvent = _uiEvent.asSharedFlow()
 
     private val _uiStateFlow = MutableStateFlow<AttractionUiState>(AttractionUiState.Loading)
     val uiStateFlow: StateFlow<AttractionUiState>
@@ -82,15 +81,11 @@ class AttractionViewModel @Inject constructor(
     fun onAction(action: AttractionAction) {
         when (action) {
             AttractionAction.OpenGuide -> {
-                viewModelScope.launch {
-                    _uiEvent.send(AttractionEvent.OpenGuide(attractionId))
-                }
+                _uiEvent.tryEmit(AttractionEvent.OpenGuide(attractionId))
             }
 
             is AttractionAction.OpenObject -> {
-                viewModelScope.launch {
-                    _uiEvent.send(AttractionEvent.OpenObject(id = action.id, type = action.type))
-                }
+                _uiEvent.tryEmit(AttractionEvent.OpenObject(id = action.id, type = action.type))
             }
 
             AttractionAction.RecallAttraction -> loadAttraction()
@@ -100,9 +95,7 @@ class AttractionViewModel @Inject constructor(
             }
 
             AttractionAction.OnBackPressed -> {
-                viewModelScope.launch {
-                    _uiEvent.send(AttractionEvent.OnBackPressed)
-                }
+                _uiEvent.tryEmit(AttractionEvent.OnBackPressed)
             }
 
             AttractionAction.OpenOnMap -> {}
@@ -136,6 +129,10 @@ class AttractionViewModel @Inject constructor(
 
             is AttractionAction.ChangeReviewStars -> {
                 _reviewModalStateFlow.update { ReviewModalState.Default(action.starsCount) }
+            }
+
+            AttractionAction.OpenReviews -> {
+                _uiEvent.tryEmit(AttractionEvent.OpenReviews(attractionId))
             }
         }
     }

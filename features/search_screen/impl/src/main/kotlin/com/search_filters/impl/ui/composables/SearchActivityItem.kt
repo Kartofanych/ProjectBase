@@ -1,6 +1,5 @@
 package com.search_filters.impl.ui.composables
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,16 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import coil.size.Scale
 import com.example.multimodulepractice.common.composables.ActivityType
+import com.example.multimodulepractice.common.composables.NetworkImage
 import com.example.multimodulepractice.common.composables.ReviewStarsComponent
+import com.example.multimodulepractice.common.composables.touchAction
 import com.example.multimodulepractice.common.data.models.local.ActivityEntity
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.regularTextStyle
@@ -38,21 +34,17 @@ fun SearchActivity(entity: ActivityEntity, onAction: (SearchAction) -> Unit) {
             .fillMaxWidth()
             .padding(top = 18.dp)
             .height(108.dp)
-            .clickable {
+            .touchAction {
                 onAction(SearchAction.ActivityClicked(entity))
             }
             .padding(horizontal = 18.dp)
     ) {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(entity.icon)
-                .scale(Scale.FILL)
-                .build(),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
+
+        NetworkImage(
             modifier = Modifier
                 .size(108.dp)
-                .clip(RoundedCornerShape(16.dp))
+                .clip(RoundedCornerShape(16.dp)),
+            url = entity.icon
         )
 
         Spacer(modifier = Modifier.width(16.dp))

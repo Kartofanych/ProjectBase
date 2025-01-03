@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,40 +27,28 @@ import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.favourites.impl.ui.FavouritesUiState.FavouritesState
 import com.favourites.impl.ui.composables.FavoritesContent
-import com.favourites.impl.ui.composables.ProfileModal
 import com.favourites.impl.ui.composables.UnauthorizedContent
 
 @Composable
 fun ProfileScreen(uiState: FavouritesUiState, onAction: (FavouritesAction) -> Unit) {
 
-    Scaffold(
-        modifier = Modifier
-            .fillMaxSize(),
-        containerColor = Color.White
-    ) {
-        when (uiState.state) {
-            is FavouritesState.Authorized ->
-                FavoritesContent(
-                    uiState,
-                    onAction,
-                    it.calculateTopPadding()
-                )
-
-            FavouritesState.Error -> DefaultError(
-                modifier = Modifier.fillMaxSize(),
-                onReload = {
-                    onAction(FavouritesAction.OnReload)
-                }
+    when (uiState.state) {
+        is FavouritesState.Authorized ->
+            FavoritesContent(
+                uiState,
+                onAction,
             )
 
-            FavouritesState.Loading -> DefaultLoading(modifier = Modifier.fillMaxSize())
+        FavouritesState.Error -> DefaultError(
+            modifier = Modifier.fillMaxSize(),
+            onReload = {
+                onAction(FavouritesAction.OnReload)
+            }
+        )
 
-            FavouritesState.Unauthorized -> UnauthorizedContent(uiState, onAction)
-        }
+        FavouritesState.Loading -> DefaultLoading(modifier = Modifier.fillMaxSize())
 
-        if (uiState.isModalVisible && uiState.state is FavouritesState.Authorized) {
-            ProfileModal(uiState.state, onAction, it.calculateBottomPadding())
-        }
+        FavouritesState.Unauthorized -> UnauthorizedContent(uiState, onAction)
     }
 }
 

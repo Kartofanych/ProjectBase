@@ -46,6 +46,7 @@ import com.example.multimodulepractice.main.impl.ui.map.MapScreen
 import com.example.multimodulepractice.main.impl.ui.map.MapScreenEventHandler
 import com.filters.api.FiltersEntry
 import com.promo.api.PromoEntry
+import com.reviews.api.ReviewsEntry
 import com.search.api.SearchEntry
 import com.service.api.ServiceEntry
 import com.splash.api.SplashEntry
@@ -114,28 +115,25 @@ class MainActivity : AppCompatActivity() {
         val searchFeature = destinations.find<SearchEntry>()
         val attractionFeature = destinations.find<AttractionEntry>()
         val promoFeature = destinations.find<PromoEntry>()
+        val reviewsFeature = destinations.find<ReviewsEntry>()
 
         val isDebug = BuildConfig.DEBUG
         val isProduction = appProvider.appConfig.isProduction()
 
+        Scaffold(
+            modifier = Modifier
+                .fillMaxSize(),
+            containerColor = Color.White
+        ) {
 
-        Scaffold(containerColor = Color.Transparent) {
-
-            Map(
-                modifier = Modifier
-                    .padding(bottom = it.calculateBottomPadding() + 52.dp)
-                    .fillMaxSize(),
-                navController = navController
-            )
+            Map(navController = navController)
 
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
+                modifier = Modifier.fillMaxSize()
             ) {
                 NavHost(
                     navController = navController,
                     startDestination = splashFeature.featureRoute,
-                    modifier = Modifier.padding(bottom = it.calculateBottomPadding())
                 ) {
                     register(
                         splashFeature,
@@ -152,7 +150,7 @@ class MainActivity : AppCompatActivity() {
                     register(
                         mainFeature,
                         navController = navController,
-                        modifier = Modifier
+                        modifier = Modifier.padding(bottom = it.calculateBottomPadding())
                     )
 
                     register(
@@ -196,6 +194,12 @@ class MainActivity : AppCompatActivity() {
                         navController = navController,
                         modifier = Modifier
                     )
+
+                    register(
+                        reviewsFeature,
+                        navController = navController,
+                        modifier = Modifier
+                    )
                 }
                 if (isDebug) {
                     DebugPanel(
@@ -209,26 +213,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Composable
-    fun Map(navController: NavHostController, modifier: Modifier) {
+    fun Map(navController: NavHostController) {
         val mapViewModel = injectedViewModel {
             appProvider.mapViewModel
         }
 
         val mapUiState = mapViewModel.uiStateFlow.collectAsState().value
-        Box(
-            modifier = modifier
-        ) {
-            MapScreenEventHandler(
-                uiEvent = mapViewModel.uiEvent,
-                openFilters = { navController.navigate("filters") },
-                openAttraction = { id -> navController.navigate("attraction/$id") },
-            )
-            MapScreen(
-                uiState = mapUiState,
-                onMapAction = mapViewModel::onMapAction,
-                map = mapViewModel.map
-            )
-        }
+        MapScreenEventHandler(
+            uiEvent = mapViewModel.uiEvent,
+            openFilters = { navController.navigate("filters") },
+            openAttraction = { id -> navController.navigate("attraction/$id") },
+        )
+
+        MapScreen(
+            uiState = mapUiState,
+            onMapAction = mapViewModel::onMapAction,
+            map = mapViewModel.map
+        )
     }
 
     @Composable

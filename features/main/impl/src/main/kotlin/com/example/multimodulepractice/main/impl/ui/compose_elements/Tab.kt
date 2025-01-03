@@ -1,7 +1,6 @@
 package com.example.multimodulepractice.main.impl.ui.compose_elements
 
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -17,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.multimodulepractice.common.composables.touchAction
 import com.example.multimodulepractice.common.theme.tabTextStyle
 import com.example.multimodulepractice.main.impl.R
 import com.example.multimodulepractice.main.impl.data.models.MainTab
@@ -41,7 +41,7 @@ fun Tab(
         modifier = modifier
             .fillMaxHeight()
             .clip(RoundedCornerShape(size = 10.dp))
-            .clickable {
+            .touchAction {
                 onAction(MainAction.OpenTab(tabValue))
             },
         contentAlignment = Alignment.Center
