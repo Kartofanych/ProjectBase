@@ -29,7 +29,7 @@ interface NetworkModule {
         private const val TESTING_BASE_URL =
             "https://bbalve6v55k081m4pfn9.containers.yandexcloud.net/"
         private const val PRODUCTION_BASE_URL =
-            "https://bban3krd1de8vtafs5p3.containers.yandexcloud.net/"
+            "https://quick-travel.ru/api/"
 
         @Provides
         @AppScope

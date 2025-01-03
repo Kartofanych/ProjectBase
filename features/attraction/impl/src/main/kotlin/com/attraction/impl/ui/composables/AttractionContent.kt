@@ -76,7 +76,7 @@ fun AttractionContent(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(Color.White)
-                        .padding(top = scaffold.calculateTopPadding()),
+                        .padding(top = scaffold.calculateTopPadding() + 10.dp),
                     onAction = onAction,
                     schedule = attraction.schedule
                 )

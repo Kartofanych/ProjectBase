@@ -22,7 +22,6 @@ import com.example.multimodulepractice.common.composables.NetworkImage
 import com.example.multimodulepractice.common.composables.ReviewStarsComponent
 import com.example.multimodulepractice.common.composables.touchAction
 import com.example.multimodulepractice.common.theme.mediumTextStyle
-import com.example.multimodulepractice.common.theme.regularTextStyle
 
 @Composable
 fun ServiceItem(item: CloseObject, onAction: (AttractionAction) -> Unit) {
@@ -73,14 +72,14 @@ fun ServiceItem(item: CloseObject, onAction: (AttractionAction) -> Unit) {
                 overflow = TextOverflow.Ellipsis
             )
 
-            Spacer(modifier = Modifier.height(5.dp))
-
-            Text(
-                text = item.distance,
-                style = regularTextStyle.copy(fontSize = 10.sp, color = Color(0xFF959595)),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
+//            Spacer(modifier = Modifier.height(5.dp))
+//
+//            Text(
+//                text = item.distance,
+//                style = regularTextStyle.copy(fontSize = 10.sp, color = Color(0xFF959595)),
+//                maxLines = 1,
+//                overflow = TextOverflow.Ellipsis
+//            )
         }
     }
 }

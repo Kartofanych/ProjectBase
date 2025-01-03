@@ -1,6 +1,5 @@
 package com.favourites.impl.data.interactors
 
-import com.example.multimodulepractice.auth.AuthInfoManager
 import com.example.multimodulepractice.common.data.models.local.ResponseState
 import com.favourites.impl.data.FavoritesApi
 import com.favourites.impl.data.mappers.FavoritesMapper
@@ -13,7 +12,6 @@ import javax.inject.Inject
 class FavouritesInteractor @Inject constructor(
     private val api: FavoritesApi,
     private val mapper: FavoritesMapper,
-    private val authInfoManager: AuthInfoManager,
 ) {
 
     suspend fun favorite(): ResponseState<FavoritesResponse> {
@@ -23,7 +21,7 @@ class FavouritesInteractor @Inject constructor(
                 return@withContext ResponseState.Success(mapper.map(response))
             } catch (exception: Exception) {
                 when {
-                    exception is HttpException && exception.code() == 403 -> ResponseState.Error.Unauthorized()
+                    exception is HttpException && exception.code() == 401 -> ResponseState.Error.Unauthorized()
                     else -> ResponseState.Error.Default()
                 }
             }

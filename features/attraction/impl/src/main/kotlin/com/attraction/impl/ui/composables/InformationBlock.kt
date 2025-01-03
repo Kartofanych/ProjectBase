@@ -55,19 +55,17 @@ fun InformationBlock(attraction: Attraction, onAction: (AttractionAction) -> Uni
 
             Spacer(modifier = Modifier.width(6.dp))
 
-            if (attraction.isAuthorized) {
-                Text(
-                    text = block.ratingBlock.reviewCount,
-                    style = regularTextStyle.copy(
-                        fontSize = 14.sp,
-                        textDecoration = TextDecoration.Underline,
-                        color = Color(0xFF74A3FF)
-                    ),
-                    modifier = Modifier.touchAction {
-                        onAction(AttractionAction.ChangeReviewModalVisibility(true))
-                    }
-                )
-            }
+            Text(
+                text = block.ratingBlock.reviewCount,
+                style = regularTextStyle.copy(
+                    fontSize = 14.sp,
+                    textDecoration = TextDecoration.Underline,
+                    color = Color(0xFF74A3FF)
+                ),
+                modifier = Modifier.touchAction {
+                    onAction(AttractionAction.OpenReviews)
+                }
+            )
         }
 
         if (attraction.isAuthorized) {

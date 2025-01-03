@@ -9,7 +9,7 @@ sealed interface ResponseState<T> {
         // 426
         class OldVersion<T>: Error<T>
 
-        // 403
+        // 401
         class Unauthorized<T> : Error<T>
 
         // 498

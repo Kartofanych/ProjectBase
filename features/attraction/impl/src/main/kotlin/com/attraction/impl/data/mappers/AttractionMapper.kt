@@ -75,7 +75,8 @@ class AttractionMapper @Inject constructor(
                         genitiveSingular = "$total отзыва",
                         genitivePlural = "$total отзывов",
                     ),
-                    starCount = rating.toInt()
+                    starCount = rating.toInt(),
+                    total = total,
                 ),
                 reviewCounts = with(rateList) {
                     listOf(five, four, three, two, one)
@@ -89,8 +90,7 @@ class AttractionMapper @Inject constructor(
                         text = it.text,
                         stars = it.stars,
                     )
-                },
-                reviewsNumber = total
+                }
             )
         }
 
@@ -104,7 +104,8 @@ class AttractionMapper @Inject constructor(
                     genitiveSingular = "$total отзыва",
                     genitivePlural = "$total отзывов",
                 ),
-                starCount = rating.toInt()
+                starCount = rating.toInt(),
+                total = total,
             )
         }
 

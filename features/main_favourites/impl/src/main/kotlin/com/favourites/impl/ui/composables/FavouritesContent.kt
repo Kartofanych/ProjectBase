@@ -11,28 +11,33 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.multimodulepractice.common.theme.regularTextStyle
 import com.favourites.impl.ui.FavoritesToolbar
 import com.favourites.impl.ui.FavouritesAction
 import com.favourites.impl.ui.FavouritesUiState
+import com.favourites.impl.ui.FavouritesUiState.FavouritesState
 
 @Composable
 fun FavoritesContent(
     uiState: FavouritesUiState,
     onAction: (FavouritesAction) -> Unit,
-    topPadding: Dp
 ) {
     val state = uiState.state
-    if (state is FavouritesUiState.FavouritesState.Authorized) {
-        Box(modifier = Modifier.fillMaxSize()) {
+    if (state is FavouritesState.Authorized) {
+        Scaffold(
+            modifier = Modifier
+                .fillMaxSize(),
+            containerColor = Color.White
+        ) {
 
             if (state.items.isNotEmpty()) {
                 LazyVerticalGrid(
@@ -43,7 +48,7 @@ fun FavoritesContent(
                     horizontalArrangement = Arrangement.spacedBy(18.dp)
                 ) {
                     item {
-                        Spacer(modifier = Modifier.height(topPadding))
+                        Spacer(modifier = Modifier.height(it.calculateTopPadding()))
                     }
 
                     item(
@@ -63,10 +68,12 @@ fun FavoritesContent(
                         FavouriteItem(it, onAction)
                     }
 
-                    item {
-                        Spacer(
-                            modifier = Modifier.height(40.dp)
-                        )
+                    item(
+                        span = {
+                            GridItemSpan(2)
+                        }
+                    ) {
+                        Spacer(modifier = Modifier.height(52.dp))
                     }
                 }
             } else {
@@ -84,6 +91,10 @@ fun FavoritesContent(
                         textAlign = TextAlign.Center
                     )
                 }
+            }
+
+            if (uiState.isModalVisible && uiState.state is FavouritesState.Authorized) {
+                ProfileModal(uiState.state, onAction, it.calculateBottomPadding())
             }
         }
     }

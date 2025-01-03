@@ -22,6 +22,7 @@ import com.attraction.impl.ui.AttractionAction
 import com.example.multimodulepractice.attraction.impl.R
 import com.example.multimodulepractice.common.composables.DefaultButton
 import com.example.multimodulepractice.common.composables.DefaultSeparator
+import com.example.multimodulepractice.common.composables.ReviewItem
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 
@@ -91,7 +92,7 @@ fun ReviewBlock(attraction: Attraction, onAction: (AttractionAction) -> Unit) {
 
             DefaultButton(
                 onClick = {
-                    //onAction(AttractionAction.OpenGuide)
+                    onAction(AttractionAction.OpenReviews)
                 },
                 backgroundColor = Color(0xFF404040),
                 modifier = Modifier

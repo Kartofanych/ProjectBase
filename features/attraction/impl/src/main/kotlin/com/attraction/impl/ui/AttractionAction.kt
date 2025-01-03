@@ -14,6 +14,8 @@ sealed interface AttractionAction {
 
     object OpenOnMap : AttractionAction
 
+    object OpenReviews : AttractionAction
+
     object ChangeScheduleVisibility : AttractionAction
 
     class OpenObject(val id: String, val type: ObjectType) : AttractionAction

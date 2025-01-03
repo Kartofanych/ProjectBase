@@ -12,6 +12,7 @@ fun AttractionEventHandler(
     back: () -> Unit,
     navigateToAttraction: (String) -> Unit,
     navigateToService: (String) -> Unit,
+    navigateToReviews: (String) -> Unit,
 ) {
 
     LaunchedEffect(Unit) {
@@ -25,6 +26,8 @@ fun AttractionEventHandler(
                         ObjectType.SERVICE -> navigateToService(event.id)
                     }
                 }
+
+                is AttractionEvent.OpenReviews -> navigateToReviews(event.id)
 
                 AttractionEvent.OnBackPressed -> back()
             }

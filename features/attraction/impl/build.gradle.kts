@@ -18,6 +18,7 @@ dependencies {
     api(project(":features:attraction:api"))
     api(project(":features:auth:api"))
     api(project(":features:main_favourites:api"))
+    api(project(":features:reviews:api"))
     implementation(project(":common"))
     implementation(libs.core.ktx)
 

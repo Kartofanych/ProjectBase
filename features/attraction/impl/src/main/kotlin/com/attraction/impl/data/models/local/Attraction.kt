@@ -45,7 +45,6 @@ data class Attraction(
     class ReviewBlock(
         val ratingBlock: RatingBlock,
         val reviewCounts: List<Int>,
-        val reviewsNumber: Int,
         val reviews: List<Review>,
     )
 
