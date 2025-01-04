@@ -1,7 +1,7 @@
 package com.example.multimodulepractice.main.impl.data.models
 
 enum class MainTab(val title: String) {
-    MAP("Карты"),
+    MAP("Карта"),
     LIST("Поиск"),
     FAVOURITES("Избранное")
 }

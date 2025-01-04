@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.multimodulepractice.common.composables.touchAction
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.filters.impl.ui.composables.CategoriesSection
 import com.filters.impl.ui.composables.DistanceSection
@@ -68,7 +69,7 @@ fun FiltersScreen(
                 .width(225.dp)
                 .background(color = Color(0xFF74A3FF), shape = CircleShape)
                 .clip(CircleShape)
-                .clickable {
+                .touchAction {
                     onAction(FiltersAction.OnClose(withUpdates = true))
                 },
             contentAlignment = Alignment.Center

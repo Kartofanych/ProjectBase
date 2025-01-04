@@ -29,7 +29,7 @@ class ReviewsViewModel @Inject constructor(
     val uiStateFlow: StateFlow<ReviewsUiState>
         get() = _uiStateFlow
 
-    private var job: Job? = null
+    private var paginationJob: Job? = null
     private var cursor: String? = null
 
     private val currentList = mutableListOf<Review>()
@@ -40,10 +40,11 @@ class ReviewsViewModel @Inject constructor(
 
     private fun loadPage() {
         currentList.clear()
-        _uiStateFlow.update { ReviewsUiState.Loading }
+        _uiStateFlow.value = ReviewsUiState.Loading
         viewModelScope.launch {
             when (val result = interactor.loadReviewsPage(data.id)) {
-                is ResponseState.Error -> {}
+                is ResponseState.Error -> _uiStateFlow.value = ReviewsUiState.Loading
+
                 is ResponseState.Success -> {
                     cursor = result.data.cursor
                     with(result.data) {
@@ -67,7 +68,7 @@ class ReviewsViewModel @Inject constructor(
         val notnullCursor = cursor ?: return
         val state = uiStateFlow.value as? ReviewsUiState.Content ?: return
         _uiStateFlow.update { state.copy(loading = true) }
-        job = viewModelScope.launch {
+        paginationJob = viewModelScope.launch {
             when (val result = interactor.loadReviews(data.id, notnullCursor)) {
                 is ResponseState.Error -> {}
                 is ResponseState.Success -> {
@@ -82,12 +83,12 @@ class ReviewsViewModel @Inject constructor(
                     }
                 }
             }
-            job = null
+            paginationJob = null
         }
     }
 
     private fun onPagination(firstVisibleItem: Int) {
-        if (firstVisibleItem + 8 >= currentList.size && job == null) {
+        if (firstVisibleItem + 8 >= currentList.size && paginationJob == null) {
             loadNextPage()
         }
     }

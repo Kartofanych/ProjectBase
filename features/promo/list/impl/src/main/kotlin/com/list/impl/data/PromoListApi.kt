@@ -5,6 +5,6 @@ import retrofit2.http.POST
 
 interface PromoListApi {
 
-    @POST("/promocodes")
+    @POST("promocodes")
     suspend fun promoCodes(): PromoCodesResponseDto
 }

@@ -1,5 +1,6 @@
 package com.example.multimodulepractice.di.modules
 
+import com.example.multimodulepractice.BuildConfig
 import com.example.multimodulepractice.common.di.AppScope
 import com.example.multimodulepractice.network.HeaderInterceptor
 import com.travelling.api.AppConfig
@@ -35,7 +36,7 @@ interface NetworkModule {
         @AppScope
         fun provideBaseRetrofit(appConfig: AppConfig, client: OkHttpClient): Retrofit {
             val url = when {
-                appConfig.isProduction() -> PRODUCTION_BASE_URL
+                appConfig.isProduction() || !BuildConfig.DEBUG -> PRODUCTION_BASE_URL
                 else -> TESTING_BASE_URL
             }
 
