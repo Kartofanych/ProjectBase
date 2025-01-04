@@ -63,7 +63,8 @@ class ReviewsEntryImpl @Inject constructor(
             }
 
             ReviewsEventHandler(
-                uiEvent = viewModel.uiEvent
+                uiEvent = viewModel.uiEvent,
+                onBack = { navController.popBackStack() }
             )
 
             ReviewsScreen(

@@ -6,13 +6,14 @@ import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun ReviewsEventHandler(
-    uiEvent: Flow<ReviewsEvent>
+    uiEvent: Flow<ReviewsEvent>,
+    onBack: () -> Unit
 ) {
 
     LaunchedEffect(Unit) {
         uiEvent.collect { event ->
             when (event) {
-                else -> Unit
+                ReviewsEvent.OnBack -> onBack()
             }
         }
     }

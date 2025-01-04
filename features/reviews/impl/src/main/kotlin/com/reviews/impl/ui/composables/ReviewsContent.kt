@@ -1,6 +1,5 @@
 package com.reviews.impl.ui.composables
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,44 +35,42 @@ fun ReviewsContent(uiState: ReviewsUiState.Content, onAction: (ReviewsAction) ->
         modifier = Modifier.fillMaxSize(),
         containerColor = Color.White
     ) { scaffold ->
-        Column(Modifier.fillMaxSize()) {
-            LazyColumn(
-                state = scrollState,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp)
-            ) {
-                item {
-                    ReviewsToolbar(
-                        title = uiState.title,
-                        padding = scaffold.calculateTopPadding(),
-                        onAction = onAction
+        LazyColumn(
+            state = scrollState,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp)
+        ) {
+            item {
+                ReviewsToolbar(
+                    title = uiState.title,
+                    padding = scaffold.calculateTopPadding(),
+                    onAction = onAction
+                )
+
+                RatingBlock(uiState, onAction)
+
+                Spacer(Modifier.height(30.dp))
+            }
+
+            itemsIndexed(
+                items = uiState.reviews,
+                key = { index, _ -> index }
+            ) { _, it ->
+                DefaultSeparator()
+                Spacer(modifier = Modifier.height(30.dp))
+                ReviewItem(it)
+            }
+
+            item {
+                if (uiState.loading) {
+                    DefaultLoading(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp)
                     )
-
-                    RatingBlock(uiState, onAction)
-
-                    Spacer(Modifier.height(30.dp))
                 }
-
-                itemsIndexed(
-                    items = uiState.reviews,
-                    key = { index, _ -> index }
-                ) { _, it ->
-                    DefaultSeparator()
-                    Spacer(modifier = Modifier.height(30.dp))
-                    ReviewItem(it)
-                }
-
-                item {
-                    if (uiState.loading) {
-                        DefaultLoading(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(200.dp)
-                        )
-                    }
-                    Spacer(Modifier.height(scaffold.calculateBottomPadding() + 20.dp))
-                }
+                Spacer(Modifier.height(scaffold.calculateBottomPadding() + 20.dp))
             }
         }
     }

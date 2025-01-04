@@ -7,6 +7,6 @@ import retrofit2.http.POST
 
 interface PromoItemApi {
 
-    @POST("/promocode_info")
+    @POST("promocode_info")
     suspend fun promoCodeInfo(@Body body: PromoItemRequest): PromoItemDto
 }

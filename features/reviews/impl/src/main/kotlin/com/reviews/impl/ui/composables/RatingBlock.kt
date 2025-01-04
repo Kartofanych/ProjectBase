@@ -28,8 +28,7 @@ import com.reviews.impl.ui.ReviewsUiState
 fun RatingBlock(uiState: ReviewsUiState.Content, onAction: (ReviewsAction) -> Unit) {
 
     Column(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Column(
@@ -58,10 +57,7 @@ fun RatingBlock(uiState: ReviewsUiState.Content, onAction: (ReviewsAction) -> Un
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             uiState.ratings.forEachIndexed { index, item ->
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         modifier = Modifier.width(75.dp),
                         text = index.toReviewText(),

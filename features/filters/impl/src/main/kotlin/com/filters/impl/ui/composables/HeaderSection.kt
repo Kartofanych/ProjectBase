@@ -1,7 +1,6 @@
 package com.filters.impl.ui.composables
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.multimodulepractice.common.composables.touchAction
 import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.filters.impl.R
 import com.filters.impl.ui.FiltersAction
@@ -37,7 +37,7 @@ fun HeaderSection(onAction: (FiltersAction) -> Unit) {
                 .wrapContentWidth()
                 .background(Color.White, RoundedCornerShape(12.dp))
                 .clip(RoundedCornerShape(12.dp))
-                .clickable {
+                .touchAction {
                     onAction(FiltersAction.OnZeroFilters)
                 },
             contentAlignment = Alignment.Center
@@ -63,7 +63,7 @@ fun HeaderSection(onAction: (FiltersAction) -> Unit) {
                 .size(34.dp)
                 .background(Color.White, RoundedCornerShape(12.dp))
                 .clip(RoundedCornerShape(12.dp))
-                .clickable {
+                .touchAction {
                     onAction(FiltersAction.OnClose(false))
                 },
             contentAlignment = Alignment.Center

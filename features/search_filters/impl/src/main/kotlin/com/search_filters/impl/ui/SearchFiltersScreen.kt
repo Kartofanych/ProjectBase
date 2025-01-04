@@ -1,7 +1,6 @@
 package com.search_filters.impl.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
@@ -27,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.multimodulepractice.common.composables.touchAction
 import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.search_filters.impl.ui.composables.CitiesSection
 import com.search_filters.impl.ui.composables.DistanceSection
@@ -80,7 +80,7 @@ fun SearchFiltersScreen(
                 .width(225.dp)
                 .background(color = Color(0xFF74A3FF), shape = CircleShape)
                 .clip(CircleShape)
-                .clickable {
+                .touchAction {
                     onAction(SearchFiltersAction.OnClose(withUpdates = true))
                 },
             contentAlignment = Alignment.Center
