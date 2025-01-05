@@ -16,8 +16,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.composables.TopShadow
-import com.example.multimodulepractice.common.theme.mediumTextStyle
+import com.example.travelling.common.composables.TopShadow
+import com.example.travelling.common.theme.mediumTextStyle
 import com.service.impl.data.models.local.Service
 
 

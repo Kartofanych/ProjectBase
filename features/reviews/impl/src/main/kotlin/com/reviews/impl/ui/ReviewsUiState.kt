@@ -1,7 +1,7 @@
 package com.reviews.impl.ui
 
-import com.example.multimodulepractice.common.data.models.local.RatingBlock
-import com.example.multimodulepractice.common.data.models.local.Review
+import com.example.travelling.common.data.models.local.RatingBlock
+import com.example.travelling.common.data.models.local.Review
 
 sealed interface ReviewsUiState {
     object Loading : ReviewsUiState
@@ -13,6 +13,7 @@ sealed interface ReviewsUiState {
         val ratingBlock: RatingBlock,
         val ratings: List<Int>,
         val reviews: List<Review>,
-        val loading: Boolean = false
+        val loading: Boolean = false,
+        val error: Boolean = false,
     ) : ReviewsUiState
 }

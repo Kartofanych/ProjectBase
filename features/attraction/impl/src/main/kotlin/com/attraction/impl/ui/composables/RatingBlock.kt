@@ -22,9 +22,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.attraction.impl.data.models.local.Attraction
 import com.attraction.impl.ui.AttractionAction
-import com.example.multimodulepractice.common.composables.StarsComponent
-import com.example.multimodulepractice.common.theme.boldTextStyle
-import com.example.multimodulepractice.common.theme.mediumTextStyle
+import com.example.travelling.common.composables.StarsComponent
+import com.example.travelling.common.theme.boldTextStyle
+import com.example.travelling.common.theme.mediumTextStyle
 
 @Composable
 fun RatingBlock(block: Attraction.ReviewBlock, onAction: (AttractionAction) -> Unit) {

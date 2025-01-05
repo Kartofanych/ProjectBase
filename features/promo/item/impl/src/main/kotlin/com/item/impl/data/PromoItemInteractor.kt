@@ -1,6 +1,6 @@
 package com.item.impl.data
 
-import com.example.multimodulepractice.common.data.models.local.ResponseState
+import com.example.travelling.common.data.models.local.ResponseState
 import com.item.impl.data.mappers.PromoItemMapper
 import com.item.impl.data.models.dto.PromoItemRequest
 import com.item.impl.data.models.local.PromoItem

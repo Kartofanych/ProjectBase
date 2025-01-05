@@ -1,6 +1,6 @@
 package com.main_map.api
 
-import com.example.multimodulepractice.common.navigation.FeatureEntry
+import com.example.travelling.common.navigation.FeatureEntry
 
 abstract class MapFeatureEntry : FeatureEntry {
 

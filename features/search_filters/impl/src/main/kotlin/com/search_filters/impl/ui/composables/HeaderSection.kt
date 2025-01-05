@@ -20,8 +20,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.theme.mediumTextStyle
 import com.example.multimodulepractice.search_filters.impl.R
+import com.example.travelling.common.theme.mediumTextStyle
 import com.search_filters.impl.ui.SearchFiltersAction
 
 @Composable

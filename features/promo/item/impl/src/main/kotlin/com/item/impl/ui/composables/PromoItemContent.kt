@@ -26,13 +26,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material.Text
-import com.example.multimodulepractice.common.composables.DefaultButton
-import com.example.multimodulepractice.common.composables.DefaultSeparator
-import com.example.multimodulepractice.common.composables.NetworkImage
-import com.example.multimodulepractice.common.composables.touchAction
-import com.example.multimodulepractice.common.theme.mediumTextStyle
-import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.example.multimodulepractice.promo.item.impl.R
+import com.example.travelling.common.composables.DefaultButton
+import com.example.travelling.common.composables.DefaultSeparator
+import com.example.travelling.common.composables.NetworkImage
+import com.example.travelling.common.composables.touchAction
+import com.example.travelling.common.theme.mediumTextStyle
+import com.example.travelling.common.theme.semiboldTextStyle
 import com.item.impl.data.models.local.PromoItem
 import com.item.impl.ui.PromoItemAction
 

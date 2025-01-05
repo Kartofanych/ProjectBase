@@ -4,9 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.multimodulepractice.common.data.models.local.ResponseState
-import com.example.multimodulepractice.common.domain.DeeplinkHandler
-import com.example.multimodulepractice.common.utils.runWithMinTime
+import com.example.travelling.common.data.models.local.ResponseState
+import com.example.travelling.common.domain.DeeplinkHandler
+import com.example.travelling.common.utils.runWithMinTime
 import com.service.impl.di.ServiceScope
 import com.service.impl.domain.ServiceInteractor
 import com.service.impl.ui.ServiceUiState.DataState

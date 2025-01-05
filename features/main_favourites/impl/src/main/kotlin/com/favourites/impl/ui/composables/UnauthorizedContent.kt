@@ -1,5 +1,6 @@
 package com.favourites.impl.ui.composables
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.composables.DefaultButton
-import com.example.multimodulepractice.common.theme.regularTextStyle
-import com.example.multimodulepractice.common.theme.semiboldTextStyle
+import com.example.travelling.common.composables.DefaultButton
+import com.example.travelling.common.theme.regularTextStyle
+import com.example.travelling.common.theme.semiboldTextStyle
 import com.favourites.impl.ui.FavoritesToolbar
 import com.favourites.impl.ui.FavouritesAction
 import com.favourites.impl.ui.FavouritesUiState
@@ -26,6 +27,7 @@ fun UnauthorizedContent(uiState: FavouritesUiState, onAction: (FavouritesAction)
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color.White)
             .safeContentPadding()
     ) {
         FavoritesToolbar(uiState, onAction)

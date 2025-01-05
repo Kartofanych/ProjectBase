@@ -1,8 +1,8 @@
 package com.service.impl.di
 
-import com.example.multimodulepractice.common.di.AppScope
-import com.example.multimodulepractice.common.navigation.FeatureEntry
-import com.example.multimodulepractice.common.navigation.FeatureEntryKey
+import com.example.travelling.common.di.AppScope
+import com.example.travelling.common.navigation.FeatureEntry
+import com.example.travelling.common.navigation.FeatureEntryKey
 import com.service.api.ServiceEntry
 import com.service.impl.ServiceEntryImpl
 import dagger.Binds

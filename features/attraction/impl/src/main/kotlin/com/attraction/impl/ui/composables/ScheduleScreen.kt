@@ -18,10 +18,10 @@ import androidx.compose.ui.unit.sp
 import com.attraction.impl.data.models.local.Attraction
 import com.attraction.impl.ui.AttractionAction
 import com.example.multimodulepractice.attraction.impl.R
-import com.example.multimodulepractice.common.composables.touchAction
-import com.example.multimodulepractice.common.theme.boldTextStyle
-import com.example.multimodulepractice.common.theme.mediumTextStyle
-import com.example.multimodulepractice.common.theme.regularTextStyle
+import com.example.travelling.common.composables.touchAction
+import com.example.travelling.common.theme.boldTextStyle
+import com.example.travelling.common.theme.mediumTextStyle
+import com.example.travelling.common.theme.regularTextStyle
 
 @Composable
 fun ScheduleScreen(

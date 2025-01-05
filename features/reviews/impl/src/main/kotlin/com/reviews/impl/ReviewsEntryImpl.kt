@@ -7,8 +7,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.example.multimodulepractice.common.data.models.network.ObjectType
-import com.example.multimodulepractice.common.navigation.injectedViewModel
+import com.example.travelling.common.data.models.network.ObjectType
+import com.example.travelling.common.navigation.injectedViewModel
 import com.reviews.api.ReviewsEntry
 import com.reviews.impl.di.DaggerReviewsComponent
 import com.reviews.impl.di.ReviewsComponent

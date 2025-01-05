@@ -3,10 +3,10 @@ package com.start.impl.ui
 import android.text.TextUtils
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.multimodulepractice.auth.AuthInfoManager
-import com.example.multimodulepractice.auth.models.AuthInfo
-import com.example.multimodulepractice.common.data.models.local.ResponseState
-import com.example.multimodulepractice.common.utils.runWithMinTime
+import com.example.travelling.auth.AuthInfoManager
+import com.example.travelling.auth.models.AuthInfo
+import com.example.travelling.common.data.models.local.ResponseState
+import com.example.travelling.common.utils.runWithMinTime
 import com.start.impl.data.LoginInteractor
 import com.start.impl.ui.ProcessUiState.LoginState
 import com.start.impl.ui.ProcessUiState.LoginState.CodeState.CodeScreenState

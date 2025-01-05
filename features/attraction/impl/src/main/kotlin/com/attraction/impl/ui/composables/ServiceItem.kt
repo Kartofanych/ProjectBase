@@ -18,10 +18,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.attraction.impl.data.models.local.CloseObject
 import com.attraction.impl.ui.AttractionAction
-import com.example.multimodulepractice.common.composables.NetworkImage
-import com.example.multimodulepractice.common.composables.ReviewStarsComponent
-import com.example.multimodulepractice.common.composables.touchAction
-import com.example.multimodulepractice.common.theme.mediumTextStyle
+import com.example.travelling.common.composables.NetworkImage
+import com.example.travelling.common.composables.ReviewStarsComponent
+import com.example.travelling.common.composables.touchAction
+import com.example.travelling.common.theme.mediumTextStyle
 
 @Composable
 fun ServiceItem(item: CloseObject, onAction: (AttractionAction) -> Unit) {

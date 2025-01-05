@@ -1,7 +1,7 @@
 package com.search.impl.domain
 
 
-import com.example.multimodulepractice.common.data.models.local.ResponseState
+import com.example.travelling.common.data.models.local.ResponseState
 import com.search.impl.data.MainListApi
 import com.search.impl.data.mappers.ListMapper
 import com.search.impl.data.models.local.ListResponse

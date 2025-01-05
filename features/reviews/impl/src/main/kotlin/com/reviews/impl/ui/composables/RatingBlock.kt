@@ -18,9 +18,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.composables.StarsComponent
-import com.example.multimodulepractice.common.theme.boldTextStyle
-import com.example.multimodulepractice.common.theme.mediumTextStyle
+import com.example.travelling.common.composables.StarsComponent
+import com.example.travelling.common.theme.boldTextStyle
+import com.example.travelling.common.theme.mediumTextStyle
 import com.reviews.impl.ui.ReviewsAction
 import com.reviews.impl.ui.ReviewsUiState
 

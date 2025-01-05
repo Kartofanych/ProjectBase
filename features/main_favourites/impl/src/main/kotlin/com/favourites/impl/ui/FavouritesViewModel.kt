@@ -2,9 +2,9 @@ package com.favourites.impl.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.multimodulepractice.auth.AuthInfoManager
-import com.example.multimodulepractice.auth.models.AuthInfo
-import com.example.multimodulepractice.common.data.models.local.ResponseState
+import com.example.travelling.auth.AuthInfoManager
+import com.example.travelling.auth.models.AuthInfo
+import com.example.travelling.common.data.models.local.ResponseState
 import com.favourites.api.domain.FavoritesRepository
 import com.favourites.api.domain.LikeInteractor
 import com.favourites.impl.data.interactors.FavouritesInteractor

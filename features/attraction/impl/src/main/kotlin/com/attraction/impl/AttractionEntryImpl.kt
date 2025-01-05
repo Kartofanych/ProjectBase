@@ -14,8 +14,8 @@ import com.attraction.impl.di.AttractionDependencies
 import com.attraction.impl.di.DaggerAttractionComponent
 import com.attraction.impl.ui.AttractionEventHandler
 import com.attraction.impl.ui.AttractionScreen
-import com.example.multimodulepractice.common.data.models.network.ObjectType
-import com.example.multimodulepractice.common.navigation.injectedViewModel
+import com.example.travelling.common.data.models.network.ObjectType
+import com.example.travelling.common.navigation.injectedViewModel
 import com.reviews.api.ReviewsEntry
 import javax.inject.Inject
 

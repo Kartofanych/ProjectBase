@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.example.multimodulepractice.common.navigation.injectedViewModel
+import com.example.travelling.common.navigation.injectedViewModel
 import com.filters.api.FiltersEntry
 import com.filters.impl.di.DaggerFiltersComponent
 import com.filters.impl.di.FiltersDependencies

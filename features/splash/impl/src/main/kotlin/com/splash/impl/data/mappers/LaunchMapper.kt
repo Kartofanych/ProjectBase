@@ -1,11 +1,11 @@
 package com.splash.impl.data.mappers
 
-import com.example.multimodulepractice.common.data.models.network.GeoPointDto.Companion.toLocalModel
-import com.splash.impl.data.models.dto.CityDto
-import com.splash.impl.data.models.dto.LaunchResponseDto
-import com.example.multimodulepractice.common.data.models.local.City
+import com.example.travelling.common.data.models.local.City
+import com.example.travelling.common.data.models.network.GeoPointDto.Companion.toLocalModel
 import com.filters.api.data.models.Filters
 import com.filters.api.data.models.FiltersCategory
+import com.splash.impl.data.models.dto.CityDto
+import com.splash.impl.data.models.dto.LaunchResponseDto
 import com.splash.impl.data.models.local.LaunchResponse
 import javax.inject.Inject
 

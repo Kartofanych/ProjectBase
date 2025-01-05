@@ -1,6 +1,6 @@
 package com.service.impl.data.mappers
 
-import com.example.multimodulepractice.common.data.models.local.RatingBlock
+import com.example.travelling.common.data.models.local.RatingBlock
 import com.service.impl.data.models.local.Service
 import com.service.impl.data.models.local.Service.Contact
 import com.service.impl.data.models.local.Service.ServiceOrganization

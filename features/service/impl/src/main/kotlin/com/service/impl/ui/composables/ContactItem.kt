@@ -13,9 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.composables.ImageType
-import com.example.multimodulepractice.common.composables.NetworkImage
-import com.example.multimodulepractice.common.theme.regularTextStyle
+import com.example.travelling.common.composables.ImageType
+import com.example.travelling.common.composables.NetworkImage
+import com.example.travelling.common.theme.regularTextStyle
 import com.service.impl.data.models.local.Service
 import com.service.impl.ui.ServiceAction
 

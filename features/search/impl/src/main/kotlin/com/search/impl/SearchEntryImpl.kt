@@ -8,8 +8,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.multimodulepractice.common.navigation.find
-import com.example.multimodulepractice.common.navigation.register
+import com.example.travelling.common.navigation.find
+import com.example.travelling.common.navigation.register
 import com.search.api.SearchEntry
 import com.search.impl.di.DaggerSearchComponent
 import com.search.impl.di.SearchDependencies

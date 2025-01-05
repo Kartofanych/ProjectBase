@@ -5,7 +5,7 @@ import com.attraction.impl.data.mappers.AttractionMapper
 import com.attraction.impl.data.models.dto.LandmarkRequest
 import com.attraction.impl.data.models.dto.SendReviewRequest
 import com.attraction.impl.data.models.local.Attraction
-import com.example.multimodulepractice.common.data.models.local.ResponseState
+import com.example.travelling.common.data.models.local.ResponseState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.attraction.impl.ui.composables.AttractionContent
-import com.example.multimodulepractice.common.composables.DefaultError
-import com.example.multimodulepractice.common.composables.DefaultLoading
+import com.example.travelling.common.composables.DefaultError
+import com.example.travelling.common.composables.DefaultLoading
 
 @Composable
 fun AttractionScreen(

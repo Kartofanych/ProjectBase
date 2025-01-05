@@ -37,8 +37,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.theme.regularTextStyle
 import com.example.multimodulepractice.search_screen.impl.R
+import com.example.travelling.common.theme.regularTextStyle
 import com.search_filters.impl.ui.SearchAction
 import com.search_filters.impl.ui.SearchUiState
 

@@ -11,7 +11,7 @@ import androidx.navigation.compose.composable
 import com.favourites.api.FavouritesFeatureEntry
 import com.favourites.impl.di.DaggerFavouritesComponent
 import com.favourites.impl.di.FavouritesDependencies
-import com.favourites.impl.ui.ProfileScreen
+import com.favourites.impl.ui.FavouritesScreen
 import com.favourites.impl.ui.ProfileScreenEventHandler
 import javax.inject.Inject
 
@@ -54,7 +54,7 @@ class FavouritesFeatureImpl @Inject constructor(
                 uiEvent = dependencies.favouritesViewModel.uiEvent
             )
 
-            ProfileScreen(
+            FavouritesScreen(
                 dependencies.favouritesViewModel.uiStateFlow.collectAsStateWithLifecycle().value,
                 dependencies.favouritesViewModel::onAction
             )

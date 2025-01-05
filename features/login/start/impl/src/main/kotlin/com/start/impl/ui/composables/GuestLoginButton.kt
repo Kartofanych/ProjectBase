@@ -14,8 +14,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.composables.touchAction
-import com.example.multimodulepractice.common.theme.mediumTextStyle
+import com.example.travelling.common.composables.touchAction
+import com.example.travelling.common.theme.mediumTextStyle
 import com.start.impl.ui.StartAction
 
 @Composable

@@ -19,18 +19,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.composables.DefaultError
-import com.example.multimodulepractice.common.composables.DefaultLoading
-import com.example.multimodulepractice.common.composables.NetworkImage
-import com.example.multimodulepractice.common.composables.touchAction
-import com.example.multimodulepractice.common.theme.mediumTextStyle
-import com.example.multimodulepractice.common.theme.semiboldTextStyle
+import com.example.travelling.common.composables.DefaultError
+import com.example.travelling.common.composables.DefaultLoading
+import com.example.travelling.common.composables.NetworkImage
+import com.example.travelling.common.composables.touchAction
+import com.example.travelling.common.theme.mediumTextStyle
+import com.example.travelling.common.theme.semiboldTextStyle
 import com.favourites.impl.ui.FavouritesUiState.FavouritesState
 import com.favourites.impl.ui.composables.FavoritesContent
 import com.favourites.impl.ui.composables.UnauthorizedContent
 
 @Composable
-fun ProfileScreen(uiState: FavouritesUiState, onAction: (FavouritesAction) -> Unit) {
+fun FavouritesScreen(uiState: FavouritesUiState, onAction: (FavouritesAction) -> Unit) {
 
     when (uiState.state) {
         is FavouritesState.Authorized ->

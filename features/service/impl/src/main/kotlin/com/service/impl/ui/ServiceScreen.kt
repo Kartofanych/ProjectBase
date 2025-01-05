@@ -3,7 +3,7 @@ package com.service.impl.ui
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.multimodulepractice.common.composables.DefaultLoading
+import com.example.travelling.common.composables.DefaultLoading
 import com.service.impl.ui.ServiceUiState.DataState
 import com.service.impl.ui.composables.ServiceContent
 import com.service.impl.ui.composables.ServiceError

@@ -1,6 +1,6 @@
 package com.start.api
 
-import com.example.multimodulepractice.common.navigation.FeatureEntry
+import com.example.travelling.common.navigation.FeatureEntry
 
 abstract class StartEntry : FeatureEntry {
 

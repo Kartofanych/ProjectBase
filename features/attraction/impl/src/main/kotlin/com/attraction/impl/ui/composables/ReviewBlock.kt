@@ -20,11 +20,11 @@ import androidx.compose.ui.unit.sp
 import com.attraction.impl.data.models.local.Attraction
 import com.attraction.impl.ui.AttractionAction
 import com.example.multimodulepractice.attraction.impl.R
-import com.example.multimodulepractice.common.composables.DefaultButton
-import com.example.multimodulepractice.common.composables.DefaultSeparator
-import com.example.multimodulepractice.common.composables.ReviewItem
-import com.example.multimodulepractice.common.theme.mediumTextStyle
-import com.example.multimodulepractice.common.theme.semiboldTextStyle
+import com.example.travelling.common.composables.DefaultButton
+import com.example.travelling.common.composables.DefaultSeparator
+import com.example.travelling.common.composables.ReviewItem
+import com.example.travelling.common.theme.mediumTextStyle
+import com.example.travelling.common.theme.semiboldTextStyle
 
 @Composable
 fun ReviewBlock(attraction: Attraction, onAction: (AttractionAction) -> Unit) {

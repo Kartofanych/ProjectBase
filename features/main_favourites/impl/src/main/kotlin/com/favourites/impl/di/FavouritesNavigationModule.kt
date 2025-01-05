@@ -1,10 +1,10 @@
 package com.favourites.impl.di
 
-import com.main.common.di.MainScope
-import com.example.multimodulepractice.common.navigation.FeatureEntry
-import com.example.multimodulepractice.common.navigation.FeatureEntryKey
+import com.example.travelling.common.navigation.FeatureEntry
+import com.example.travelling.common.navigation.FeatureEntryKey
 import com.favourites.api.FavouritesFeatureEntry
 import com.favourites.impl.FavouritesFeatureImpl
+import com.main.common.di.MainScope
 import dagger.Binds
 import dagger.Module
 import dagger.Reusable

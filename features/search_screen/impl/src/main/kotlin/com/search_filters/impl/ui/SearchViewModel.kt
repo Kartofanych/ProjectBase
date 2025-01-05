@@ -2,8 +2,8 @@ package com.search_filters.impl.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.multimodulepractice.common.data.models.local.ActivityEntity
-import com.example.multimodulepractice.common.data.models.local.ResponseState
+import com.example.travelling.common.data.models.local.ActivityEntity
+import com.example.travelling.common.data.models.local.ResponseState
 import com.search_filters.api.data.domain.SearchFilterRepository
 import com.search_filters.api.data.models.SearchFilters
 import com.search_filters.impl.domain.SearchInteractor

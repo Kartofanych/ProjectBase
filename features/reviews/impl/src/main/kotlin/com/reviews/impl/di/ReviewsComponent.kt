@@ -1,6 +1,6 @@
 package com.reviews.impl.di
 
-import com.example.multimodulepractice.common.data.models.network.ObjectType
+import com.example.travelling.common.data.models.network.ObjectType
 import com.reviews.impl.ui.ReviewsViewModel
 import dagger.BindsInstance
 import dagger.Component

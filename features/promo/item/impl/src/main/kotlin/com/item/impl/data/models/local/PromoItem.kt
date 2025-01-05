@@ -1,7 +1,7 @@
 package com.item.impl.data.models.local
 
 import android.graphics.Bitmap
-import com.example.multimodulepractice.common.data.models.network.ObjectType
+import com.example.travelling.common.data.models.network.ObjectType
 
 data class PromoItem(
     val name: String,

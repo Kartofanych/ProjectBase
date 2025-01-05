@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.MultimodulePractice" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
+        <item name="windowSplashScreenBackground">@android:color/white</item>
+        <item name="postSplashScreenTheme">@style/Theme.Main</item>
+    </style>
+
+    <style name="Theme.Main" parent="Theme.AppCompat.NoActionBar" />
 </resources>

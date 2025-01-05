@@ -1,6 +1,6 @@
 package com.reviews.impl.data
 
-import com.example.multimodulepractice.common.data.models.local.ResponseState
+import com.example.travelling.common.data.models.local.ResponseState
 import com.reviews.impl.data.models.dto.ReviewsListRequestDto
 import com.reviews.impl.data.models.dto.ReviewsPageRequestDto
 import com.reviews.impl.data.models.local.ReviewsListResponse
@@ -28,7 +28,7 @@ class ReviewsInteractor @Inject constructor(
     suspend fun loadReviews(
         id: String,
         cursor: String,
-        sortId: String = "recent"
+        sortId: String? = "null"
     ): ResponseState<ReviewsListResponse> {
         return withContext(Dispatchers.IO) {
             try {

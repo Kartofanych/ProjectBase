@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.attraction.impl.data.models.local.Attraction
 import com.attraction.impl.ui.AttractionAction
-import com.example.multimodulepractice.common.theme.semiboldTextStyle
+import com.example.travelling.common.theme.semiboldTextStyle
 
 @Composable
 fun ServicesBlock(block: Attraction.CloseObjectsBlock, onAction: (AttractionAction) -> Unit) {

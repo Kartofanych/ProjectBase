@@ -1,6 +1,6 @@
 package com.service.impl.data.models.local
 
-import com.example.multimodulepractice.common.data.models.local.RatingBlock
+import com.example.travelling.common.data.models.local.RatingBlock
 
 data class Service(
     val id: String,

@@ -2,7 +2,7 @@ package com.item.impl.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import com.example.multimodulepractice.common.data.models.network.ObjectType
+import com.example.travelling.common.data.models.network.ObjectType
 import kotlinx.coroutines.flow.Flow
 
 @Composable

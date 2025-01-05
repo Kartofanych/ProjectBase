@@ -9,7 +9,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.example.multimodulepractice.common.navigation.injectedViewModel
+import com.example.travelling.common.navigation.injectedViewModel
 import com.item.api.PromoItemEntry
 import com.item.impl.di.DaggerPromoItemComponent
 import com.item.impl.di.PromoItemDependencies

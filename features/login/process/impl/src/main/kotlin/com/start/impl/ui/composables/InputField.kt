@@ -38,8 +38,8 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.theme.regularTextStyle
 import com.example.multimodulepractice.login.process.impl.R
+import com.example.travelling.common.theme.regularTextStyle
 import com.start.impl.ui.ProcessAction
 import com.start.impl.ui.ProcessUiState
 

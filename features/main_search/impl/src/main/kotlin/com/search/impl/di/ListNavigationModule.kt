@@ -1,8 +1,8 @@
 package com.search.impl.di
 
+import com.example.travelling.common.navigation.FeatureEntry
+import com.example.travelling.common.navigation.FeatureEntryKey
 import com.main.common.di.MainScope
-import com.example.multimodulepractice.common.navigation.FeatureEntry
-import com.example.multimodulepractice.common.navigation.FeatureEntryKey
 import com.search.api.SearchFeatureEntry
 import com.search.impl.ListFeatureImpl
 import dagger.Binds

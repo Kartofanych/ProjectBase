@@ -1,8 +1,8 @@
 package com.search_filters.impl.domain
 
-import com.example.multimodulepractice.common.data.models.local.GeoPoint.Companion.toDto
-import com.example.multimodulepractice.common.data.models.local.ResponseState
-import com.example.multimodulepractice.geo.repository.GeoRepository
+import com.example.travelling.common.data.models.local.GeoPoint.Companion.toDto
+import com.example.travelling.common.data.models.local.ResponseState
+import com.example.travelling.geo.repository.GeoRepository
 import com.search_filters.api.data.models.SearchFilters
 import com.search_filters.impl.data.SearchApi
 import com.search_filters.impl.data.mappers.SearchMapper

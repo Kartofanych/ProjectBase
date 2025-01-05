@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.theme.semiboldTextStyle
+import com.example.travelling.common.theme.semiboldTextStyle
 
 @Composable
 fun CategoryChip(text: String, color: Color) {
