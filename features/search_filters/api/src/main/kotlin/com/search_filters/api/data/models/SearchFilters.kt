@@ -1,7 +1,7 @@
 package com.search_filters.api.data.models
 
-import com.example.multimodulepractice.common.data.models.local.City
-import com.example.multimodulepractice.common.data.models.local.FilterDistance
+import com.example.travelling.common.data.models.local.City
+import com.example.travelling.common.data.models.local.FilterDistance
 
 data class SearchFilters(
     val distance: FilterDistance,

@@ -1,7 +1,7 @@
 package com.filters.impl.di
 
 import android.content.Context
-import com.example.multimodulepractice.common.di.AppContext
+import com.example.travelling.common.di.AppContext
 import com.filters.api.data.FiltersRepository
 import javax.inject.Inject
 

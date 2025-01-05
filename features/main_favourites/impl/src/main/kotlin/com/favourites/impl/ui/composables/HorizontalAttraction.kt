@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.multimodulepractice.common.theme.mediumTextStyle
-import com.example.multimodulepractice.common.theme.semiboldTextStyle
+import com.example.travelling.common.theme.mediumTextStyle
+import com.example.travelling.common.theme.semiboldTextStyle
 import com.favourites.impl.ui.FavouritesAction
 import com.main.common.data.local.Attraction
 

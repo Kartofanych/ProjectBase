@@ -32,8 +32,8 @@ import coil.size.Scale
 import com.attraction.impl.data.models.local.Attraction
 import com.attraction.impl.ui.AttractionAction
 import com.example.multimodulepractice.attraction.impl.R
-import com.example.multimodulepractice.common.composables.shimmerBrush
-import com.example.multimodulepractice.common.composables.touchAction
+import com.example.travelling.common.composables.shimmerBrush
+import com.example.travelling.common.composables.touchAction
 
 @Composable
 fun ImageSlider(

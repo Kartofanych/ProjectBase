@@ -7,7 +7,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.example.multimodulepractice.common.navigation.injectedViewModel
+import com.example.travelling.common.navigation.injectedViewModel
 import com.search_filters.api.data.SearchScreenEntry
 import com.search_filters.impl.di.DaggerSearchScreenComponent
 import com.search_filters.impl.di.SearchScreenDependencies

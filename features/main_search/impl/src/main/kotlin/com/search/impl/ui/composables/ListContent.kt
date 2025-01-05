@@ -26,10 +26,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.composables.touchAction
-import com.example.multimodulepractice.common.theme.regularTextStyle
-import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.example.multimodulepractice.main_search.impl.R
+import com.example.travelling.common.composables.touchAction
+import com.example.travelling.common.theme.regularTextStyle
+import com.example.travelling.common.theme.semiboldTextStyle
 import com.search.impl.ui.ListAction
 import com.search.impl.ui.ListUiState
 

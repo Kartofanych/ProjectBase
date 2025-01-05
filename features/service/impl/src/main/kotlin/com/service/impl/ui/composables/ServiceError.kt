@@ -18,9 +18,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material.Icon
-import com.example.multimodulepractice.common.theme.mediumTextStyle
-import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.example.multimodulepractice.service.impl.R
+import com.example.travelling.common.theme.mediumTextStyle
+import com.example.travelling.common.theme.semiboldTextStyle
 import com.service.impl.ui.ServiceAction
 
 @Composable

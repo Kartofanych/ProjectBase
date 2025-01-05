@@ -12,5 +12,5 @@ class ReviewsListRequestDto(
     val cursor: String,
 
     @SerializedName("sort_id")
-    val sortId: String,
+    val sortId: String?,
 )

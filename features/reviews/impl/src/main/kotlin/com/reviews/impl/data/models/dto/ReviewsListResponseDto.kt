@@ -1,7 +1,7 @@
 package com.reviews.impl.data.models.dto
 
 import androidx.annotation.Keep
-import com.example.multimodulepractice.common.data.models.network.ReviewDto
+import com.example.travelling.common.data.models.network.ReviewDto
 import com.google.gson.annotations.SerializedName
 
 @Keep

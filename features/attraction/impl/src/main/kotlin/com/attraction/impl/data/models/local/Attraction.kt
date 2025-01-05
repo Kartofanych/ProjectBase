@@ -1,7 +1,7 @@
 package com.attraction.impl.data.models.local
 
-import com.example.multimodulepractice.common.data.models.local.RatingBlock
-import com.example.multimodulepractice.common.data.models.local.Review
+import com.example.travelling.common.data.models.local.RatingBlock
+import com.example.travelling.common.data.models.local.Review
 
 data class Attraction(
     val id: String,

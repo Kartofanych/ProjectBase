@@ -2,7 +2,7 @@ package com.search.impl.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.multimodulepractice.common.data.models.local.ResponseState
+import com.example.travelling.common.data.models.local.ResponseState
 import com.main.common.di.MainScope
 import com.search.impl.domain.ListInteractor
 import dagger.Reusable

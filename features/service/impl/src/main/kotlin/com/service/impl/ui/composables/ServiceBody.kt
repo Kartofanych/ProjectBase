@@ -39,13 +39,13 @@ import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
 import coil.size.Scale
-import com.example.multimodulepractice.common.composables.NetworkImage
-import com.example.multimodulepractice.common.composables.ReviewStarsComponent
-import com.example.multimodulepractice.common.composables.shimmerBrush
-import com.example.multimodulepractice.common.theme.mediumTextStyle
-import com.example.multimodulepractice.common.theme.regularTextStyle
-import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.example.multimodulepractice.service.impl.R
+import com.example.travelling.common.composables.NetworkImage
+import com.example.travelling.common.composables.ReviewStarsComponent
+import com.example.travelling.common.composables.shimmerBrush
+import com.example.travelling.common.theme.mediumTextStyle
+import com.example.travelling.common.theme.regularTextStyle
+import com.example.travelling.common.theme.semiboldTextStyle
 import com.service.impl.data.models.local.Service
 
 @Composable

@@ -28,12 +28,12 @@ import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
 import coil.size.Scale
-import com.example.multimodulepractice.common.composables.shimmerBrush
-import com.example.multimodulepractice.common.theme.mediumTextStyle
-import com.example.multimodulepractice.common.theme.regularTextStyle
-import com.example.multimodulepractice.common.theme.semiboldTextStyle
+import com.example.travelling.common.ChipCard
+import com.example.travelling.common.composables.shimmerBrush
+import com.example.travelling.common.theme.mediumTextStyle
+import com.example.travelling.common.theme.regularTextStyle
+import com.example.travelling.common.theme.semiboldTextStyle
 import com.main.common.data.local.Attraction
-import com.example.multimodulepractice.common.ChipCard
 import com.search.impl.ui.ListAction
 
 @OptIn(ExperimentalLayoutApi::class)

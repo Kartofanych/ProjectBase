@@ -1,6 +1,6 @@
 package com.search_filters.impl.ui
 
-import com.example.multimodulepractice.common.data.models.local.ActivityEntity
+import com.example.travelling.common.data.models.local.ActivityEntity
 
 sealed interface SearchAction {
     object BackPressed : SearchAction

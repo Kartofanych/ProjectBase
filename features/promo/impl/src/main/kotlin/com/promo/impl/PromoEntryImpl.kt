@@ -11,15 +11,15 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.multimodulepractice.common.navigation.find
-import com.example.multimodulepractice.common.navigation.injectedViewModel
-import com.example.multimodulepractice.common.navigation.register
+import com.example.travelling.common.navigation.find
+import com.example.travelling.common.navigation.injectedViewModel
+import com.example.travelling.common.navigation.register
 import com.item.api.PromoItemEntry
 import com.list.api.PromoListEntry
-import com.promo.impl.di.PromoDependencies
-import com.promo.impl.ui.PromoEventHandler
 import com.promo.api.PromoEntry
 import com.promo.impl.di.DaggerPromoComponent
+import com.promo.impl.di.PromoDependencies
+import com.promo.impl.ui.PromoEventHandler
 import javax.inject.Inject
 
 class PromoEntryImpl @Inject constructor(

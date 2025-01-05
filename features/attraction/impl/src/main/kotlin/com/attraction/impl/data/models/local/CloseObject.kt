@@ -1,6 +1,6 @@
 package com.attraction.impl.data.models.local
 
-import com.example.multimodulepractice.common.data.models.network.ObjectType
+import com.example.travelling.common.data.models.network.ObjectType
 
 data class CloseObject(
     val id: String,

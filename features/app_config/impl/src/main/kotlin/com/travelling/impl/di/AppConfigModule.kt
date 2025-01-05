@@ -1,6 +1,6 @@
 package com.travelling.impl.di
 
-import com.example.multimodulepractice.common.di.AppScope
+import com.example.travelling.common.di.AppScope
 import com.travelling.api.AppConfig
 import com.travelling.impl.AppConfigImpl
 import dagger.Binds

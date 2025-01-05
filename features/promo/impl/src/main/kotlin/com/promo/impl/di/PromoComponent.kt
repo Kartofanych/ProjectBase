@@ -1,6 +1,6 @@
 package com.promo.impl.di
 
-import com.example.multimodulepractice.common.navigation.Destinations
+import com.example.travelling.common.navigation.Destinations
 import com.promo.impl.ui.PromoViewModel
 import dagger.Component
 

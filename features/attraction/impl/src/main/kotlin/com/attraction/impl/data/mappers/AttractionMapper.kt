@@ -9,10 +9,10 @@ import com.attraction.impl.data.models.local.Attraction
 import com.attraction.impl.data.models.local.Attraction.ReviewBlock
 import com.attraction.impl.data.models.local.CloseObject
 import com.attraction.impl.data.models.local.SimilarAttraction
-import com.example.multimodulepractice.auth.AuthInfoManager
-import com.example.multimodulepractice.common.data.models.local.RatingBlock
-import com.example.multimodulepractice.common.data.models.local.Review
-import com.example.multimodulepractice.common.utils.withWordEnding
+import com.example.travelling.auth.AuthInfoManager
+import com.example.travelling.common.data.models.local.RatingBlock
+import com.example.travelling.common.data.models.local.Review
+import com.example.travelling.common.utils.withWordEnding
 import javax.inject.Inject
 
 class AttractionMapper @Inject constructor(

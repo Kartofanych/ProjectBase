@@ -1,6 +1,6 @@
 package com.favourites.impl.data.interactors
 
-import com.example.multimodulepractice.common.data.models.local.ResponseState
+import com.example.travelling.common.data.models.local.ResponseState
 import com.favourites.impl.data.FavoritesApi
 import com.favourites.impl.data.mappers.FavoritesMapper
 import com.favourites.impl.data.models.local.FavoritesResponse

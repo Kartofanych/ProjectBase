@@ -1,9 +1,9 @@
 package com.reviews.impl.data
 
-import com.example.multimodulepractice.common.data.models.local.RatingBlock
-import com.example.multimodulepractice.common.data.models.local.Review
-import com.example.multimodulepractice.common.data.models.network.ReviewDto
-import com.example.multimodulepractice.common.utils.withWordEnding
+import com.example.travelling.common.data.models.local.RatingBlock
+import com.example.travelling.common.data.models.local.Review
+import com.example.travelling.common.data.models.network.ReviewDto
+import com.example.travelling.common.utils.withWordEnding
 import com.reviews.impl.data.models.dto.ReviewsListResponseDto
 import com.reviews.impl.data.models.dto.ReviewsPageResponseDto
 import com.reviews.impl.data.models.local.ReviewsListResponse

@@ -23,8 +23,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.composables.touchAction
-import com.example.multimodulepractice.common.theme.semiboldTextStyle
+import com.example.travelling.common.composables.touchAction
+import com.example.travelling.common.theme.semiboldTextStyle
 import com.filters.impl.ui.composables.CategoriesSection
 import com.filters.impl.ui.composables.DistanceSection
 import com.filters.impl.ui.composables.HeaderSection

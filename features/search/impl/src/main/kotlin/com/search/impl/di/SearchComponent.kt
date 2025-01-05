@@ -1,6 +1,6 @@
 package com.search.impl.di
 
-import com.example.multimodulepractice.common.navigation.Destinations
+import com.example.travelling.common.navigation.Destinations
 import com.search_filters.impl.di.SearchFiltersDependencies
 import dagger.Component
 

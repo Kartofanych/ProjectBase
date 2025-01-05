@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.attraction.impl.ui.AttractionAction
 import com.attraction.impl.ui.AttractionUiState
 import com.attraction.impl.ui.ReviewModalState
-import com.example.multimodulepractice.common.composables.DefaultSeparator
+import com.example.travelling.common.composables.DefaultSeparator
 
 @Composable
 fun AttractionContent(

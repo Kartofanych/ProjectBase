@@ -2,8 +2,8 @@ package com.reviews.impl.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.multimodulepractice.common.data.models.local.ResponseState
-import com.example.multimodulepractice.common.data.models.local.Review
+import com.example.travelling.common.data.models.local.ResponseState
+import com.example.travelling.common.data.models.local.Review
 import com.reviews.impl.data.ReviewsInteractor
 import com.reviews.impl.di.ReviewsComponent
 import com.reviews.impl.di.ReviewsScope
@@ -67,10 +67,18 @@ class ReviewsViewModel @Inject constructor(
     private fun loadNextPage() {
         val notnullCursor = cursor ?: return
         val state = uiStateFlow.value as? ReviewsUiState.Content ?: return
-        _uiStateFlow.update { state.copy(loading = true) }
+        if (state.error) return
+        _uiStateFlow.update { state.copy(loading = true, error = false) }
         paginationJob = viewModelScope.launch {
             when (val result = interactor.loadReviews(data.id, notnullCursor)) {
-                is ResponseState.Error -> {}
+                is ResponseState.Error -> _uiStateFlow.update {
+                    state.copy(
+                        reviews = currentList,
+                        loading = false,
+                        error = true,
+                    )
+                }
+
                 is ResponseState.Success -> {
                     val items = result.data.items
                     cursor = result.data.cursor
@@ -78,7 +86,7 @@ class ReviewsViewModel @Inject constructor(
                     _uiStateFlow.update {
                         state.copy(
                             reviews = currentList,
-                            loading = false
+                            loading = false,
                         )
                     }
                 }

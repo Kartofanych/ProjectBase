@@ -1,10 +1,10 @@
 package com.attraction.impl.data.models.dto
 
 import androidx.annotation.Keep
-import com.example.multimodulepractice.common.data.models.network.GeoPointDto
-import com.example.multimodulepractice.common.data.models.network.ObjectType
-import com.example.multimodulepractice.common.data.models.network.RateListObjectDto
-import com.example.multimodulepractice.common.data.models.network.ReviewDto
+import com.example.travelling.common.data.models.network.GeoPointDto
+import com.example.travelling.common.data.models.network.ObjectType
+import com.example.travelling.common.data.models.network.RateListObjectDto
+import com.example.travelling.common.data.models.network.ReviewDto
 import com.google.gson.annotations.SerializedName
 
 @Keep

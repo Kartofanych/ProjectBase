@@ -3,8 +3,8 @@ package com.search.impl.ui
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.multimodulepractice.common.composables.DefaultError
-import com.example.multimodulepractice.common.composables.DefaultLoading
+import com.example.travelling.common.composables.DefaultError
+import com.example.travelling.common.composables.DefaultLoading
 import com.search.impl.ui.composables.ListContent
 
 @Composable

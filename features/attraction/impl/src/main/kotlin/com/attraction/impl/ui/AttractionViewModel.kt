@@ -3,7 +3,7 @@ package com.attraction.impl.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.attraction.impl.domain.AttractionInteractor
-import com.example.multimodulepractice.common.data.models.local.ResponseState
+import com.example.travelling.common.data.models.local.ResponseState
 import com.favourites.api.domain.FavoritesRepository
 import com.favourites.api.domain.LikeInteractor
 import kotlinx.coroutines.Job

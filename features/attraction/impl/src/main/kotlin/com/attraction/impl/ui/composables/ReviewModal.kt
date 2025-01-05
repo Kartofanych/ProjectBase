@@ -33,14 +33,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.attraction.impl.ui.AttractionAction
 import com.attraction.impl.ui.ReviewModalState
-import com.example.multimodulepractice.common.R
-import com.example.multimodulepractice.common.composables.DefaultButton
-import com.example.multimodulepractice.common.composables.DefaultError
-import com.example.multimodulepractice.common.composables.DefaultLoading
-import com.example.multimodulepractice.common.composables.touchAction
-import com.example.multimodulepractice.common.theme.mediumTextStyle
-import com.example.multimodulepractice.common.theme.regularTextStyle
-import com.example.multimodulepractice.common.theme.semiboldTextStyle
+import com.example.multimodulepractice.attraction.impl.R
+import com.example.travelling.common.composables.DefaultButton
+import com.example.travelling.common.composables.DefaultError
+import com.example.travelling.common.composables.DefaultLoading
+import com.example.travelling.common.composables.touchAction
+import com.example.travelling.common.theme.mediumTextStyle
+import com.example.travelling.common.theme.regularTextStyle
+import com.example.travelling.common.theme.semiboldTextStyle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

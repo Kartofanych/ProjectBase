@@ -1,9 +1,9 @@
 package com.search_filters.impl.data.mappers
 
-import com.example.multimodulepractice.common.data.models.local.ActivityEntity
-import com.example.multimodulepractice.common.data.models.local.ActivityEntity.ActivityType
-import com.example.multimodulepractice.common.data.models.network.ActivityDto
-import com.example.multimodulepractice.common.data.models.network.ActivityDto.ActivityTypeDto
+import com.example.travelling.common.data.models.local.ActivityEntity
+import com.example.travelling.common.data.models.local.ActivityEntity.ActivityType
+import com.example.travelling.common.data.models.network.ActivityDto
+import com.example.travelling.common.data.models.network.ActivityDto.ActivityTypeDto
 import com.search_filters.impl.data.models.dto.SearchResponseDto
 import com.search_filters.impl.data.models.local.SearchResponse
 import javax.inject.Inject

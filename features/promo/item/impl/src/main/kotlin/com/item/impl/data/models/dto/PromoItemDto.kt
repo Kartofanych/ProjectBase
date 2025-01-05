@@ -1,7 +1,7 @@
 package com.item.impl.data.models.dto
 
 import androidx.annotation.Keep
-import com.example.multimodulepractice.common.data.models.network.ObjectType
+import com.example.travelling.common.data.models.network.ObjectType
 import com.google.gson.annotations.SerializedName
 
 @Keep

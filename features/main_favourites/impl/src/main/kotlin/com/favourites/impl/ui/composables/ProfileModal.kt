@@ -27,11 +27,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.composables.DefaultSeparator
-import com.example.multimodulepractice.common.composables.NetworkImage
-import com.example.multimodulepractice.common.composables.touchAction
-import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.example.multimodulepractice.favourites.impl.R
+import com.example.travelling.common.composables.DefaultSeparator
+import com.example.travelling.common.composables.NetworkImage
+import com.example.travelling.common.composables.touchAction
+import com.example.travelling.common.theme.semiboldTextStyle
 import com.favourites.impl.ui.FavouritesAction
 import com.favourites.impl.ui.FavouritesUiState
 
@@ -139,7 +139,9 @@ fun ProfileModal(
                                 fontSize = 12.sp,
                                 color = Color.White
                             ),
-                            modifier = Modifier.align(Alignment.Center).padding(horizontal = 4.dp)
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .padding(horizontal = 4.dp)
                         )
                     }
                 }

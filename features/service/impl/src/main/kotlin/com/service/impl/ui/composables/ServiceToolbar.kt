@@ -25,10 +25,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.theme.semiboldTextStyle
-import com.example.multimodulepractice.common.utils.dpToPx
-import com.example.multimodulepractice.common.utils.screenWidthPx
 import com.example.multimodulepractice.service.impl.R
+import com.example.travelling.common.theme.semiboldTextStyle
+import com.example.travelling.common.utils.dpToPx
+import com.example.travelling.common.utils.screenWidthPx
 import com.service.impl.data.models.local.Service
 import com.service.impl.ui.ServiceAction
 

@@ -19,11 +19,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.composables.NetworkImage
-import com.example.multimodulepractice.common.composables.ReviewStarsComponent
-import com.example.multimodulepractice.common.composables.touchAction
-import com.example.multimodulepractice.common.theme.mediumTextStyle
-import com.example.multimodulepractice.common.theme.regularTextStyle
+import com.example.travelling.common.composables.NetworkImage
+import com.example.travelling.common.composables.ReviewStarsComponent
+import com.example.travelling.common.composables.touchAction
+import com.example.travelling.common.theme.mediumTextStyle
+import com.example.travelling.common.theme.regularTextStyle
 import com.search.impl.data.models.local.Activity
 import com.search.impl.ui.ListAction
 

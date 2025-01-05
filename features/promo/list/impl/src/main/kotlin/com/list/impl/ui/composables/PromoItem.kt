@@ -24,10 +24,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.composables.NetworkImage
-import com.example.multimodulepractice.common.composables.touchAction
-import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.example.multimodulepractice.promo.list.impl.R
+import com.example.travelling.common.composables.NetworkImage
+import com.example.travelling.common.composables.touchAction
+import com.example.travelling.common.theme.semiboldTextStyle
 import com.list.impl.data.models.local.PromoCode
 import com.list.impl.ui.PromoListAction
 

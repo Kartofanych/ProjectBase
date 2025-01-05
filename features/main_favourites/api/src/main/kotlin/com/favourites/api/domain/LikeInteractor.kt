@@ -1,6 +1,6 @@
 package com.favourites.api.domain
 
-import com.example.multimodulepractice.common.data.models.local.ResponseState
+import com.example.travelling.common.data.models.local.ResponseState
 
 interface LikeInteractor {
 

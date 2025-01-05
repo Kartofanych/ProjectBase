@@ -15,9 +15,10 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.multimodulepractice.common.composables.DefaultLoading
-import com.example.multimodulepractice.common.composables.DefaultSeparator
-import com.example.multimodulepractice.common.composables.ReviewItem
+import com.example.travelling.common.composables.DefaultError
+import com.example.travelling.common.composables.DefaultLoading
+import com.example.travelling.common.composables.DefaultSeparator
+import com.example.travelling.common.composables.ReviewItem
 import com.reviews.impl.ui.ReviewsAction
 import com.reviews.impl.ui.ReviewsUiState
 
@@ -70,6 +71,16 @@ fun ReviewsContent(uiState: ReviewsUiState.Content, onAction: (ReviewsAction) ->
                             .height(200.dp)
                     )
                 }
+
+                if (uiState.error) {
+                    DefaultError(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp),
+                        onReload = { onAction(ReviewsAction.OnReload) }
+                    )
+                }
+
                 Spacer(Modifier.height(scaffold.calculateBottomPadding() + 20.dp))
             }
         }

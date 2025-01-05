@@ -1,6 +1,6 @@
 package com.list.impl.data
 
-import com.example.multimodulepractice.common.data.models.local.ResponseState
+import com.example.travelling.common.data.models.local.ResponseState
 import com.list.impl.data.mappers.PromoListMapper
 import com.list.impl.data.models.local.PromoCodesResponse
 import kotlinx.coroutines.Dispatchers

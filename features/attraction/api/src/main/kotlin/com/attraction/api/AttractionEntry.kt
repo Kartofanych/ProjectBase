@@ -2,7 +2,7 @@ package com.attraction.api
 
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import com.example.multimodulepractice.common.navigation.FeatureEntry
+import com.example.travelling.common.navigation.FeatureEntry
 
 abstract class AttractionEntry : FeatureEntry {
 

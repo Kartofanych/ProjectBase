@@ -17,10 +17,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.theme.regularTextStyle
-import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.example.multimodulepractice.login.start.impl.BuildConfig
 import com.example.multimodulepractice.login.start.impl.R
+import com.example.travelling.common.theme.regularTextStyle
+import com.example.travelling.common.theme.semiboldTextStyle
 import com.start.impl.ui.composables.GuestsLoginButton
 import com.start.impl.ui.composables.LoginButton
 

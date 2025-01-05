@@ -32,12 +32,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.multimodulepractice.common.composables.NetworkImage
-import com.example.multimodulepractice.common.composables.touchAction
-import com.example.multimodulepractice.common.theme.boldTextStyle
-import com.example.multimodulepractice.common.theme.mediumTextStyle
-import com.example.multimodulepractice.common.theme.semiboldTextStyle
 import com.example.multimodulepractice.favourites.impl.R
+import com.example.travelling.common.composables.NetworkImage
+import com.example.travelling.common.composables.touchAction
+import com.example.travelling.common.theme.boldTextStyle
+import com.example.travelling.common.theme.mediumTextStyle
+import com.example.travelling.common.theme.semiboldTextStyle
 import com.favourites.impl.data.models.local.FavoriteAttraction
 import com.favourites.impl.ui.FavouritesAction
 

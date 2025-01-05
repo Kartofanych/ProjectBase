@@ -1,7 +1,7 @@
 package com.travelling.impl
 
 import android.content.Context
-import com.example.multimodulepractice.common.di.AppContext
+import com.example.travelling.common.di.AppContext
 import com.travelling.api.AppConfig
 import javax.inject.Inject
 

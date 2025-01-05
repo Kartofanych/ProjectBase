@@ -1,6 +1,6 @@
 package com.start.impl.data
 
-import com.example.multimodulepractice.common.data.models.local.ResponseState
+import com.example.travelling.common.data.models.local.ResponseState
 import com.start.impl.data.mappers.ValidateMapper
 import com.start.impl.data.models.dto.RegisterCall
 import com.start.impl.data.models.dto.ValidationCall
