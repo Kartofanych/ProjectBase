@@ -96,14 +96,14 @@ class ReviewsViewModel @Inject constructor(
     }
 
     private fun onPagination(firstVisibleItem: Int) {
-        if (firstVisibleItem + 8 >= currentList.size && paginationJob == null) {
+        if (firstVisibleItem + 8 >= currentList.size && paginationJob == null && _uiStateFlow.value is ReviewsUiState.Content) {
             loadNextPage()
         }
     }
 
     private fun onReload() {
         when (_uiStateFlow.value) {
-            is ReviewsUiState.Content -> Unit
+            is ReviewsUiState.Content -> loadNextPage()
             else -> loadPage()
         }
     }

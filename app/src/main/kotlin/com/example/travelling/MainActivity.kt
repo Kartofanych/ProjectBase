@@ -49,6 +49,7 @@ import com.example.travelling.main.impl.ui.map.MapScreen
 import com.example.travelling.main.impl.ui.map.MapScreenEventHandler
 import com.example.travelling.ui.splash.SplashViewModel
 import com.filters.api.FiltersEntry
+import com.onboarding.api.OnboardingEntry
 import com.promo.api.PromoEntry
 import com.reviews.api.ReviewsEntry
 import com.search.api.SearchEntry
@@ -126,6 +127,7 @@ class MainActivity : AppCompatActivity() {
         val attractionFeature = destinations.find<AttractionEntry>()
         val promoFeature = destinations.find<PromoEntry>()
         val reviewsFeature = destinations.find<ReviewsEntry>()
+        val onboardingFeature = destinations.find<OnboardingEntry>()
 
         val isDebug = BuildConfig.DEBUG
         val isProduction = appProvider.appConfig.isProduction()
@@ -153,6 +155,12 @@ class MainActivity : AppCompatActivity() {
 
                     register(
                         loginFeature,
+                        navController = navController,
+                        modifier = Modifier
+                    )
+
+                    register(
+                        onboardingFeature,
                         navController = navController,
                         modifier = Modifier
                     )

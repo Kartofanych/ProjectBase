@@ -33,10 +33,6 @@ class MainFeatureImpl @Inject constructor(
     private val mainDependencies: MainDependencies
 ) : MainFeatureEntry() {
 
-    private val component by lazy {
-        DaggerMainComponent.factory().create(mainDependencies)
-    }
-
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
         navController: NavController,
@@ -59,6 +55,7 @@ class MainFeatureImpl @Inject constructor(
                 }
             }
         ) {
+            val component = DaggerMainComponent.factory().create(mainDependencies)
 
             val mapEntry = component.destinations.find<MapFeatureEntry>()
             val searchEntry = component.destinations.find<SearchFeatureEntry>()

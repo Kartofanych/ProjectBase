@@ -20,10 +20,6 @@ class LaunchEntryImpl @Inject constructor(
     private val launchDependencies: LaunchDependencies
 ) : LaunchEntry() {
 
-    private val component by lazy {
-        DaggerLaunchComponent.factory().create(launchDependencies)
-    }
-
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
         navController: NavController,
@@ -31,16 +27,16 @@ class LaunchEntryImpl @Inject constructor(
         modifier: Modifier
     ) {
 
-        navGraphBuilder.composable(
-            route = featureRoute
-        ) {
-            val viewModel = injectedViewModel {
-                component.viewModel
-            }
+        navGraphBuilder.composable(route = featureRoute) {
+            val component = DaggerLaunchComponent.factory().create(launchDependencies)
+            val viewModel = injectedViewModel { component.viewModel }
+            val userPreferences = launchDependencies.userPreferences
+            val authInfo = launchDependencies.authInfoManager.authInfo()
 
-            val startDestination = when (launchDependencies.authInfoManager.authInfo()) {
-                AuthInfo.Guest -> LOGIN_ROUTE
-                is AuthInfo.User -> MAIN_ROUTE
+            val startDestination = when {
+                !userPreferences.isOnboardingShown() -> ONBOARDING_ROUTE
+                authInfo is AuthInfo.Guest -> LOGIN_ROUTE
+                else -> MAIN_ROUTE
             }
 
             LaunchScreenEventHandler(
@@ -58,5 +54,6 @@ class LaunchEntryImpl @Inject constructor(
     private companion object {
         const val LOGIN_ROUTE = "login"
         const val MAIN_ROUTE = "main"
+        const val ONBOARDING_ROUTE = "onboarding"
     }
 }

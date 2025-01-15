@@ -9,6 +9,7 @@ import com.example.travelling.guide.impl.di.GuideDependencies
 import com.example.travelling.main.impl.di.MainDependencies
 import com.example.travelling.main.impl.ui.map.MapViewModel
 import com.filters.impl.di.FiltersDependencies
+import com.onboarding.impl.di.OnboardingDependencies
 import com.promo.impl.di.PromoDependencies
 import com.reviews.impl.di.ReviewsDependencies
 import com.splash.impl.di.LaunchDependencies
@@ -39,6 +40,8 @@ interface AppProvider {
     val promoDependencies: PromoDependencies
 
     val launchDependencies: LaunchDependencies
+
+    val onboardingDependencies: OnboardingDependencies
 }
 
 val LocalAppProvider = compositionLocalOf<AppProvider> { error("No app provider found!") }
