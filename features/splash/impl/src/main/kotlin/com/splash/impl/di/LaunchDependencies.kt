@@ -6,6 +6,7 @@ import com.example.travelling.common.di.AppContext
 import com.filters.api.data.FiltersRepository
 import com.splash.api.domain.CitiesRepository
 import com.splash.impl.data.LaunchApi
+import com.travelling.api.UserPreferences
 import javax.inject.Inject
 
 class LaunchDependencies @Inject constructor(
@@ -13,6 +14,7 @@ class LaunchDependencies @Inject constructor(
     val context: Context,
     val launchApi: LaunchApi,
     val authInfoManager: AuthInfoManager,
+    val userPreferences: UserPreferences,
     val citiesRepository: CitiesRepository,
     val filtersRepository: FiltersRepository
 )

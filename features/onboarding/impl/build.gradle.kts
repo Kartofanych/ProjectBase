@@ -16,6 +16,7 @@ android {
 
 dependencies {
     api(project(":features:onboarding:api"))
+    api(project(":features:app_config:api"))
     implementation(project(":common"))
     implementation(libs.core.ktx)
 

@@ -6,6 +6,7 @@ import com.example.travelling.guide.impl.di.GuideNavigationModule
 import com.example.travelling.login.impl.di.LoginNavigationModule
 import com.example.travelling.main.impl.di.MainNavigationModule
 import com.filters.impl.di.FiltersNavigationModule
+import com.onboarding.impl.di.OnboardingNavigationModule
 import com.promo.impl.di.PromoNavigationModule
 import com.reviews.impl.di.ReviewsNavigationModule
 import com.search.impl.di.SearchNavigationModule
@@ -26,6 +27,7 @@ import dagger.Module
         AttractionNavigationModule::class,
         PromoNavigationModule::class,
         ReviewsNavigationModule::class,
+        OnboardingNavigationModule::class,
     ]
 )
 interface NavigationModule

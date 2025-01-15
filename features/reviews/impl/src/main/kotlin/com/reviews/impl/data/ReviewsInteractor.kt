@@ -28,7 +28,7 @@ class ReviewsInteractor @Inject constructor(
     suspend fun loadReviews(
         id: String,
         cursor: String,
-        sortId: String? = "null"
+        sortId: String? = null
     ): ResponseState<ReviewsListResponse> {
         return withContext(Dispatchers.IO) {
             try {

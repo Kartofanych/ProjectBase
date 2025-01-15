@@ -1,4 +1,4 @@
-package com.search.impl
+package com.onboarding.impl
 
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
@@ -7,17 +7,17 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.example.multimodulepractice.common.navigation.injectedViewModel
-import com.search.api.SearchEntry
-import com.search.impl.di.DaggerSearchComponent
-import com.search.impl.di.SearchDependencies
-import com.search.impl.ui.SearchEventHandler
-import com.search.impl.ui.SearchScreen
+import com.example.travelling.common.navigation.injectedViewModel
+import com.onboarding.api.OnboardingEntry
+import com.onboarding.impl.di.DaggerOnboardingComponent
+import com.onboarding.impl.di.OnboardingDependencies
+import com.onboarding.impl.ui.OnboardingEventHandler
+import com.onboarding.impl.ui.OnboardingScreen
 import javax.inject.Inject
 
-class SearchEntryImpl @Inject constructor(
-    private val searchDependencies: SearchDependencies
-) : SearchEntry() {
+class OnboardingEntryImpl @Inject constructor(
+    private val dependencies: OnboardingDependencies
+) : OnboardingEntry() {
 
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
@@ -36,27 +36,33 @@ class SearchEntryImpl @Inject constructor(
             },
             exitTransition = {
                 slideOutHorizontally {
-                    it
+                    -it
                 }
             },
             popExitTransition = {
                 slideOutHorizontally {
-                    it
+                    -it
                 }
             }
         ) {
 
             val viewModel = injectedViewModel {
-                //DaggerSearchComponent.factory().create(searchDependencies).viewModel
+                DaggerOnboardingComponent.factory().create(dependencies).viewModel
             }
 
-            SearchEventHandler(
-                uiEvent = viewModel.uiEvent
+            OnboardingEventHandler(
+                uiEvent = viewModel.uiEvent,
+                openLogin = { navController.navigate(LOGIN_ROUTE) },
             )
-            SearchScreen(
+
+            OnboardingScreen(
                 viewModel.uiStateFlow.collectAsStateWithLifecycle().value,
                 viewModel::onAction
             )
         }
+    }
+
+    private companion object {
+        const val LOGIN_ROUTE = "login"
     }
 }

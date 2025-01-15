@@ -21,6 +21,7 @@ android {
 
 dependencies {
     api(project(":features:splash:api"))
+    api(project(":features:app_config:api"))
     api(project(":features:auth:api"))
     api(project(":features:filters:api"))
     implementation(project(":common"))
