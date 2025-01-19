@@ -3,6 +3,7 @@ package com.list.impl.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.travelling.common.data.models.local.ResponseState
+import com.example.travelling.common.utils.Analytics
 import com.list.impl.data.PromoListInteractor
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +25,7 @@ class PromoListViewModel @Inject constructor(
         get() = _uiStateFlow
 
     init {
+        Analytics.reportOpenFeature("promo.list")
         getPromoCodes()
     }
 
@@ -45,8 +47,10 @@ class PromoListViewModel @Inject constructor(
                 }
             }
 
-            PromoListAction.Close -> viewModelScope.launch {
-                _uiEvent.send(PromoListEvent.OnClose)
+            PromoListAction.Close -> {
+                viewModelScope.launch {
+                    _uiEvent.send(PromoListEvent.OnClose)
+                }
             }
 
             PromoListAction.OnReload -> getPromoCodes()

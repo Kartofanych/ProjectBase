@@ -1,7 +1,6 @@
 package com.example.travelling
 
 import androidx.compose.runtime.compositionLocalOf
-import com.attraction.impl.di.AttractionDependencies
 import com.example.travelling.auth.AuthInfoManager
 import com.example.travelling.di.ActivityComponent
 import com.example.travelling.geo.GeoManager
@@ -12,7 +11,6 @@ import com.filters.impl.di.FiltersDependencies
 import com.onboarding.impl.di.OnboardingDependencies
 import com.promo.impl.di.PromoDependencies
 import com.reviews.impl.di.ReviewsDependencies
-import com.splash.impl.di.LaunchDependencies
 import com.travelling.api.AppConfig
 
 interface AppProvider {
@@ -33,13 +31,9 @@ interface AppProvider {
 
     val filtersDependencies: FiltersDependencies
 
-    val attractionDependencies: AttractionDependencies
-
     val reviewsDependencies: ReviewsDependencies
 
     val promoDependencies: PromoDependencies
-
-    val launchDependencies: LaunchDependencies
 
     val onboardingDependencies: OnboardingDependencies
 }

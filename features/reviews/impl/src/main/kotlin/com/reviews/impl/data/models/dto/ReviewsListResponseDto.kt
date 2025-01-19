@@ -10,5 +10,5 @@ class ReviewsListResponseDto(
     val items: List<ReviewDto>,
 
     @SerializedName("cursor")
-    val cursor: String,
+    val cursor: String?,
 )

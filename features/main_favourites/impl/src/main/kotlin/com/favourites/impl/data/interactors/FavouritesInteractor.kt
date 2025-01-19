@@ -1,6 +1,8 @@
 package com.favourites.impl.data.interactors
 
 import com.example.travelling.common.data.models.local.ResponseState
+import com.example.travelling.common.utils.Analytics
+import com.example.travelling.common.utils.networkCall
 import com.favourites.impl.data.FavoritesApi
 import com.favourites.impl.data.mappers.FavoritesMapper
 import com.favourites.impl.data.models.local.FavoritesResponse
@@ -16,15 +18,21 @@ class FavouritesInteractor @Inject constructor(
 
     suspend fun favorite(): ResponseState<FavoritesResponse> {
         return withContext(Dispatchers.IO) {
-            try {
-                val response = api.favorites()
-                return@withContext ResponseState.Success(mapper.map(response))
-            } catch (exception: Exception) {
-                when {
-                    exception is HttpException && exception.code() == 401 -> ResponseState.Error.Unauthorized()
-                    else -> ResponseState.Error.Default()
+            networkCall(
+                run = {
+                    val start = System.currentTimeMillis()
+                    val response = api.favorites()
+                    val time = System.currentTimeMillis() - start
+                    Analytics.reportNetworkSuccess(route = "favorites", millis = time)
+                    return@withContext ResponseState.Success(mapper.map(response))
+                }, catch = { throwable ->
+                    Analytics.reportNetworkError(route = "favorites", throwable = throwable)
+                    when {
+                        throwable is HttpException && throwable.code() == 401 -> ResponseState.Error.Unauthorized()
+                        else -> ResponseState.Error.Default()
+                    }
                 }
-            }
+            )
         }
     }
 }

@@ -12,6 +12,7 @@ import com.attraction.impl.data.models.local.SimilarAttraction
 import com.example.travelling.auth.AuthInfoManager
 import com.example.travelling.common.data.models.local.RatingBlock
 import com.example.travelling.common.data.models.local.Review
+import com.example.travelling.common.data.models.network.GeoPointDto.Companion.toLocalModel
 import com.example.travelling.common.utils.withWordEnding
 import javax.inject.Inject
 
@@ -36,7 +37,8 @@ class AttractionMapper @Inject constructor(
                         },
                         timing = subtitle
                     )
-                }
+                },
+                showGuide = response.showGuide ?: true,
             ),
             closeObjectsBlock = response.activityBlocks.map(::mapActivityBlock),
             reviewsBlock = mapReviewsBlock(response.reviews),
@@ -47,7 +49,8 @@ class AttractionMapper @Inject constructor(
                 isVisible = false,
                 scheduleDays = response.schedule.days.map(::mapScheduleDay)
             ),
-            isAuthorized = authInfoManager.isAuthorized()
+            isAuthorized = authInfoManager.isAuthorized(),
+            location = response.location.toLocalModel(),
         )
     }
 

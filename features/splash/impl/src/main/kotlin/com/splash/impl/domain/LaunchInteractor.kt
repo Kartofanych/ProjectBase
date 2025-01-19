@@ -2,6 +2,8 @@ package com.splash.impl.domain
 
 import com.example.multimodulepractice.splash.impl.BuildConfig
 import com.example.travelling.common.data.models.local.ResponseState
+import com.example.travelling.common.utils.Analytics
+import com.example.travelling.common.utils.networkCall
 import com.splash.impl.data.LaunchApi
 import com.splash.impl.data.mappers.LaunchMapper
 import com.splash.impl.data.models.dto.LaunchRequest
@@ -18,15 +20,22 @@ class LaunchInteractor @Inject constructor(
 
     suspend fun launch(): ResponseState<LaunchResponse> {
         return withContext(Dispatchers.IO) {
-            try {
-                val response = launchApi.launch(LaunchRequest(BuildConfig.VERSION_NAME))
-                ResponseState.Success(launchMapper.map(response))
-            } catch (exception: Exception) {
-                when {
-                    exception is HttpException && exception.code() == 426 -> ResponseState.Error.OldVersion()
-                    else -> ResponseState.Error.Default()
+            networkCall(
+                run = {
+                    val start = System.currentTimeMillis()
+                    val response = launchApi.launch(LaunchRequest(BuildConfig.VERSION_NAME))
+                    val time = System.currentTimeMillis() - start
+                    Analytics.reportNetworkSuccess(route = "launch", time)
+                    ResponseState.Success(launchMapper.map(response))
+                },
+                catch = { throwable ->
+                    Analytics.reportNetworkError(route = "launch", throwable = throwable)
+                    when {
+                        throwable is HttpException && throwable.code() == 426 -> ResponseState.Error.OldVersion()
+                        else -> ResponseState.Error.Default()
+                    }
                 }
-            }
+            )
         }
     }
 }

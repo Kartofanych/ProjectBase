@@ -123,77 +123,78 @@ fun InformationBlock(attraction: Attraction, onAction: (AttractionAction) -> Uni
             )
         }
 
-        if (false) {
-            Spacer(modifier = Modifier.height(14.dp))
+        Spacer(modifier = Modifier.height(14.dp))
 
-            Row(
+        Row(
+            modifier = Modifier
+                .padding(start = 6.dp, end = 16.dp)
+                .fillMaxWidth()
+                .touchAction {
+                    onAction(AttractionAction.OpenOnMap)
+                },
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Column {
+                Text(
+                    text = "Как добраться?",
+                    style = semiboldTextStyle.copy(
+                        fontSize = 15.sp,
+                        color = Color(0xFF535353)
+                    )
+                )
+
+                Text(
+                    text = block.address,
+                    style = mediumTextStyle.copy(
+                        fontSize = 11.sp,
+                        color = Color(0xFF535353)
+                    )
+                )
+            }
+
+            Icon(
+                painter = painterResource(R.drawable.ic_geo),
+                contentDescription = null,
+                modifier = Modifier.size(14.dp)
+            )
+        }
+
+        if (block.showGuide) {
+
+            Spacer(modifier = Modifier.height(35.dp))
+
+            DefaultButton(
+                onClick = {
+                    onAction(AttractionAction.OpenGuide)
+                },
+                backgroundColor = Color(0xFF404040),
                 modifier = Modifier
-                    .padding(start = 6.dp, end = 16.dp)
-                    .fillMaxWidth()
-                    .touchAction {
-                        onAction(AttractionAction.OpenOnMap)
-                    },
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                    .align(Alignment.CenterHorizontally)
+                    .width(300.dp)
+                    .height(40.dp)
             ) {
-
-                Column {
-                    Text(
-                        text = "Показать на карте",
-                        style = semiboldTextStyle.copy(
-                            fontSize = 15.sp,
-                            color = Color(0xFF535353)
-                        )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_info),
+                        contentDescription = null,
+                        modifier = Modifier.size(16.dp),
+                        tint = Color.White
                     )
 
+                    Spacer(modifier = Modifier.width(14.dp))
+
                     Text(
-                        text = block.address,
+                        text = "Читать подробнее",
                         style = mediumTextStyle.copy(
-                            fontSize = 11.sp,
-                            color = Color(0xFF535353)
+                            fontSize = 14.sp,
+                            color = Color.White
                         )
                     )
                 }
-
-                Icon(
-                    painter = painterResource(R.drawable.ic_geo),
-                    contentDescription = null,
-                    modifier = Modifier.size(14.dp)
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(35.dp))
-
-        DefaultButton(
-            onClick = {
-                onAction(AttractionAction.OpenGuide)
-            },
-            backgroundColor = Color(0xFF404040),
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .width(300.dp)
-                .height(40.dp)
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_info),
-                    contentDescription = null,
-                    modifier = Modifier.size(16.dp),
-                    tint = Color.White
-                )
-
-                Spacer(modifier = Modifier.width(14.dp))
-
-                Text(
-                    text = "Читать подробнее",
-                    style = mediumTextStyle.copy(
-                        fontSize = 14.sp,
-                        color = Color.White
-                    )
-                )
             }
         }
 

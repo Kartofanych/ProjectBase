@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.travelling.common.data.models.local.ActivityEntity
 import com.example.travelling.common.data.models.local.ResponseState
+import com.example.travelling.common.utils.Analytics
 import com.search_filters.api.data.domain.SearchFilterRepository
 import com.search_filters.api.data.models.SearchFilters
 import com.search_filters.impl.domain.SearchInteractor
@@ -34,6 +35,7 @@ class SearchViewModel @Inject constructor(
     private val _uiStateFlow = MutableStateFlow(
         SearchUiState.empty(cities = citiesRepository.cities().map { it.name })
     )
+
     val uiStateFlow: StateFlow<SearchUiState>
         get() = _uiStateFlow
 
@@ -44,6 +46,7 @@ class SearchViewModel @Inject constructor(
     private var searchJob: Job? = null
 
     init {
+        Analytics.reportOpenFeature(feature = "search")
         collectSearch()
         collectFilters()
     }
@@ -160,12 +163,14 @@ class SearchViewModel @Inject constructor(
             is SearchAction.ActivityClicked -> {
                 when (action.entity.type) {
                     ActivityEntity.ActivityType.LANDMARK -> {
+                        Analytics.reportFeatureAction(feature = "search", action = "attraction_tap")
                         viewModelScope.launch {
                             _uiEvent.send(SearchEvent.OnOpenAttraction(action.entity.id))
                         }
                     }
 
                     ActivityEntity.ActivityType.SERVICE -> {
+                        Analytics.reportFeatureAction(feature = "search", action = "service_tap")
                         viewModelScope.launch {
                             _uiEvent.send(SearchEvent.OnOpenService(action.entity.id))
                         }
@@ -198,6 +203,7 @@ class SearchViewModel @Inject constructor(
             }
 
             SearchAction.OpenFilters -> {
+                Analytics.reportFeatureAction(feature = "search", action = "filters_tap")
                 viewModelScope.launch {
                     _uiEvent.send(SearchEvent.OnOpenFilters)
                 }
@@ -205,6 +211,7 @@ class SearchViewModel @Inject constructor(
 
             is SearchAction.OnScrollAction -> {
                 if (action.firstVisibleItem + 8 >= currentList.size && searchJob == null && cursor != null) {
+                    Analytics.reportFeatureAction(feature = "search", action = "next_page")
                     searchRequest(
                         _uiStateFlow.value.searchString,
                         searchFilterRepository.filters.value

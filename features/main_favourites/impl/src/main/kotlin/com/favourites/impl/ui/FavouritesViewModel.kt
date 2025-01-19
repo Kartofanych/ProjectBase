@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.travelling.auth.AuthInfoManager
 import com.example.travelling.auth.models.AuthInfo
 import com.example.travelling.common.data.models.local.ResponseState
+import com.example.travelling.common.utils.Analytics
 import com.favourites.api.domain.FavoritesRepository
 import com.favourites.api.domain.LikeInteractor
 import com.favourites.impl.data.interactors.FavouritesInteractor
@@ -29,7 +30,7 @@ class FavouritesViewModel @Inject constructor(
     private val authInfoManager: AuthInfoManager,
     private val interactor: FavouritesInteractor,
     private val likeInteractor: LikeInteractor,
-    private val favoritesRepository: FavoritesRepository,
+    private val favouritesRepository: FavoritesRepository,
 ) : ViewModel() {
 
     private val _uiStateFlow = MutableStateFlow(FavouritesUiState.empty())
@@ -63,7 +64,7 @@ class FavouritesViewModel @Inject constructor(
     }
 
     fun onAttach() {
-        if (favoritesRepository.shouldUpdate()) {
+        if (favouritesRepository.shouldUpdate()) {
             getFavourites()
         }
     }
@@ -102,6 +103,10 @@ class FavouritesViewModel @Inject constructor(
     }
 
     private suspend fun changeFavorite(id: String, isLiked: Boolean, index: Int) {
+        Analytics.reportFeatureAction(
+            feature = "favourites",
+            action = if (isLiked) "like" else "unlike"
+        )
         when (likeInteractor.changeFavorite(id, isLiked)) {
             is ResponseState.Error -> {
                 _uiStateFlow.update { uiState ->
@@ -117,7 +122,7 @@ class FavouritesViewModel @Inject constructor(
             }
 
             is ResponseState.Success -> {
-                favoritesRepository.requestUpdate()
+                favouritesRepository.requestUpdate()
             }
         }
     }
@@ -125,7 +130,7 @@ class FavouritesViewModel @Inject constructor(
     private fun collectProfileUpdates() {
         viewModelScope.launch {
             authInfoManager.authInfoFlow().drop(1).collectLatest { _ ->
-                favoritesRepository.requestUpdate()
+                favouritesRepository.requestUpdate()
             }
         }
     }
@@ -133,6 +138,7 @@ class FavouritesViewModel @Inject constructor(
     fun onAction(action: FavouritesAction) {
         when (action) {
             FavouritesAction.OnLogOut -> {
+                Analytics.reportFeatureAction(feature = "favourites", action = "logout")
                 viewModelScope.launch {
                     authInfoManager.updateAuthInfo(AuthInfo.Guest)
                     _uiEvent.send(FavouritesUiEvent.LogOut)
@@ -140,18 +146,21 @@ class FavouritesViewModel @Inject constructor(
             }
 
             is FavouritesAction.OnOpenAttraction -> {
+                Analytics.reportFeatureAction(feature = "favourites", action = "attraction_tap")
                 viewModelScope.launch {
                     _uiEvent.send(FavouritesUiEvent.OpenAttraction(action.attractionId))
                 }
             }
 
             FavouritesAction.OnLogIn -> {
+                Analytics.reportFeatureAction(feature = "favourites", action = "login_tap")
                 viewModelScope.launch {
                     _uiEvent.send(FavouritesUiEvent.LogOut)
                 }
             }
 
             is FavouritesAction.ChangeProfileModalVisibility -> {
+                Analytics.reportFeatureAction(feature = "favourites", action = "open_profile")
                 _uiStateFlow.update {
                     it.copy(isModalVisible = action.isVisible)
                 }
@@ -172,6 +181,7 @@ class FavouritesViewModel @Inject constructor(
             FavouritesAction.OnReload -> getFavourites()
 
             FavouritesAction.OpenPromo -> {
+                Analytics.reportFeatureAction(feature = "favourites", action = "open_promo_list")
                 _uiStateFlow.update { it.copy(isModalVisible = false) }
                 viewModelScope.launch { _uiEvent.send(FavouritesUiEvent.OpenPromo) }
             }

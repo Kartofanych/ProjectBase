@@ -19,6 +19,7 @@ dependencies {
     api(project(":features:auth:api"))
     api(project(":features:main_favourites:api"))
     api(project(":features:reviews:api"))
+    api(project(":features:geo"))
     implementation(project(":common"))
     implementation(libs.core.ktx)
 
@@ -30,4 +31,6 @@ dependencies {
     implementation(libs.auth.sdk)
 
     implementation(libs.bundles.network)
+
+    implementation(libs.bundles.utils)
 }

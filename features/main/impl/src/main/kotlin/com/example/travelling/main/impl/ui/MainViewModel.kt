@@ -2,6 +2,7 @@ package com.example.travelling.main.impl.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.travelling.common.utils.Analytics
 import com.example.travelling.main.impl.data.models.MainTab
 import com.example.travelling.main.impl.domain.MapScreenRepository
 import com.main.common.di.MainScope
@@ -26,12 +27,14 @@ class MainViewModel @Inject constructor(
     val uiEvent = _uiEvent.receiveAsFlow()
 
     init {
+        Analytics.reportOpenFeature("main")
         mapScreenRepository.updateMapVisibility(true)
     }
 
     fun onAction(action: MainAction) {
         when (action) {
             is MainAction.OpenTab -> {
+                Analytics.reportOpenFeature("main.${action.tab.featureName}")
                 _uiState.update {
                     it.copy(currentTab = action.tab)
                 }

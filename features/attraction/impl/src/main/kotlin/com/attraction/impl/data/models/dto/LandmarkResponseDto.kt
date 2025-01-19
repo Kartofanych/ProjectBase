@@ -38,7 +38,10 @@ data class LandmarkResponseDto(
     val activityBlocks: List<CloseObjectsBlockDto>,
 
     @SerializedName("similar_places")
-    val similar: List<SimilarItemDto>
+    val similar: List<SimilarItemDto>,
+
+    @SerializedName("show_guide")
+    val showGuide: Boolean?,
 ) {
     @Keep
     data class ReviewsBlockDto(
