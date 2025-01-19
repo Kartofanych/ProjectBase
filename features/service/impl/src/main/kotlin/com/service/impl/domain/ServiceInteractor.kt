@@ -1,6 +1,8 @@
 package com.service.impl.domain
 
 import com.example.travelling.common.data.models.local.ResponseState
+import com.example.travelling.common.utils.Analytics
+import com.example.travelling.common.utils.networkCall
 import com.service.impl.data.ServiceApi
 import com.service.impl.data.mappers.ServiceMapper
 import com.service.impl.data.models.local.Service
@@ -16,12 +18,18 @@ class ServiceInteractor @Inject constructor(
 
     suspend fun service(serviceId: String): ResponseState<Service> {
         return withContext(Dispatchers.IO) {
-            try {
-                val response = api.service(ServiceRequest(serviceId))
-                ResponseState.Success(mapper.map(response))
-            } catch (e: Exception) {
-                ResponseState.Error.Default()
-            }
+            networkCall(
+                run = {
+                    val start = System.currentTimeMillis()
+                    val response = api.service(ServiceRequest(serviceId))
+                    val time = System.currentTimeMillis() - start
+                    Analytics.reportNetworkSuccess(route = "service", millis = time)
+                    ResponseState.Success(mapper.map(response))
+                }, catch = { throwable ->
+                    Analytics.reportNetworkError(route = "service", throwable = throwable)
+                    ResponseState.Error.Default()
+                }
+            )
         }
     }
 }

@@ -3,6 +3,7 @@ package com.item.impl.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.travelling.common.data.models.local.ResponseState
+import com.example.travelling.common.utils.Analytics
 import com.item.impl.data.PromoItemInteractor
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +26,7 @@ class PromoItemViewModel @Inject constructor(
         get() = _uiStateFlow
 
     init {
+        Analytics.reportOpenFeature("promo.item", mapOf("token" to token))
         getPromo()
     }
 
@@ -45,6 +47,7 @@ class PromoItemViewModel @Inject constructor(
             PromoItemUiState.OnReload -> getPromo()
 
             is PromoItemAction.OpenInfo -> {
+                Analytics.reportFeatureAction(feature = "promo", action = "open_item_info")
                 _uiEvent.tryEmit(PromoItemEvent.OnOpenInfo(action.id, action.type))
             }
         }

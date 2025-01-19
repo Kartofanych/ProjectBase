@@ -1,7 +1,7 @@
 package com.example.travelling.main.impl.data.models
 
-enum class MainTab(val title: String) {
-    MAP("Карта"),
-    LIST("Поиск"),
-    FAVOURITES("Избранное")
+enum class MainTab(val title: String, val featureName: String) {
+    MAP("Карта", "map"),
+    LIST("Поиск", "list"),
+    FAVOURITES("Избранное", "favourites")
 }

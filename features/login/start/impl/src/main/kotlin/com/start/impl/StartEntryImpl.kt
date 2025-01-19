@@ -30,14 +30,10 @@ class StartEntryImpl @Inject constructor(
             arguments,
             enterTransition = null,
             exitTransition = {
-                slideOutHorizontally {
-                    it
-                }
+                slideOutHorizontally { it }
             },
             popExitTransition = {
-                slideOutHorizontally {
-                    it
-                }
+                slideOutHorizontally { it }
             }
         ) {
 

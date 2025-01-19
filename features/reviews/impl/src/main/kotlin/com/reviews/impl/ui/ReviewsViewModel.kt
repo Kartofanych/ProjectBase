@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.travelling.common.data.models.local.ResponseState
 import com.example.travelling.common.data.models.local.Review
+import com.example.travelling.common.utils.Analytics
 import com.reviews.impl.data.ReviewsInteractor
 import com.reviews.impl.di.ReviewsComponent
 import com.reviews.impl.di.ReviewsScope
@@ -35,6 +36,7 @@ class ReviewsViewModel @Inject constructor(
     private val currentList = mutableListOf<Review>()
 
     init {
+        Analytics.reportOpenFeature(feature = "reviews")
         onReload()
     }
 
@@ -43,7 +45,7 @@ class ReviewsViewModel @Inject constructor(
         _uiStateFlow.value = ReviewsUiState.Loading
         viewModelScope.launch {
             when (val result = interactor.loadReviewsPage(data.id)) {
-                is ResponseState.Error -> _uiStateFlow.value = ReviewsUiState.Loading
+                is ResponseState.Error -> _uiStateFlow.value = ReviewsUiState.Error
 
                 is ResponseState.Success -> {
                     cursor = result.data.cursor
@@ -97,13 +99,18 @@ class ReviewsViewModel @Inject constructor(
 
     private fun onPagination(firstVisibleItem: Int) {
         if (firstVisibleItem + 8 >= currentList.size && paginationJob == null && _uiStateFlow.value is ReviewsUiState.Content) {
+            Analytics.reportFeatureAction(feature = "reviews", action = "next_page")
             loadNextPage()
         }
     }
 
     private fun onReload() {
-        when (_uiStateFlow.value) {
-            is ReviewsUiState.Content -> loadNextPage()
+        when (val state = _uiStateFlow.value) {
+            is ReviewsUiState.Content -> {
+                _uiStateFlow.update { state.copy(error = false) }
+                loadNextPage()
+            }
+
             else -> loadPage()
         }
     }

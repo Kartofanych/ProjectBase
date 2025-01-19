@@ -1,5 +1,6 @@
 package com.attraction.impl
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
@@ -12,8 +13,10 @@ import androidx.navigation.compose.composable
 import com.attraction.api.AttractionEntry
 import com.attraction.impl.di.AttractionDependencies
 import com.attraction.impl.di.DaggerAttractionComponent
+import com.attraction.impl.ui.AttractionAction
 import com.attraction.impl.ui.AttractionEventHandler
 import com.attraction.impl.ui.AttractionScreen
+import com.attraction.impl.ui.AttractionUiState
 import com.example.travelling.common.data.models.network.ObjectType
 import com.example.travelling.common.navigation.injectedViewModel
 import com.reviews.api.ReviewsEntry
@@ -72,6 +75,15 @@ class AttractionEntryImpl @Inject constructor(
                 viewModel.reviewModalStateFlow.collectAsStateWithLifecycle().value,
                 viewModel::onAction
             )
+
+            BackHandler {
+                val state = viewModel.uiStateFlow.value
+                if (state is AttractionUiState.Content && state.landmark.schedule.isVisible) {
+                    viewModel.onAction(AttractionAction.ChangeScheduleVisibility)
+                } else {
+                    viewModel.onAction(AttractionAction.OnBackPressed)
+                }
+            }
         }
     }
 

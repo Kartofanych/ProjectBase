@@ -1,11 +1,10 @@
 package com.service.impl.ui
 
-import android.content.Intent
-import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.travelling.common.data.models.local.ResponseState
 import com.example.travelling.common.domain.DeeplinkHandler
+import com.example.travelling.common.utils.Analytics
 import com.example.travelling.common.utils.runWithMinTime
 import com.service.impl.di.ServiceScope
 import com.service.impl.domain.ServiceInteractor
@@ -33,6 +32,7 @@ class ServiceViewModel @Inject constructor(
         get() = _uiStateFlow
 
     init {
+        Analytics.reportOpenFeature(feature = "service", mapOf("id" to serviceId))
         getService()
     }
 
@@ -59,11 +59,11 @@ class ServiceViewModel @Inject constructor(
             ServiceAction.OnReload -> getService()
 
             is ServiceAction.Deeplink -> {
-                val intent = Intent(Intent.ACTION_VIEW).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    data = Uri.parse(action.deeplink)
-                }
-                deeplinkHandler.handleIntent(intent)
+                Analytics.reportFeatureAction(
+                    feature = "service",
+                    action = "connection to ${action.deeplink}"
+                )
+                deeplinkHandler.handleDeeplink(action.deeplink)
             }
         }
     }

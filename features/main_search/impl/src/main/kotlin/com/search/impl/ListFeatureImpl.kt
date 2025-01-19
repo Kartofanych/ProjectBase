@@ -25,7 +25,6 @@ class ListFeatureImpl @Inject constructor(
         mainNavController: NavController,
         modifier: Modifier
     ) {
-        DaggerListComponent.factory().create(dependencies)
 
         navGraphBuilder.composable(
             route = featureRoute,
@@ -44,6 +43,8 @@ class ListFeatureImpl @Inject constructor(
                 }
             },
         ) {
+
+            DaggerListComponent.factory().create(dependencies)
 
             val viewModel = injectedViewModel {
                 dependencies.listViewModel

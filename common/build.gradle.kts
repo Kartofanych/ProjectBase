@@ -27,6 +27,8 @@ dependencies {
 
     implementation(libs.bundles.network)
 
+    implementation(libs.bundles.utils)
+
     implementation(libs.richtext.commonmark)
 
 }

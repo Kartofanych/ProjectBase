@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.travelling.auth.AuthInfoManager
 import com.example.travelling.auth.models.AuthInfo
+import com.example.travelling.common.utils.Analytics
 import com.start.impl.di.StartScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,9 +25,14 @@ class StartViewModel @Inject constructor(
     val uiStateFlow: StateFlow<StartUiState>
         get() = _uiStateFlow
 
+    init {
+        Analytics.reportOpenFeature("login_start")
+    }
+
     fun onAction(action: StartAction) {
         when (action) {
             StartAction.OnGuestLogin -> {
+                Analytics.reportFeatureAction("login_start", "guest")
                 viewModelScope.launch {
                     authInfoManager.updateAuthInfo(AuthInfo.Guest)
                     _uiEvent.send(StartEvent.OnGuestLogin)
@@ -34,6 +40,7 @@ class StartViewModel @Inject constructor(
             }
 
             StartAction.OnLogin -> {
+                Analytics.reportFeatureAction("login_start", "mail")
                 viewModelScope.launch { _uiEvent.send(StartEvent.OnLogin) }
             }
         }

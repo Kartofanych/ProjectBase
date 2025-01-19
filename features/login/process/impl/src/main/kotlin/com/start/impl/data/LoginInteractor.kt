@@ -1,6 +1,8 @@
 package com.start.impl.data
 
 import com.example.travelling.common.data.models.local.ResponseState
+import com.example.travelling.common.utils.Analytics
+import com.example.travelling.common.utils.networkCall
 import com.start.impl.data.mappers.ValidateMapper
 import com.start.impl.data.models.dto.RegisterCall
 import com.start.impl.data.models.dto.ValidationCall
@@ -17,26 +19,46 @@ class LoginInteractor @Inject constructor(
 
     suspend fun register(email: String): ResponseState<Unit> {
         return withContext(Dispatchers.IO) {
-            try {
-                api.register(RegisterCall(email))
-                ResponseState.Success(Unit)
-            } catch (e: Exception) {
-                ResponseState.Error.Default()
-            }
+            networkCall(
+                run = {
+                    val start = System.currentTimeMillis()
+                    api.register(RegisterCall(email))
+                    val time = System.currentTimeMillis() - start
+                    Analytics.reportNetworkSuccess(route = "register", time)
+
+                    ResponseState.Success(Unit)
+                },
+                catch = { throwable ->
+                    Analytics.reportNetworkError(route = "register", throwable = throwable)
+                    ResponseState.Error.Default()
+                }
+            )
         }
     }
 
     suspend fun validateCode(email: String, code: String): ResponseState<ValidationResponse> {
         return withContext(Dispatchers.IO) {
-            try {
-                val call = api.validateEmail(ValidationCall(email, code))
-                ResponseState.Success(validateMapper.map(call))
-            } catch (e: Exception) {
-                when {
-                    (e is HttpException && e.code() == 498) -> ResponseState.Error.BadCode()
-                    else -> ResponseState.Error.Default()
+            networkCall(
+                run = {
+                    val start = System.currentTimeMillis()
+                    val call = api.validateEmail(ValidationCall(email, code))
+                    val time = System.currentTimeMillis() - start
+                    Analytics.reportNetworkSuccess(route = "validateCode", time)
+                    ResponseState.Success(validateMapper.map(call))
+                },
+                catch = { throwable ->
+                    when {
+                        (throwable is HttpException && throwable.code() == 498) -> ResponseState.Error.BadCode()
+                        else -> {
+                            Analytics.reportNetworkError(
+                                route = "validateCode",
+                                throwable = throwable
+                            )
+                            ResponseState.Error.Default()
+                        }
+                    }
                 }
-            }
+            )
         }
     }
 }

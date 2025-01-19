@@ -3,6 +3,8 @@ package com.splash.impl.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.travelling.common.data.models.local.ResponseState
+import com.example.travelling.common.domain.DeeplinkHandler
+import com.example.travelling.common.utils.Analytics
 import com.filters.api.data.FiltersRepository
 import com.splash.api.domain.CitiesRepository
 import com.splash.impl.di.LaunchScope
@@ -20,7 +22,8 @@ import javax.inject.Inject
 class LaunchViewModel @Inject constructor(
     private val launchInteractor: LaunchInteractor,
     private val citiesRepository: CitiesRepository,
-    private val filtersRepository: FiltersRepository
+    private val filtersRepository: FiltersRepository,
+    private val deeplinkHandler: DeeplinkHandler,
 ) : ViewModel() {
 
     private val _uiEvent = Channel<LaunchEvent>()
@@ -31,6 +34,7 @@ class LaunchViewModel @Inject constructor(
         get() = _uiStateFlow
 
     init {
+        Analytics.reportOpenFeature("launch")
         launch()
     }
 
@@ -59,8 +63,7 @@ class LaunchViewModel @Inject constructor(
     fun onSplashAction(action: LaunchAction) {
         when (action) {
             LaunchAction.Update -> {
-                //TODO deeplink to market
-                _uiStateFlow.update { LaunchUiState.Loading }
+                deeplinkHandler.handleDeeplink("https://quick-travel.ru")
             }
         }
     }

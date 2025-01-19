@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.travelling.auth.AuthInfoManager
 import com.example.travelling.auth.models.AuthInfo
 import com.example.travelling.common.data.models.local.ResponseState
+import com.example.travelling.common.utils.Analytics
 import com.example.travelling.common.utils.runWithMinTime
 import com.start.impl.data.LoginInteractor
 import com.start.impl.ui.ProcessUiState.LoginState
@@ -32,6 +33,10 @@ class ProcessViewModel @Inject constructor(
         get() = _uiStateFlow
 
     private var code: String = ""
+
+    init {
+        Analytics.reportOpenFeature("login_process")
+    }
 
     fun onAction(action: ProcessAction) {
         when (action) {
@@ -102,6 +107,7 @@ class ProcessViewModel @Inject constructor(
             val mail = _uiStateFlow.value.currentText
             when (val result = runWithMinTime({ loginInteractor.validateCode(mail, code) })) {
                 is ResponseState.Error.BadCode -> {
+                    Analytics.reportFeatureAction(feature = "login_process", action = "bad_code")
                     _uiStateFlow.update {
                         it.copy(loginState = loginState.copy(state = CodeScreenState.ERROR))
                     }
@@ -121,6 +127,7 @@ class ProcessViewModel @Inject constructor(
                             name = result.data.name,
                         )
                     )
+                    Analytics.reportFeatureAction(feature = "login_process", action = "success")
                     _uiEvent.send(ProcessEvent.OpenMain)
                 }
             }

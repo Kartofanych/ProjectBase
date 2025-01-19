@@ -20,6 +20,7 @@ import com.example.travelling.common.data.models.local.GeoPoint
 import com.example.travelling.common.data.models.local.ResponseState
 import com.example.travelling.common.di.AppContext
 import com.example.travelling.common.di.AppScope
+import com.example.travelling.common.utils.Analytics
 import com.example.travelling.common.utils.calculateDistance
 import com.example.travelling.common.utils.runWithMinTime
 import com.example.travelling.geo.repository.GeoRepository
@@ -172,7 +173,10 @@ class MapViewModel @Inject constructor(
                 it.forEach { city ->
                     cityObjects.add(createCityObject(city))
                 }
-                mapInfo(camera.target.toGeoPoint(), camera.zoom)
+                citiesRepository.closestCity(geoRepository.geoInfoImmediately().currentPoint)
+                    ?.let { closestCity ->
+                        moveToLocation(closestCity.geoPoint, false)
+                    }
             }
         }
     }
@@ -272,8 +276,8 @@ class MapViewModel @Inject constructor(
                 val loader = ImageLoader(context)
                 val request = ImageRequest.Builder(context)
                     .data(landmark.icon)
-                    .error(R.drawable.ic_dollar_pin)
-                    .fallback(R.drawable.ic_dollar_pin)
+                    .error(R.drawable.ic_city_pin)
+                    .fallback(R.drawable.ic_city_pin)
                     .allowHardware(false)
                     .build()
 
@@ -349,12 +353,14 @@ class MapViewModel @Inject constructor(
         when (action) {
 
             is MapActions.OnPlaceMarkTapped -> {
+                Analytics.reportFeatureAction(feature = "map", action = "attraction_tap")
                 viewModelScope.launch {
                     _uiEvent.send(MapUiEvent.OnAttractionOpen(action.landmarkId))
                 }
             }
 
             is MapActions.OnCityTapped -> {
+                Analytics.reportFeatureAction(feature = "map", action = "city_tap")
                 moveToLocation(action.geoPoint, true, 13f)
             }
 
@@ -365,6 +371,7 @@ class MapViewModel @Inject constructor(
             }
 
             MapActions.OnMyLocationClick -> {
+                Analytics.reportFeatureAction(feature = "map", action = "my_location_tap")
                 moveToLocation(geoRepository.geoInfoImmediately().currentPoint, true)
             }
         }
@@ -384,7 +391,6 @@ class MapViewModel @Inject constructor(
                     )
                 )
             }
-            moveToLocation(geoPoint, false)
         } else {
             userMapObject?.let {
                 it.geometry = location

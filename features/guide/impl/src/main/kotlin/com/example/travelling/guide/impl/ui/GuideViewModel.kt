@@ -3,6 +3,7 @@ package com.example.travelling.guide.impl.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.travelling.common.data.models.local.ResponseState
+import com.example.travelling.common.utils.Analytics
 import com.example.travelling.common.utils.runWithMinTime
 import com.example.travelling.guide.impl.di.GuideScope
 import com.example.travelling.guide.impl.interactors.GuideInteractor
@@ -31,6 +32,7 @@ class GuideViewModel @Inject constructor(
     private var launchJob: Job? = null
 
     init {
+        Analytics.reportOpenFeature("guide", mapOf("id" to id))
         launch(id)
     }
 

@@ -29,7 +29,6 @@ android {
 
     buildTypes {
         getByName("release") {
-            //TODO true
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -42,10 +41,12 @@ android {
                 storePassword = getLocalProperty("KEY_PASSWORD").toString()
             }
             buildConfigField("String", "API_KEY", "\"${getLocalProperty("API_KEY")}\"")
+            buildConfigField("String", "METRICA_KEY", "\"${getLocalProperty("METRICA_KEY")}\"")
         }
 
         getByName("debug") {
             buildConfigField("String", "API_KEY", "\"${getLocalProperty("API_KEY")}\"")
+            buildConfigField("String", "METRICA_KEY", "\"${getLocalProperty("METRICA_KEY")}\"")
         }
     }
 
@@ -129,8 +130,5 @@ dependencies {
 
     implementation(libs.bundles.network)
 
-    //TODO
-    implementation(platform("com.google.firebase:firebase-bom:33.1.1"))
-    implementation("com.google.firebase:firebase-analytics")
-
+    implementation(libs.analytics)
 }

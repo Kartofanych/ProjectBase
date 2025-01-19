@@ -1,6 +1,8 @@
 package com.example.travelling.guide.impl.interactors
 
 import com.example.travelling.common.data.models.local.ResponseState
+import com.example.travelling.common.utils.Analytics
+import com.example.travelling.common.utils.networkCall
 import com.example.travelling.guide.impl.data.GuideApi
 import com.example.travelling.guide.impl.data.mappers.GuideMapper
 import com.example.travelling.guide.impl.data.models.GuideRequestDto
@@ -16,12 +18,19 @@ class GuideInteractor @Inject constructor(
 
     suspend fun guide(landmarkId: String): ResponseState<GuideResponse> {
         return withContext(Dispatchers.IO) {
-            try {
-                val response = api.attractionGuide(GuideRequestDto(landmarkId))
-                ResponseState.Success(mapper.map(response))
-            } catch (e: Exception) {
-                ResponseState.Error.Default()
-            }
+            networkCall(
+                run = {
+                    val start = System.currentTimeMillis()
+                    val response = api.attractionGuide(GuideRequestDto(landmarkId))
+                    val time = System.currentTimeMillis() - start
+                    Analytics.reportNetworkSuccess(route = "guide", time)
+
+                    ResponseState.Success(mapper.map(response))
+                }, catch = { throwable ->
+                    Analytics.reportNetworkError(route = "guide", throwable = throwable)
+                    ResponseState.Error.Default()
+                }
+            )
         }
     }
 }

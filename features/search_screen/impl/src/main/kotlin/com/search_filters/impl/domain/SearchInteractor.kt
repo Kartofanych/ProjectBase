@@ -2,6 +2,8 @@ package com.search_filters.impl.domain
 
 import com.example.travelling.common.data.models.local.GeoPoint.Companion.toDto
 import com.example.travelling.common.data.models.local.ResponseState
+import com.example.travelling.common.utils.Analytics
+import com.example.travelling.common.utils.networkCall
 import com.example.travelling.geo.repository.GeoRepository
 import com.search_filters.api.data.models.SearchFilters
 import com.search_filters.impl.data.SearchApi
@@ -25,23 +27,30 @@ class SearchInteractor @Inject constructor(
         cursor: String
     ): ResponseState<SearchResponse> {
         return withContext(Dispatchers.IO) {
-            try {
-                val response = api.search(
-                    SearchRequest(
-                        query = searchText,
-                        geoPoint = geoRepository.geoInfoImmediately().currentPoint.toDto(),
-                        cursor = cursor,
-                        filters = SearchFiltersDto(
-                            distance = filters.distance.km.toFloat(),
-                            cities = filters.cities.filter { it.isActive }.map { it.id },
-                            minRating = filters.ratingFrom
+            networkCall(
+                run = {
+                    val start = System.currentTimeMillis()
+                    val response = api.search(
+                        SearchRequest(
+                            query = searchText,
+                            geoPoint = geoRepository.geoInfoImmediately().currentPoint.toDto(),
+                            cursor = cursor,
+                            filters = SearchFiltersDto(
+                                distance = filters.distance.km.toFloat(),
+                                cities = filters.cities.filter { it.isActive }.map { it.id },
+                                minRating = filters.ratingFrom
+                            )
                         )
                     )
-                )
-                ResponseState.Success(searchMapper.map(response))
-            } catch (exception: Exception) {
-                ResponseState.Error.Default()
-            }
+                    val time = System.currentTimeMillis() - start
+                    Analytics.reportNetworkSuccess(route = "search", millis = time)
+                    ResponseState.Success(searchMapper.map(response))
+                },
+                catch = { throwable ->
+                    Analytics.reportNetworkError(route = "search", throwable = throwable)
+                    ResponseState.Error.Default()
+                }
+            )
         }
     }
 }

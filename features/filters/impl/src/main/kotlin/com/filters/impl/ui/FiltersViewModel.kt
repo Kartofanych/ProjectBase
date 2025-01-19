@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.travelling.common.data.models.local.FilterDistance
 import com.example.travelling.common.data.models.local.FilterDistance.Companion.toFiltersValue
+import com.example.travelling.common.utils.Analytics
 import com.filters.api.data.FiltersRepository
 import com.filters.api.data.models.Filters
 import com.filters.impl.di.FiltersScope
@@ -33,6 +34,7 @@ class FiltersViewModel @Inject constructor(
     val distanceStateFlow: MutableFloatState = mutableFloatStateOf(400f)
 
     init {
+        Analytics.reportOpenFeature("map_filters")
         filtersRepository.filters.value?.let {
             _uiStateFlow.value = FiltersUiState(categories = it.categories)
             distanceStateFlow.floatValue = it.distance.toFiltersValue()
@@ -64,6 +66,7 @@ class FiltersViewModel @Inject constructor(
                             )
                         )
                     }
+                    Analytics.reportFeatureAction(feature = "map_filters", action = "change")
                     _uiEvent.send(FiltersUiEvent.OnClose)
                 }
             }

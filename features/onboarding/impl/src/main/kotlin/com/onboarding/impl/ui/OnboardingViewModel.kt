@@ -1,6 +1,7 @@
 package com.onboarding.impl.ui
 
 import androidx.lifecycle.ViewModel
+import com.example.travelling.common.utils.Analytics
 import com.travelling.api.UserPreferences
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,9 +20,14 @@ class OnboardingViewModel @Inject constructor(
     val uiStateFlow: StateFlow<OnboardingUiState>
         get() = _uiStateFlow
 
+    init {
+        Analytics.reportOpenFeature("onboarding")
+    }
+
     fun onAction(action: OnboardingAction) {
         when (action) {
             OnboardingAction.OnFinish -> {
+                Analytics.reportFeatureAction(feature = "onboarding", action = "finish")
                 userPreferences.updateOnboardingShown()
                 _uiEvent.tryEmit(OnboardingEvent.OpenLogin)
             }
