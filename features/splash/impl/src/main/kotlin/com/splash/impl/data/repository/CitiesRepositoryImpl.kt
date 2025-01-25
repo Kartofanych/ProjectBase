@@ -29,12 +29,20 @@ class CitiesRepositoryImpl @Inject constructor() : CitiesRepository {
         _cities.emit(current)
     }
 
-    override fun closestCity(pinPoint: GeoPoint): City? {
+    override fun closestNotLoadedCity(pinPoint: GeoPoint): City? {
         for (city in cities().filter { !it.isLoaded }) {
             if (calculateDistance(pinPoint, city.geoPoint).toFloat() <= city.radius) {
                 return city
             }
         }
         return null
+    }
+
+    override fun closestCity(pinPoint: GeoPoint): City? {
+        if (cities().isEmpty()) return null
+
+        return cities().minByOrNull { city ->
+            calculateDistance(pinPoint, city.geoPoint)
+        }
     }
 }

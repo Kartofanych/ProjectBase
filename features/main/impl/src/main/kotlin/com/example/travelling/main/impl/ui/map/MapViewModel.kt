@@ -150,10 +150,10 @@ class MapViewModel @Inject constructor(
 
     init {
         onStart()
-        subscribeToCities()
-        subscribeToGeo()
-        subscribeToFilters()
         map.mapWindow.map.addCameraListener(cameraListener)
+        subscribeToGeo()
+        subscribeToCities()
+        subscribeToFilters()
         subscribeToMapScreen()
     }
 
@@ -222,7 +222,7 @@ class MapViewModel @Inject constructor(
 
     private fun mapInfo(point: GeoPoint, zoom: Float) {
         if (zoom < 12f) return
-        citiesRepository.closestCity(point)?.let { city ->
+        citiesRepository.closestNotLoadedCity(point)?.let { city ->
             if (mapRequestJob.city != city) {
                 _uiStateFlow.update {
                     it.copy(state = MapState.Loading)
