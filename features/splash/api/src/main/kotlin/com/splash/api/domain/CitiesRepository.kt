@@ -14,5 +14,7 @@ interface CitiesRepository {
 
     suspend fun loadedCity(city: City)
 
+    fun closestNotLoadedCity(pinPoint: GeoPoint): City?
+
     fun closestCity(pinPoint: GeoPoint): City?
 }

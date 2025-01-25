@@ -7,6 +7,7 @@ import com.example.travelling.common.data.models.local.ResponseState
 import com.example.travelling.common.domain.DeeplinkHandler
 import com.example.travelling.common.utils.Analytics
 import com.example.travelling.geo.repository.GeoRepository
+import com.example.travelling.geo.repository.PreferredRouteTypeInteractor
 import com.favourites.api.domain.FavoritesRepository
 import com.favourites.api.domain.LikeInteractor
 import kotlinx.coroutines.Job
@@ -26,6 +27,7 @@ class AttractionViewModel @Inject constructor(
     private val favoritesRepository: FavoritesRepository,
     private val deeplinkHandler: DeeplinkHandler,
     private val geoRepository: GeoRepository,
+    private val routeTypeInteractor: PreferredRouteTypeInteractor,
 ) : ViewModel() {
 
     private val _uiEvent = MutableSharedFlow<AttractionEvent>(extraBufferCapacity = 1)
@@ -109,11 +111,17 @@ class AttractionViewModel @Inject constructor(
             }
 
             AttractionAction.OpenOnMap -> {
-                val (userLat, userLon) = geoRepository.geoInfoImmediately().currentPoint
-                val (attrLat, attrLon) = (uiStateFlow.value as? AttractionUiState.Content)?.landmark?.location
+                val userLocation = geoRepository.geoInfoImmediately().currentPoint
+                val (userLat, userLon) = userLocation
+                val targetLocation =
+                    (uiStateFlow.value as? AttractionUiState.Content)?.landmark?.location
+                val (attrLat, attrLon) = targetLocation
                     ?: return
+
+                val preferredRouteType =
+                    routeTypeInteractor.bestOption(userLocation, targetLocation).value
                 deeplinkHandler.handleDeeplink(
-                    "yandexmaps://maps.yandex.ru/?rtext$userLat,$userLon~$attrLat,$attrLon&rtt=auto"
+                    "yandexmaps://maps.yandex.ru/?rtext=$userLat,$userLon~$attrLat,$attrLon&rtt=$preferredRouteType"
                 )
             }
 
