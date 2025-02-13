@@ -3,8 +3,8 @@ package com.attraction.impl.data.models.dto
 import androidx.annotation.Keep
 import com.example.travelling.common.data.models.network.GeoPointDto
 import com.example.travelling.common.data.models.network.ObjectType
-import com.example.travelling.common.data.models.network.RateListObjectDto
-import com.example.travelling.common.data.models.network.ReviewDto
+import com.example.travelling.common.data.models.network.ReviewsBlockDto
+import com.example.travelling.common.data.models.network.ScheduleDto
 import com.google.gson.annotations.SerializedName
 
 @Keep
@@ -43,47 +43,6 @@ data class LandmarkResponseDto(
     @SerializedName("show_guide")
     val showGuide: Boolean?,
 ) {
-    @Keep
-    data class ReviewsBlockDto(
-        @SerializedName("avg_rate")
-        val rating: Float,
-
-        @SerializedName("total_count")
-        val total: Int,
-
-        @SerializedName("rate_list")
-        val rateList: RateListObjectDto,
-
-        @SerializedName("review_list")
-        val reviewList: List<ReviewDto>,
-    )
-
-    @Keep
-    data class ScheduleDto(
-        @SerializedName("status")
-        val status: StatusDto,
-
-        @SerializedName("days")
-        val days: List<DayScheduleDto>
-    ) {
-        @Keep
-        data class StatusDto(
-            @SerializedName("is_open")
-            val isOpen: Boolean,
-
-            @SerializedName("subtitle")
-            val subtitle: String,
-        )
-
-        @Keep
-        data class DayScheduleDto(
-            @SerializedName("name")
-            val name: String,
-
-            @SerializedName("timing")
-            val timing: String,
-        )
-    }
 
     @Keep
     data class CloseObjectsBlockDto(

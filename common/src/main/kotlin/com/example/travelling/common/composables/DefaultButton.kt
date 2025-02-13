@@ -20,8 +20,9 @@ fun DefaultButton(
     content: @Composable BoxScope.() -> Unit,
 ) {
     Box(
-        modifier = modifier
+        modifier = Modifier
             .touchAction(onClick)
+            .then(modifier)
             .background(color = backgroundColor, shape = shape)
             .clip(shape),
         contentAlignment = Alignment.Center,

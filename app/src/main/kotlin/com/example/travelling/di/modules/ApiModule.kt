@@ -3,6 +3,7 @@ package com.example.travelling.di.modules
 import com.attraction.impl.data.AttractionApi
 import com.example.travelling.guide.impl.data.GuideApi
 import com.main.common.data.MainApi
+import com.reviews.impl.data.ReviewsApi
 import com.service.impl.data.ServiceApi
 import com.splash.impl.data.LaunchApi
 import dagger.Module
@@ -35,5 +36,10 @@ class ApiModule {
     @Provides
     fun provideAttractionApi(retrofit: Retrofit): AttractionApi {
         return retrofit.create(AttractionApi::class.java)
+    }
+
+    @Provides
+    fun provideReviewApi(retrofit: Retrofit): ReviewsApi {
+        return retrofit.create(ReviewsApi::class.java)
     }
 }

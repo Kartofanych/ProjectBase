@@ -20,7 +20,9 @@ class PromoListMapper @Inject constructor() {
             endDate = dto.endDate,
             imageUrl = dto.imageUrl,
             subtitle = dto.description,
-            token = dto.token
+            token = dto.token,
+            rating = dto.rating,
+            tag = dto.tag,
         )
     }
 }

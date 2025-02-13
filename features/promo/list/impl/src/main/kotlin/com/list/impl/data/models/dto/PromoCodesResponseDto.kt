@@ -21,4 +21,8 @@ data class PromoCodeDto(
     val endDate: String,
     @SerializedName("image_url")
     val imageUrl: String,
+    @SerializedName("tag")
+    val tag: String,
+    @SerializedName("rating")
+    val rating: Float,
 )

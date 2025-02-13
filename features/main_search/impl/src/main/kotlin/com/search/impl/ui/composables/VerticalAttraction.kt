@@ -76,7 +76,8 @@ fun RecommendedAttractionView(
         if (attraction.rating != 0f) {
             ReviewStarsComponent(
                 rating = attraction.rating.toString(),
-                starCount = attraction.stars
+                starCount = attraction.stars,
+                modifier = Modifier.padding(horizontal = 5.dp),
             )
         }
     }

@@ -1,4 +1,4 @@
-package com.attraction.impl.data.models.dto
+package com.reviews.impl.data.models.dto
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName

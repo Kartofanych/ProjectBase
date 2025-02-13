@@ -1,6 +1,5 @@
 package com.service.impl.ui.composables
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -15,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.travelling.common.composables.ImageType
 import com.example.travelling.common.composables.NetworkImage
+import com.example.travelling.common.composables.touchAction
 import com.example.travelling.common.theme.regularTextStyle
 import com.service.impl.data.models.local.Service
 import com.service.impl.ui.ServiceAction
@@ -33,7 +33,7 @@ fun ContactItem(contact: Service.Contact, onAction: (ServiceAction) -> Unit) {
             type = ImageType.SVG,
             modifier = Modifier
                 .size(65.dp)
-                .clickable {
+                .touchAction {
                     onAction(ServiceAction.Deeplink(contact.deeplink))
                 }
         )

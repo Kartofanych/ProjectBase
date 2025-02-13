@@ -218,6 +218,10 @@ class SearchViewModel @Inject constructor(
                     )
                 }
             }
+
+            SearchAction.OnDispose -> {
+
+            }
         }
     }
 

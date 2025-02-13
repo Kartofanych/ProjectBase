@@ -10,6 +10,7 @@ import com.example.travelling.geo.repository.GeoRepository
 import com.example.travelling.geo.repository.PreferredRouteTypeInteractor
 import com.favourites.api.domain.FavoritesRepository
 import com.favourites.api.domain.LikeInteractor
+import com.reviews.api.SendReviewInteractor
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,6 +29,7 @@ class AttractionViewModel @Inject constructor(
     private val deeplinkHandler: DeeplinkHandler,
     private val geoRepository: GeoRepository,
     private val routeTypeInteractor: PreferredRouteTypeInteractor,
+    private val sendReviewInteractor: SendReviewInteractor
 ) : ViewModel() {
 
     private val _uiEvent = MutableSharedFlow<AttractionEvent>(extraBufferCapacity = 1)
@@ -165,7 +167,7 @@ class AttractionViewModel @Inject constructor(
     private fun sendReview(text: String, stars: Int) {
         _reviewModalStateFlow.update { _ -> ReviewModalState.Loading }
         viewModelScope.launch {
-            when (attractionInteractor.sendReview(id = attractionId, text = text, stars = stars)) {
+            when (sendReviewInteractor.sendReview(id = attractionId, text = text, stars = stars)) {
                 is ResponseState.Error -> {
                     _reviewModalStateFlow.update { ReviewModalState.Error }
                 }

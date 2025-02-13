@@ -8,8 +8,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.travelling.common.theme.mediumTextStyle
@@ -18,7 +21,11 @@ import com.search_filters.impl.ui.SearchAction
 import com.search_filters.impl.ui.SearchUiState.SearchScreenState
 
 @Composable
-fun ZeroSearch(zeroState: SearchScreenState.ZeroSearch, onAction: (SearchAction) -> Unit) {
+fun ZeroSearch(
+    zeroState: SearchScreenState.ZeroSearch,
+    onAction: (SearchAction) -> Unit,
+    textField: MutableState<TextFieldValue>
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,7 +46,13 @@ fun ZeroSearch(zeroState: SearchScreenState.ZeroSearch, onAction: (SearchAction)
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { onAction(SearchAction.ChangeSearchText(city)) }
+                    .clickable {
+                        textField.value = textField.value.copy(
+                            text = city,
+                            selection = TextRange(city.length)
+                        )
+                        onAction(SearchAction.ChangeSearchText(city))
+                    }
                     .padding(horizontal = 20.dp)
             ) {
                 Spacer(modifier = Modifier.height(4.dp))

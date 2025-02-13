@@ -1,5 +1,6 @@
 package com.attraction.impl.ui.composables
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -51,11 +53,17 @@ fun ReviewBlock(attraction: Attraction, onAction: (AttractionAction) -> Unit) {
                 onClick = {
                     onAction(AttractionAction.ChangeReviewModalVisibility(true))
                 },
-                backgroundColor = Color(0xFF404040),
+                backgroundColor = Color(0xFFFFFFFF),
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .width(300.dp)
                     .height(40.dp)
+                    .border(
+                        width = 1.dp,
+                        shape = RoundedCornerShape(12.dp),
+                        color = Color(0xFF74A3FF),
+                    ),
+                shape = RoundedCornerShape(12.dp)
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically
@@ -64,7 +72,7 @@ fun ReviewBlock(attraction: Attraction, onAction: (AttractionAction) -> Unit) {
                         painter = painterResource(R.drawable.ic_pen),
                         contentDescription = null,
                         modifier = Modifier.size(18.dp),
-                        tint = Color.White
+                        tint = Color(0xFF74A3FF)
                     )
 
                     Spacer(modifier = Modifier.width(12.dp))
@@ -73,7 +81,7 @@ fun ReviewBlock(attraction: Attraction, onAction: (AttractionAction) -> Unit) {
                         text = "Напишите отзыв",
                         style = mediumTextStyle.copy(
                             fontSize = 14.sp,
-                            color = Color.White
+                            color = Color(0xFF74A3FF)
                         )
                     )
                 }
@@ -94,17 +102,23 @@ fun ReviewBlock(attraction: Attraction, onAction: (AttractionAction) -> Unit) {
                 onClick = {
                     onAction(AttractionAction.OpenReviews)
                 },
-                backgroundColor = Color(0xFF404040),
+                backgroundColor = Color(0xFFFFFFFF),
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .width(300.dp)
                     .height(40.dp)
+                    .border(
+                        width = 1.dp,
+                        shape = RoundedCornerShape(12.dp),
+                        color = Color(0xFF74A3FF),
+                    ),
+                shape = RoundedCornerShape(12.dp)
             ) {
                 Text(
                     text = "Посмотреть все отзывы",
                     style = mediumTextStyle.copy(
                         fontSize = 14.sp,
-                        color = Color.White
+                        color = Color(0xFF74A3FF)
                     )
                 )
             }

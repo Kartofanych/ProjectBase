@@ -1,8 +1,8 @@
 package com.reviews.impl.di
 
-import retrofit2.Retrofit
+import com.reviews.impl.data.ReviewsApi
 import javax.inject.Inject
 
 class ReviewsDependencies @Inject constructor(
-    val retrofit: Retrofit
+    val reviewsApi: ReviewsApi,
 )

@@ -7,6 +7,8 @@ import com.example.travelling.main.impl.di.MainDataModule
 import com.favourites.impl.di.FavouritesAppBindsModule
 import com.filters.api.data.FiltersRepository
 import com.filters.impl.data.FiltersRepositoryImpl
+import com.reviews.api.SendReviewInteractor
+import com.reviews.impl.data.SendReviewInteractorImpl
 import com.splash.api.domain.CitiesRepository
 import com.splash.impl.data.repository.CitiesRepositoryImpl
 import com.travelling.impl.di.AppConfigModule
@@ -34,4 +36,7 @@ interface DataModule {
     @AppScope
     @Reusable
     fun bindCitiesRepository(citiesRepositoryImpl: CitiesRepositoryImpl): CitiesRepository
+
+    @Binds
+    fun SendReviewInteractor(impl: SendReviewInteractorImpl): SendReviewInteractor
 }

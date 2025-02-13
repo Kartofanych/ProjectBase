@@ -3,13 +3,10 @@ package com.service.impl.ui.composables
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
@@ -51,11 +48,11 @@ fun ServiceContent(service: Service, onAction: (ServiceAction) -> Unit) {
 
             ServiceBody(service = service, scrollState = scrollState)
 
-            ServiceFooter(
-                service = service,
-                modifier = Modifier.align(Alignment.BottomCenter),
-                openBottomSheet = { bottomSheetVisibility.value = true }
-            )
+            /*ServiceFooter(
+            service = service,
+            modifier = Modifier.align(Alignment.BottomCenter),
+            openBottomSheet = { bottomSheetVisibility.value = true }
+        )*/
         }
     }
     if (bottomSheetVisibility.value) {
@@ -77,7 +74,7 @@ fun ServiceContent(service: Service, onAction: (ServiceAction) -> Unit) {
                     style = mediumTextStyle.copy(fontSize = 16.sp, color = Color.Black)
                 )
 
-                Row(
+                /*Row(
                     modifier = Modifier
                         .padding(top = 20.dp)
                 ) {
@@ -87,7 +84,7 @@ fun ServiceContent(service: Service, onAction: (ServiceAction) -> Unit) {
                             Spacer(Modifier.width(22.dp))
                         }
                     }
-                }
+                }*/
             }
         }
     }

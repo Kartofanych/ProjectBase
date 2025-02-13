@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -169,11 +170,12 @@ fun InformationBlock(attraction: Attraction, onAction: (AttractionAction) -> Uni
                 onClick = {
                     onAction(AttractionAction.OpenGuide)
                 },
-                backgroundColor = Color(0xFF404040),
+                backgroundColor = Color(0xFF74A3FF),
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .width(300.dp)
-                    .height(40.dp)
+                    .height(40.dp),
+                shape = RoundedCornerShape(12.dp),
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically

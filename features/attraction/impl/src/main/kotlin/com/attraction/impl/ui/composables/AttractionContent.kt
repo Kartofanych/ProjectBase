@@ -34,7 +34,8 @@ fun AttractionContent(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .verticalScroll(state = rememberScrollState()),
+                    .verticalScroll(state = rememberScrollState())
+                    .padding(bottom = scaffold.calculateBottomPadding()),
             ) {
 
                 ImageSlider(scaffold.calculateTopPadding(), attraction, onAction)
@@ -63,8 +64,6 @@ fun AttractionContent(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 ReviewBlock(attraction, onAction)
-
-                DefaultSeparator()
             }
 
             AnimatedVisibility(

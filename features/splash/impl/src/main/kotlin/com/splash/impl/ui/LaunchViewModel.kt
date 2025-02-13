@@ -10,7 +10,6 @@ import com.splash.api.domain.CitiesRepository
 import com.splash.impl.di.LaunchScope
 import com.splash.impl.domain.LaunchInteractor
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -47,8 +46,7 @@ class LaunchViewModel @Inject constructor(
                 }
 
                 is ResponseState.Error -> {
-                    delay(3000L)
-                    launch()
+                    _uiStateFlow.update { LaunchUiState.Error }
                 }
 
                 is ResponseState.Success -> {
@@ -65,6 +63,8 @@ class LaunchViewModel @Inject constructor(
             LaunchAction.Update -> {
                 deeplinkHandler.handleDeeplink("https://quick-travel.ru")
             }
+
+            LaunchAction.Reload -> launch()
         }
     }
 }

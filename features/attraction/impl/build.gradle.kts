@@ -16,6 +16,7 @@ android {
 
 dependencies {
     api(project(":features:attraction:api"))
+    api(project(":features:geo"))
     api(project(":features:auth:api"))
     api(project(":features:main_favourites:api"))
     api(project(":features:reviews:api"))

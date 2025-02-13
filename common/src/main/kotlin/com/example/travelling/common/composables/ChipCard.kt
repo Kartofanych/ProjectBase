@@ -1,4 +1,4 @@
-package com.example.travelling.common
+package com.example.travelling.common.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -12,7 +12,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.travelling.common.composables.touchAction
 import com.example.travelling.common.theme.semiboldTextStyle
 
 @Composable
