@@ -142,7 +142,7 @@ fun FavouriteItem(item: FavoriteAttraction, onAction: (FavouritesAction) -> Unit
             )
 
             Text(
-                text = "4.8",
+                text = item.rating.toString(),
                 style = boldTextStyle.copy(fontSize = 14.sp, color = Color(0xFF74A3FF)),
                 modifier = Modifier.align(Alignment.BottomEnd),
                 maxLines = 1

@@ -36,7 +36,7 @@ fun FavoritesContent(
         Scaffold(
             modifier = Modifier
                 .fillMaxSize(),
-            containerColor = Color.White
+            containerColor = Color.White,
         ) {
 
             if (state.items.isNotEmpty()) {

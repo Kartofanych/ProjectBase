@@ -1,6 +1,8 @@
 package com.service.impl.data.models.network
 
 import androidx.annotation.Keep
+import com.example.travelling.common.data.models.network.ReviewsBlockDto
+import com.example.travelling.common.data.models.network.ScheduleDto
 import com.google.gson.annotations.SerializedName
 
 @Keep
@@ -14,9 +16,6 @@ class ServiceResponseDto(
 
     @SerializedName("subtitle")
     val subtitle: String,
-
-    @SerializedName("rating_block")
-    val ratingBlock: RatingBlockDto,
 
     @SerializedName("price")
     val price: String,
@@ -32,6 +31,15 @@ class ServiceResponseDto(
 
     @SerializedName("contacts")
     val contacts: List<ContactDto>?,
+
+    @SerializedName("schedule")
+    val schedule: ScheduleDto,
+
+    @SerializedName("service_types")
+    val serviceTypes: List<ServiceTypeDto>,
+
+    @SerializedName("reviews")
+    val reviews: ReviewsBlockDto,
 ) {
     @Keep
     class RatingBlockDto(
@@ -60,6 +68,18 @@ class ServiceResponseDto(
 
         @SerializedName("icon")
         val icon: String,
+
+        @SerializedName("title")
+        val title: String,
+    )
+
+    @Keep
+    class ServiceTypeDto(
+        @SerializedName("uid")
+        val id: String,
+
+        @SerializedName("price")
+        val price: String,
 
         @SerializedName("title")
         val title: String,

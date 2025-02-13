@@ -2,8 +2,6 @@ package com.attraction.impl.data.mappers
 
 import com.attraction.impl.data.models.dto.LandmarkResponseDto
 import com.attraction.impl.data.models.dto.LandmarkResponseDto.CloseObjectsBlockDto
-import com.attraction.impl.data.models.dto.LandmarkResponseDto.ReviewsBlockDto
-import com.attraction.impl.data.models.dto.LandmarkResponseDto.ScheduleDto.DayScheduleDto
 import com.attraction.impl.data.models.dto.LandmarkResponseDto.SimilarItemDto
 import com.attraction.impl.data.models.local.Attraction
 import com.attraction.impl.data.models.local.Attraction.ReviewBlock
@@ -13,6 +11,8 @@ import com.example.travelling.auth.AuthInfoManager
 import com.example.travelling.common.data.models.local.RatingBlock
 import com.example.travelling.common.data.models.local.Review
 import com.example.travelling.common.data.models.network.GeoPointDto.Companion.toLocalModel
+import com.example.travelling.common.data.models.network.ReviewsBlockDto
+import com.example.travelling.common.data.models.network.ScheduleDto
 import com.example.travelling.common.utils.withWordEnding
 import javax.inject.Inject
 
@@ -54,7 +54,7 @@ class AttractionMapper @Inject constructor(
         )
     }
 
-    private fun mapScheduleDay(dto: DayScheduleDto): Attraction.Schedule.ScheduleDay =
+    private fun mapScheduleDay(dto: ScheduleDto.DayScheduleDto): Attraction.Schedule.ScheduleDay =
         with(dto) { Attraction.Schedule.ScheduleDay(name = name, timing = timing) }
 
     private fun mapSimilarAttraction(dto: SimilarItemDto): SimilarAttraction =

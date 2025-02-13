@@ -7,6 +7,7 @@ import com.example.travelling.common.domain.DeeplinkHandler
 import com.example.travelling.geo.repository.GeoRepository
 import com.favourites.api.domain.FavoritesRepository
 import com.favourites.api.domain.LikeInteractor
+import com.reviews.api.SendReviewInteractor
 import javax.inject.Inject
 
 class AttractionDependencies @Inject constructor(
@@ -17,4 +18,5 @@ class AttractionDependencies @Inject constructor(
     val authInfoManager: AuthInfoManager,
     val deeplinkHandler: DeeplinkHandler,
     val geoRepository: GeoRepository,
+    val sendReviewInteractor: SendReviewInteractor,
 )

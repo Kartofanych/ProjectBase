@@ -7,6 +7,8 @@ sealed interface SearchAction {
 
     object OpenFilters : SearchAction
 
+    object OnDispose : SearchAction
+
     class ChangeSearchText(val search: String) : SearchAction
 
     class ActivityClicked(val entity: ActivityEntity) : SearchAction

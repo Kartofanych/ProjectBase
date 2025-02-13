@@ -10,4 +10,6 @@ data class PromoCode(
     val subtitle: String,
     val endDate: String,
     val imageUrl: String,
+    val rating: Float,
+    val tag: String,
 )

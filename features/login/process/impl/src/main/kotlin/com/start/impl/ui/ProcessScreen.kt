@@ -10,12 +10,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
@@ -35,6 +37,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withLink
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.multimodulepractice.login.process.impl.R
@@ -49,6 +58,53 @@ import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun ProcessScreen(uiState: ProcessUiState, onAction: (ProcessAction) -> Unit) {
+
+    val annotatedText = buildAnnotatedString {
+        withStyle(
+            SpanStyle(
+                color = Color(0xFF778389),
+                fontStyle = mediumTextStyle.fontStyle
+            )
+        ) {
+            append("Продолжая, я соглашаюсь с ")
+        }
+        withLink(
+            LinkAnnotation.Url(
+                url = "https://quick-travel.ru/term_of_use",
+                styles = TextLinkStyles(
+                    style = SpanStyle(
+                        textDecoration = TextDecoration.Underline,
+                        color = Color(0xFF778389),
+                        fontStyle = semiboldTextStyle.fontStyle
+                    )
+                )
+            ),
+        ) {
+            append("Пользовательским соглашением")
+        }
+        withStyle(
+            SpanStyle(
+                color = Color(0xFF778389),
+                fontStyle = mediumTextStyle.fontStyle
+            )
+        ) {
+            append(", а также с обработкой моей персональной информации на условиях ")
+        }
+        withLink(
+            LinkAnnotation.Url(
+                url = "https://quick-travel.ru/privacy_policy",
+                styles = TextLinkStyles(
+                    style = SpanStyle(
+                        textDecoration = TextDecoration.Underline,
+                        color = Color(0xFF778389),
+                        fontStyle = semiboldTextStyle.fontStyle
+                    )
+                )
+            ),
+        ) {
+            append("Политики конфиденциальности")
+        }
+    }
 
     Scaffold(
         containerColor = Color.White,
@@ -119,12 +175,12 @@ fun ProcessScreen(uiState: ProcessUiState, onAction: (ProcessAction) -> Unit) {
 
                     InputField(uiState, onAction)
 
-                    Box(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
 
                     Text(
                         modifier = Modifier.padding(horizontal = 3.dp),
-                        text = "Продолжая, я соглашаюсь с Пользовательским соглашением, а также с обработкой моей персональной информации на условиях Политики конфиденциальности",
-                        style = regularTextStyle.copy(fontSize = 10.sp, color = Color(0xFF778389))
+                        text = annotatedText,
+                        style = regularTextStyle.copy(fontSize = 10.sp, color = Color(0xFF778389)),
                     )
                 }
             }

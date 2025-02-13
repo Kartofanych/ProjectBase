@@ -28,7 +28,7 @@ import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
 import coil.size.Scale
-import com.example.travelling.common.ChipCard
+import com.example.travelling.common.composables.ChipCard
 import com.example.travelling.common.composables.shimmerBrush
 import com.example.travelling.common.theme.mediumTextStyle
 import com.example.travelling.common.theme.regularTextStyle

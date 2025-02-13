@@ -50,7 +50,7 @@ fun InputField(uiState: ProcessUiState, onAction: (ProcessAction) -> Unit) {
     }
     val focusRequester = remember { FocusRequester() }
 
-    Column(modifier = Modifier.height(54.dp)) {
+    Column(modifier = Modifier.height(58.dp)) {
         BasicTextField(
             value = textField,
             onValueChange = {
@@ -107,6 +107,7 @@ fun InputField(uiState: ProcessUiState, onAction: (ProcessAction) -> Unit) {
                 }
             }
         }
+
         androidx.compose.animation.AnimatedVisibility(
             enter = fadeIn(),
             exit = fadeOut(),

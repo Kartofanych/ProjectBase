@@ -18,7 +18,10 @@ android {
 
 dependencies {
     api(project(":features:service:api"))
+    api(project(":features:auth:api"))
     api(project(":features:main:api"))
+    api(project(":features:reviews:api"))
+    implementation(project(":features:geo"))
     implementation(project(":common"))
     implementation(libs.core.ktx)
 
